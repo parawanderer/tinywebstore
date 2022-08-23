@@ -25,7 +25,7 @@
                 </div>
             <?php endif ?>
 
-            <form action="/account/register" method="post" class="row g-3 bootstrap-validate" id="registrationForm" novalidate>
+            <form action="/account/register" method="post" class="row g-3" id="registrationForm" novalidate>
                 <?= csrf_field() ?>
 
                 <div class="col-12">

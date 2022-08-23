@@ -4,34 +4,34 @@
   <div class="row">
     <div class="col col-lg-3 account-nav">
         <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item fs-6">
-            <a href="/account" class="nav-link active" aria-current="page">
+        <li class="<?= $page === '' ? 'nav-item' : '' ?> fs-6">
+            <a href="/account" class="nav-link <?= $page === '' ? 'active' : 'link-dark' ?>" aria-current="page">
             <i class="bi bi-person fs-5" aria-hidden="true"></i>
             Account
             </a>
         </li>
         <?php if ($user['has_shop']): ?>
-            <li class="fs-6">
-                <a href="/store/admin" class="nav-link link-dark">
+            <li class="<?= $page === 'shop' ? 'nav-item' : '' ?> fs-6">
+                <a href="<?= esc($user['shop_url']) ?>" class="nav-link <?= $page === 'shop' ? 'active' : 'link-dark' ?>">
                 <i class="bi bi-shop fs-5" aria-hidden="true"></i>
                 Shop (<?= esc($user['shop_name']) ?>)
                 </a>
             </li>
         <?php endif ?> 
-        <li class="fs-6">
-            <a href="/account/orders" class="nav-link link-dark">
+        <li class="<?= $page === 'orders' ? 'nav-item' : '' ?> fs-6">
+            <a href="/account/orders" class="nav-link <?= $page === 'orders' ? 'active' : 'link-dark' ?>">
             <i class="bi bi-receipt fs-5" aria-hidden="true"></i>
-            Orders
+            Your Orders
             </a>
         </li>
-        <li class="fs-6">
-            <a href="/account/watchlist" class="nav-link link-dark">
+        <li class="<?= $page === 'watchlist' ? 'nav-item' : '' ?> fs-6">
+            <a href="/account/watchlist" class="nav-link <?= $page === 'watchlist' ? 'active' : 'link-dark' ?>">
             <i class="bi bi-eye fs-5" aria-hidden="true"></i>
             Watchlist
             </a>
         </li>
-        <li class="fs-6">
-            <a href="/account/messages" class="nav-link link-dark">
+        <li class="<?= $page === 'messages' ? 'nav-item' : '' ?> fs-6">
+            <a href="/account/messages" class="nav-link <?= $page === 'messages' ? 'active' : 'link-dark' ?>">
             <i class="bi bi-envelope fs-5" aria-hidden="true"></i>
             Messages
             </a>
@@ -45,7 +45,7 @@
         </li>
         </ul>
     </div>
-    <div class="col-md-auto">
+    <div class="col">
         <?= $this->renderSection('content') ?>
     </div>
   </div>

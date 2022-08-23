@@ -29,7 +29,10 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="/account"><i class="bi bi-person" aria-hidden="true"></i> Account</a></li>
-                    <li><a class="dropdown-item" href="/account/orders"><i class="bi bi-receipt" aria-hidden="true"></i> Orders</a></li>
+                    <?php if ($user['has_shop']): ?>
+                        <li><a class="dropdown-item" href="<?= esc($user['shop_url']) ?>"><i class="bi bi-shop" aria-hidden="true"></i> Shop (<?= esc($user['shop_name']) ?>)</a></li>
+                    <?php endif ?>
+                    <li><a class="dropdown-item" href="/account/orders"><i class="bi bi-receipt" aria-hidden="true"></i> Your Orders</a></li>
                     <li><a class="dropdown-item" href="/account/watchlist"><i class="bi bi-eye" aria-hidden="true"></i> Watchlist</a></li>
                     <li><a class="dropdown-item" href="/account/messages"><i class="bi bi-envelope" aria-hidden="true"></i> Messages</a></li>
                     <li><hr class="dropdown-divider"></li>

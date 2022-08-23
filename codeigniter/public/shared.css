@@ -35,6 +35,11 @@
     padding-bottom:3rem;
 }
 
+.p-outer-block-s {
+    padding-top:1.5rem;
+    padding-bottom:3rem;
+}
+
 .line-left {
     border-left: 2px solid var(--line-light);
 }
@@ -42,6 +47,14 @@
 .title-underline {
     border-bottom: 2px solid var(--line-light);
     padding-bottom: 0.5em;
+}
+
+.user-editable-box h1 {
+    font-size: 2rem;
+}
+
+.user-editable-box h2 {
+    font-size: 1.25rem;
 }
 
 

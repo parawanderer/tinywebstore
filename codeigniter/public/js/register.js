@@ -1,4 +1,3 @@
-// Fetch all the forms we want to apply custom Bootstrap validation styles to
 const form = document.getElementById('registrationForm');
 
 const passwordInput = document.getElementById('password');
@@ -53,8 +52,6 @@ function zipcodeValidator(zip) {
 
 zipInput.addEventListener('input', function (event) { 
     const value = event.target.value?.trim();
-
-    console.log(value, zipcodeValidator(value));
 
     if (!value) {
         const ERROR = 'Please provide a zip code';

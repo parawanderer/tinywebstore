@@ -12,7 +12,9 @@
         "ext-mbstring": "*",
         "kint-php/kint": "^4.1.1",
         "laminas/laminas-escaper": "^2.9",
-        "psr/log": "^1.1"
+        "psr/log": "^1.1",
+        "ezyang/htmlpurifier": "^4.14",
+        "php-ffmpeg/php-ffmpeg": "^1.0"
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.1",

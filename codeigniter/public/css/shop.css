@@ -1,0 +1,68 @@
+.shop-banner {
+    height: 15rem;
+    overflow: hidden;
+}
+
+
+.shop-banner-edit {
+    height: 9rem;
+    overflow: hidden;
+}
+
+.shop-logo {
+    height: 7rem;
+    width: 7rem;
+    object-fit: cover
+}
+
+.banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.text-avatar {
+    background-color: rgb(0 0 0 / 37%);
+    color: white;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.profile-media {
+    width: 5rem;
+    height: 4rem;
+}
+
+.image-popup-img {
+    width: 20rem;
+    max-height: 20rem;
+}
+
+.media-item-img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.media-item-container {
+    max-height: 15rem;
+    overflow: hidden;
+}
+
+.media-item-clickable {
+    cursor: pointer;
+}
+
+.media-view-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.image-view-image-container {
+    width: 100%;
+    height: 85vh;
+    overflow: hidden;
+}

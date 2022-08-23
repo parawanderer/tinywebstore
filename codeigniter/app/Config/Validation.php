@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Validation\ColorRules;
 use CodeIgniter\Validation\CreditCardRules;
 use CodeIgniter\Validation\FileRules;
 use CodeIgniter\Validation\FormatRules;
@@ -26,7 +27,8 @@ class Validation extends BaseConfig
         FormatRules::class,
         FileRules::class,
         CreditCardRules::class,
-        PasswordRules::class
+        PasswordRules::class,
+        ColorRules::class
     ];
 
     /**

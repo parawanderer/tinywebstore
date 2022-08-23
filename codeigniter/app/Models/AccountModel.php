@@ -8,7 +8,7 @@ class AccountModel extends Model
 {
     private const ACCOUNT_SELECT = "SELECT a.id, a.username, a.first_name, a.last_name, 
         a.address, a.created, a.password_hash, (s.id is not null) as has_shop,
-        s.name as shop_name
+        s.name as shop_name, s.id as shop_id
         FROM account a 
         LEFT JOIN shop s on a.id = s.user_id
         WHERE a.username = ?";
@@ -37,7 +37,7 @@ class AccountModel extends Model
     }
 
     public function register(string $username, string $firstName, string $lastName, string $address, string $password) {
-        $registrationTime = time();
+        $registrationTime = date('Y-m-d H:i:s');
         $passHash = AccountModel::hash($password);
 
         $this->save([
@@ -84,5 +84,6 @@ class AccountModel extends Model
         $user['id'] = intval($user['id']);
         $user['has_shop'] = intval($user['has_shop']) == 1;
         $user['created'] = strtotime($user['created']);
+        $user['shop_id'] = intval($user['shop_id']);
     }
 }

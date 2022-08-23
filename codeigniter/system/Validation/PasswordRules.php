@@ -4,10 +4,10 @@ namespace CodeIgniter\Validation;
 // custom
 class PasswordRules
 {
-    const MIN_DIGITS = 1;
-    const MIN_ALPHABETIC = 1;
-    const MIN_SYMBOLS = 1;
-    const MIN_LENGTH = 10;
+    private const MIN_DIGITS = 1;
+    private const MIN_ALPHABETIC = 1;
+    private const MIN_SYMBOLS = 1;
+    private const MIN_LENGTH = 10;
 
     public function strong_password(?string $str = null, ?string &$error = null): bool
     {

@@ -43,11 +43,23 @@ $routes->get('pages', 'Pages::index');
 // $routes->get('(:any)', 'Pages::view/$1');
 
 $routes->get('account', 'Account::index');
+$routes->get('account/orders', 'Account::orders');
+$routes->get('account/watchlist', 'Account::watchlist');
+$routes->get('account/messages', 'Account::messages');
 $routes->get('account/login', 'Account::login');
 $routes->post('account/login', 'Account::login');
 $routes->post('account/register', 'Account::register');
 $routes->get('account/register', 'Account::register');
 $routes->get('account/logout', 'Account::logout');
+
+
+$routes->get('search', 'Search::index');
+
+$routes->get('shop/(:num)', 'Shop::index/$1');
+$routes->get('shop/edit', 'Shop::edit');
+$routes->post('shop/edit', 'Shop::edit');
+$routes->post('shop/media/delete', 'Shop::deleteMedia');
+$routes->post('shop/media/add', 'Shop::addMedia');
 
 /*
  * --------------------------------------------------------------------
