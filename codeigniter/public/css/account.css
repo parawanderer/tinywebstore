@@ -1,0 +1,15 @@
+.account-nav .link-dark:focus, .account-nav .link-dark:hover {
+    color: var(--bs-indigo);
+}
+
+/* .nav-link:focus, .nav-link:hover {
+    color: #0a58ca;
+} */
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: var(--bs-indigo);
+}
+
+.account-nav .bi {
+    margin-right: 0.5em;
+}

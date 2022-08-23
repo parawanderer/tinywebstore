@@ -1,0 +1,82 @@
+:root {
+    --indigo-muted: #6351ce;
+    --indigo-dark : #5000d2;
+    --line-light: #f0f3f6;
+}
+
+.bg-indigo {
+    background-color: var(--indigo-muted);
+}
+
+.bg-indigo-bright {
+    background-color: var(--bs-indigo);
+}
+
+.btn.bg-indigo {
+    background-color: var(--bs-indigo);
+}
+
+.btn.bg-indigo.disabled, .btn.bg-indigo:disabled {
+    background-color: var(--bs-indigo);
+    border-color: var(--bs-indigo);
+}
+
+.btn.bg-indigo:hover, .btn.bg-indigo:active, .btn.bg-indigo:focus {
+    background-color: var(--indigo-dark);
+    border-color: var(--indigo-dark);
+}
+
+.btn.bg-indigo:focus {
+    box-shadow: 0 0 0 0.25rem rgb(67 49 253 / 50%);
+}
+
+.p-outer-block {
+    padding-top:3rem;
+    padding-bottom:3rem;
+}
+
+.line-left {
+    border-left: 2px solid var(--line-light);
+}
+
+.title-underline {
+    border-bottom: 2px solid var(--line-light);
+    padding-bottom: 0.5em;
+}
+
+
+/* top nav / search */
+
+.navbar.search-bar {
+    background-color: var(--indigo-muted);
+    padding: 0.5rem 4rem;
+}
+
+.navbar.search-bar .bi {
+    font-size: 1.5rem;
+}
+
+.account-icon {
+    align-items: center;
+}
+
+.account-icon .username {
+    margin-left: 0.2em;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: var(--bs-indigo);
+}
+
+.navbar.search-bar .dropdown-item {
+    display: flex;
+    align-items: center;
+}
+
+.navbar.search-bar .dropdown-item .bi {
+    margin-right: 0.5em;
+}
+
+.store-icon {
+    margin-right: 0.5em;
+}

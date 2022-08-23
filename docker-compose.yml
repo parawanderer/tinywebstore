@@ -7,3 +7,4 @@ services:
       - ./mysql:/var/lib/mysql
     ports:
       - 8080:80
+      - 3306:3306
