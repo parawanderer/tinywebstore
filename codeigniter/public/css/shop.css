@@ -103,9 +103,21 @@
 }
 
 .desc-container h1 {
-    font-size: 2em;
+    font-size: 2rem;
 }
 
 .desc-container h2 {
-    font-size: 1.25em;
+    font-size: 1.25rem;
+}
+
+.product-thumbnail-img {
+    height: 15rem;
+    width: 100%;
+    object-fit: cover;
+}
+
+.similar-products-img {
+    height: 10rem;
+    width: 100%;
+    object-fit: cover;
 }

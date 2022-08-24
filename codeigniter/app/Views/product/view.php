@@ -217,7 +217,13 @@
                 <?php foreach ($similar_products as $similarProduct) : ?>
                     <div class="col">
                         <div class="card h-100">
-                            <img src="/img/pillows.jpg" class="card-img-top" alt="Similar Product Thumbnail">
+                            <?php if ($similarProduct['media_thumbnail_id']): ?>
+                                <img src="/uploads/shop/media/<?= esc($similarProduct['media_thumbnail_id']) ?>" class="card-img-top similar-products-img" alt="Similar Product Thumbnail">
+                            <?php else: ?>
+                                <div class="rounded float-start similar-products-img bg-grey-light d-flex justify-content-center">
+                                    <i class="bi bi-image text-white fs-1 align-self-center"></i>
+                                </div>
+                            <?php endif ?>
                             <div class="card-body">
                                 <h6 class="card-title">
                                     <a href="/product/<?= esc($similarProduct['id']) ?>" class="stretched-link text-decoration-none text-reset">

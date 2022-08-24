@@ -124,15 +124,21 @@
 
             <?php foreach ($products as $product): ?>
                 <div class="col">
-                    <div class="card h-100">
-                        <img src="/img/pillows.jpg" class="card-img-top" alt="Product thumbnail">
+                    <div class="card h-100 text-dark">
+                        <?php if ($product['media_thumbnail_id']): ?>
+                            <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="card-img-top product-thumbnail-img" alt="Product thumbnail">
+                        <?php else: ?>
+                            <div class="rounded float-start product-thumbnail-img bg-grey-light d-flex justify-content-center">
+                                <i class="bi bi-image text-white fs-1 align-self-center"></i>
+                            </div>
+                        <?php endif ?>
                         <div class="card-body">
                             <h5 class="card-title">
                                 <a href="/product/<?= esc($product['id']) ?>" class="stretched-link text-decoration-none text-reset">
                                 <?= esc($product['title']) ?>
                                 </a>
                             </h5>
-                            <h6 class="card-text">€ <?= esc($product['price']) ?></h6>
+                            <h6 class="card-text color-indigo">€ <?= esc($product['price']) ?></h6>
                         </div>
                     </div>
                 </div>

@@ -19,14 +19,37 @@ class ProductModel extends Model
     ];
 
     public function getForShop(int $shopId, int $limit = 200) {
-        return $this->where(["shop_id" => $shopId])->findAll($limit);
+        $result = $this->select("product.id, product.shop_id, product.title, product.price, product.availability, product.main_media, product.description, shop_media.mimetype as media_mimetype")
+            ->join('shop_media', 'product.main_media = shop_media.id', 'left')
+            ->where(["product.shop_id" => $shopId])
+            ->findAll($limit);
+
+        ProductModel::updateMediaInfo($result);
+
+        return $result;
     }
 
     public function getForShopExcluding(int $shopId, array $excludeIds, int $limit = 200) {
-        return $this->where(["shop_id" => $shopId])->whereNotIn("id", $excludeIds)->findAll($limit);
+        $result = $this->select("product.id, product.shop_id, product.title, product.price, product.availability, product.main_media, product.description, shop_media.mimetype as media_mimetype")
+                ->join('shop_media', 'product.main_media = shop_media.id', 'left')
+                ->where(["product.shop_id" => $shopId])
+                ->whereNotIn("product.id", $excludeIds)
+                ->findAll($limit);
+        
+        ProductModel::updateMediaInfo($result);
+
+        return $result;
     }
 
     public function getById(int $productId) {
         return $this->where(["id" => $productId])->first();
+    }
+
+    private static function updateMediaInfo(array &$products) {
+        foreach($products as &$product) {
+            [ $isVideo, $thumbnailId ] = ShopMediaModel::getThumbnailInfo($product['main_media'], $product['media_mimetype']);
+
+            $product['media_thumbnail_id'] = $thumbnailId ?? $product['main_media'];
+        }
     }
 }

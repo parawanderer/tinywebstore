@@ -69,15 +69,24 @@ class ShopMediaModel extends Model
 
     private static function updateExtraInfo(array &$mediaItems) {
         foreach ($mediaItems as &$item) {
-            $isVideo = $item['mimetype'] === 'video/mp4'; // only mp4 supported in this project
+            [$isVideo, $thumbnailId] = ShopMediaModel::getThumbnailInfo($item['id'], $item['mimetype']);
 
-            $item['is_video'] = false;
-            $item['thumbnail_id'] = null;
-
-            if ($isVideo) {
-                $item['is_video'] = true;
-                $item['thumbnail_id'] = substr($item['id'], 0, strrpos($item['id'], ".")) . ".jpg";
-            }
+            $item['is_video'] = $isVideo;
+            $item['thumbnail_id'] = $thumbnailId;
         }
+    }
+
+    public static function getThumbnailInfo(?string $mediaItemId, ?string $mimeType) {
+        $isVideo = $mimeType === 'video/mp4'; // only mp4 supported in this project
+
+        $isVideo = false;
+        $thumbnailId = null;
+
+        if ($isVideo) {
+            $isVideo = true;
+            $thumbnailId = substr($mediaItemId, 0, strrpos($mediaItemId, ".")) . ".jpg";
+        }
+
+        return [ $isVideo, $thumbnailId ];
     }
 }
