@@ -91,7 +91,7 @@
                                     alt="Shop uploaded media item"
                                 >
 
-                                <?php if ($logged_in && $owns_shop) : ?>
+                                <?php if ($owns_shop) : ?>
                                     <div class="card-img-overlay d-flex flex-row-reverse">
                                         <button data-media-id="<?= esc($mediaItem['id']) ?>" class="btn-close media-remove-button" aria-label="Delete Media"></button>
                                     </div>
@@ -103,7 +103,7 @@
 
             </div>
 
-            <?php if ($logged_in && $owns_shop) : ?>
+            <?php if ($owns_shop) : ?>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end pt-3">
                     <button class="btn btn-primary bg-indigo" id="addMediaButton" style="<?= $shop['font_color'] ? "background-color: {$shop['font_color']}; border-color: {$shop['font_color']}; " : '' ?> <?= $shop['theme_color'] ? "color: {$shop['theme_color']}; " : '' ?>">
                         <i class="bi bi-images"></i>
@@ -212,7 +212,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body image-view-image-container d-flex justify-content-center align-items-center">
-                <img src="/img/pillows.jpg" class="media-view-image" alt="Media Item" id="mediaViewImage">
+                <img src="" class="media-view-image" alt="Media Item" id="mediaViewImage">
 
                 <video controls src="" poster="" width="740" style="display: none;" id="mediaViewVideo">
                     Sorry, your browser doesn't support embedded videos,

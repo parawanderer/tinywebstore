@@ -21,12 +21,21 @@
             <div class="row">
 
                 <?php if ($primary_media) : ?>
-                    <img 
-                        src="/uploads/shop/media/<?= esc($primary_media['is_video'] ? $primary_media['thumbnail_id'] : $primary_media['id']) ?>" 
-                        class="rounded float-start product-img-current" 
-                        alt="Product Photo" 
-                        id="productMediaMainImage"
+
+                    <a  href="#" 
+                        id="primaryMediaContainer" 
+                        class="media-item-clickable"
+                        data-is-video="<?= esc($primary_media['is_video']) ?>" 
+                        data-id="/uploads/shop/media/<?= esc($primary_media['id']) ?>" 
+                        data-poster="<?= esc('/uploads/shop/media/' . $primary_media['thumbnail_id']) ?>"
                     >
+                        <img 
+                            src="/uploads/shop/media/<?= esc($primary_media['is_video'] ? $primary_media['thumbnail_id'] : $primary_media['id']) ?>" 
+                            class="rounded float-start product-img-current" 
+                            alt="Product Photo" 
+                            id="productMediaMainImage"
+                        >
+                    </a>
 
                 <?php else: ?>
                     <div class="rounded float-start product-img-current bg-grey-light d-flex justify-content-center">
@@ -247,5 +256,24 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="viewMediaModal" tabindex="-1" aria-labelledby="viewMediaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewMediaModalLabel">Product Media</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body image-view-image-container d-flex justify-content-center align-items-center">
+                <img src="" class="media-view-image" alt="Media Item" id="mediaViewImage">
+
+                <video controls src="" poster="" width="740" style="display: none;" id="mediaViewVideo">
+                    Sorry, your browser doesn't support embedded videos,
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="/js/product.js"></script>
