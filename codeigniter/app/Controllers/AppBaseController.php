@@ -43,6 +43,11 @@ class AppBaseController extends BaseController
         return $session->get('username');
     }
 
+    protected function getCurrentUserId() {
+        $session = \Config\Services::session();
+        return $session->get('user_id');
+    }
+
     protected function ownsShop(int $shopId) {
         $session = \Config\Services::session();
         return $session->get('shop_id') == $shopId;

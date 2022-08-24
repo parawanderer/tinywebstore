@@ -34,7 +34,7 @@
                 </thead>
                 <tbody>
                     <?php foreach ($products as $product): ?>
-                    <tr>
+                    <tr class="align-middle">
                         <th scope="row">
                             <?php if ($product['media_thumbnail_id']): ?>
                                 <a href="/product/<?= esc($product['id']) ?>">
@@ -74,7 +74,15 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            
+            <?php if (count($products) === 0): ?>
+                <div class="container">
+                    <p class="text-muted">
+                        Your shop has no products
+                    </p>
+                </div>
 
+            <?php endif ?>
         </div>
     </div>
 </div>

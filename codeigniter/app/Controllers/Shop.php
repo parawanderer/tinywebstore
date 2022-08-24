@@ -9,6 +9,7 @@ use App\Models\ProductModel;
 use App\Models\ReviewModel;
 use App\Models\ShopMediaModel;
 use App\Models\ShopModel;
+use App\Models\WatchlistModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Files\File;
@@ -189,6 +190,14 @@ class Shop extends AppBaseController
         $mediaForProduct = $mediaModel->getForProduct($productId);
         Shop::sortMediaForProduct($mediaForProduct, $product['main_media']);
 
+
+        $isWatched = false;
+        if ($this->loggedIn()) {
+            /** @var \App\Models\WatchlistModel */
+            $watchModel = model(WatchlistModel::class);
+            $isWatched = $watchModel->isWatched($this->getCurrentUserId(), $product['id']); 
+        }
+
         $templateParams = $this->getUserTemplateParams();
         $templateParams['shop'] = $shop;
         $templateParams['product'] = $product;
@@ -199,6 +208,7 @@ class Shop extends AppBaseController
         $templateParams['is_shop_owner'] = $this->ownsShop($product['shop_id']);
         $templateParams['average_score'] = Shop::getAverageScore($reviews);
         $templateParams['similar_products'] = $similarProducts;
+        $templateParams['is_watched'] = $isWatched;
 
         return view('templates/header')
             . view('templates/top_bar', $templateParams)

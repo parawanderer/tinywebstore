@@ -78,6 +78,10 @@ $routes->get('cart', 'Cart::index');
 $routes->post('cart/add', 'Cart::add');
 $routes->get('cart/remove/(:num)', 'Cart::remove/$1');
 
+// watch
+$routes->get('watch/add/(:num)', 'Watch::watch/$1');
+$routes->get('watch/remove/(:num)', 'Watch::unwatch/$1');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

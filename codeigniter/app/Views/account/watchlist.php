@@ -2,44 +2,88 @@
 
 
 <?= $this->section('content') ?>
-    <div class="container px-4">
-        <h1>Watchlist</h1>
-        <p class="text-muted fs-5">Your watched items</p>
-        <br/>
-        <div class="row">
-            <div class="col">
+<div class="container px-4">
+    <h1>Watchlist (<?= count($watchlist) ?>)</h1>
+    <p class="text-muted fs-5">Your watched products. You will receive an alert when one of these becomes available.</p>
+    <br />
+    <div class="row">
+        <div class="col">
             <table class="table">
-            <thead>
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Item</th>
-                <th scope="col">Added Date</th>
-                <th scope="col">Availability</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>iPhone</td>
-                    <td>DATE</td>
-                    <td><span class="badge rounded-pill bg-success">Available</span></td>
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Added On</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Status</th>
+                        <th scope="col"></th>
                     </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>iPad</td>
-                    <td>DATE</td>
-                    <td><span class="badge rounded-pill bg-secondary">Out of Stock</span></td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Samsung Galaxy Phone</td>
-                    <td>DATE</td>
-                    <td><span class="badge rounded-pill bg-secondary">Out of Stock</span></td>
-                </tr>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach ($watchlist as $product) : ?>
+                        <tr class="align-middle">
+                            <th scope="row">
+                                <?php if ($product['media_thumbnail_id']) : ?>
+                                    <a href="/product/<?= esc($product['id']) ?>">
+                                        <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="img-thumbnail img-thumb-s" alt="Image thumbnail">
+                                    </a>
+                                <?php else : ?>
+                                    <div class="rounded float-start bg-grey-light d-flex justify-content-center img-thumb-s">
+                                        <i class="bi bi-image text-white fs-1 align-self-center"></i>
+                                    </div>
+                                <?php endif ?>
+                            </th>
+                            <th>
+                                <?php if ($product['title']) : ?>
+                                    <a href="/product/<?= esc($product['id']) ?>" class="text-decoration-none text-reset">
+                                        <?= esc($product['title']) ?>
+                                    </a>
+                                <?php else : ?>
+                                    <?= esc($product['fallback_title']) ?>
+                                <?php endif ?>
+                            </th>
 
+                            <td>
+                                <h6 class="text-muted">
+                                    <?= date("F jS, Y", strtotime($product['created'])) ?>
+                                </h6>
+                            </td>
+                            <td>
+                                <?php if ($product['price']) : ?>
+                                    <?= esc($product['price']) ?>
+                                <?php endif ?>
+                            </td>
+
+                            <td>
+                                <?php if ($product['availability'] === null) : ?>
+                                    <span class="badge rounded-pill bg-dark">Removed Product</span>
+                                <?php elseif ($product['availability'] == 0): ?>
+                                    <span class="badge rounded-pill bg-secondary">Out of Stock</span>
+                                <?php else : ?>
+                                    <span class="badge rounded-pill text-light bg-indigo">Available</span>
+                                <?php endif ?>
+                            </td>
+
+                            <td>
+                                <a class="btn btn-primary bg-indigo" href="/watch/remove/<?= esc($product['id'], 'attr') ?>" role="button">
+                                    <i class="bi bi-eye-slash" aria-hidden="true"></i>
+                                    Unwatch
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <?php if (count($watchlist) === 0): ?>
+            <div class="container">
+                <p class="text-muted">
+                    You have no watched products
+                </p>
             </div>
+
+            <?php endif ?>
         </div>
     </div>
+</div>
 <?= $this->endSection() ?>

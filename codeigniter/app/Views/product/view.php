@@ -89,12 +89,14 @@
                 </h3>
             </div>
             
-            <form action="/cart/add" method="post">
-                <?= csrf_field() ?>
                 
-                <input type="hidden" value="<?= esc($product['id'], 'attr') ?>" name="productId" />
 
                 <div class="d-grid gap-2 d-md-block py-2">
+
+                <form action="/cart/add" method="post">
+                    <?= csrf_field() ?>
+                    <input type="hidden" value="<?= esc($product['id'], 'attr') ?>" name="productId" />
+
                     <div class="row pb-4">
                         <div class="col col-lg-4">
                             <label for="productQuantity" class="pb-2">Quantity</label>
@@ -126,14 +128,31 @@
                         <i class="bi bi-basket px-1" aria-hidden="true"></i>
                         Add To Cart
                     </button>
+
                     <?php if ($logged_in) : ?>
-                        <button type="button" class="btn btn-lg btn-secondary" aria-label="Add Product to your watch list">
-                            <i class="bi bi-eye px-1" aria-hidden="true"></i>
-                            Watch
-                        </button>
+                        
+                        <?php if ($product['availability'] == 0 && !$is_watched): ?>
+                            <a 
+                                href="/watch/add/<?= esc($product['id'], 'attr') ?>" 
+                                class="btn btn-lg btn-secondary" 
+                                aria-label="Add Product to your watch list"
+                            >
+                                <i class="bi bi-eye px-1" aria-hidden="true"></i>
+                                Watch
+                            </a>
+                        <?php elseif($is_watched): ?> 
+                            <a 
+                                href="/watch/remove/<?= esc($product['id'], 'attr') ?>" 
+                                class="btn btn-lg btn-secondary" 
+                                aria-label="Add Product to your watch list"
+                            >
+                                <i class="bi bi-eye-slash px-1" aria-hidden="true"></i>
+                                Unwatch
+                            </a>
+                        <?php endif ?>
                     <?php endif ?>
                 </div>
-            </form>
+            
             <div class="d-grid gap-2 d-md-block">
                 <?php if ($is_shop_owner) : ?>
                     <a class="btn btn-secondary" href="/product/edit/<?= esc($product['id']) ?>">Edit Product</a>

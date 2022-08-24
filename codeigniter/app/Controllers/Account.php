@@ -139,8 +139,14 @@ class Account extends AppBaseController
     public function watchlist() {
         if (!$this->loggedIn()) return redirect()->to('/account/login');
 
+        /** @var \App\Models\WatchlistModel */
+        $watchlistModel = model(WatchlistModel::class);
+        $watchlist = $watchlistModel->getUserWatchlist($this->getCurrentUserId());
+
+
         $templateParams = $this->getUserTemplateParams();
         $templateParams['page'] = 'watchlist';
+        $templateParams['watchlist'] = $watchlist;
 
         return view('templates/header')
             . view('templates/top_bar', $templateParams)
