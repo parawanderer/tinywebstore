@@ -3,7 +3,6 @@
     overflow: hidden;
 }
 
-
 .shop-banner-edit {
     height: 9rem;
     overflow: hidden;
@@ -65,4 +64,26 @@
     width: 100%;
     height: 85vh;
     overflow: hidden;
+}
+
+
+/* manager */
+.inventory-thumbnail {
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+}
+
+/* product */
+
+.product-img-current {
+    width: 25rem;
+    height: 20rem;
+    object-fit: contain;
+}
+
+.product-img-thumb {
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
 }

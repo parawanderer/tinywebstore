@@ -20,6 +20,19 @@ class ContrastRatioChecker {
         return $ratio < 1/4.5;
     }
 
+    public static function getDarkerColor(string $hex1, string $hex2) {
+        if (!$hex1 && !$hex2) return null;
+        if (!$hex1 || !$hex2) return null;
+
+        $rgb1 = ContrastRatioChecker::getRGB($hex1);
+        $lum1 = ContrastRatioChecker::getLuminance($rgb1);
+
+        $rgb2 = ContrastRatioChecker::getRGB($hex2);
+        $lum2 = ContrastRatioChecker::getLuminance($rgb2);
+
+        return $lum1 < $lum2 ? $hex1 : $hex2;
+    }
+
     private static function getLuminance(array $rgb) {
         $results = [0, 0, 0];
 

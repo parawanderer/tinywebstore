@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Helpers\HtmlSanitizer;
 use App\Helpers\ContrastRatioChecker;
 use App\Helpers\FFMPregHelper;
+use App\Models\ProductModel;
+use App\Models\ReviewModel;
 use App\Models\ShopMediaModel;
 use App\Models\ShopModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -31,9 +33,17 @@ class Shop extends AppBaseController
 
         $media = $mediaModel->getForShop($shopId);
 
+        /** @var \App\Models\ProductModel */
+        $productModel = model(ProductModel::class);
+        $products = $productModel->getForShop($shopId, 8);
+
         $templateParams['owns_shop'] = $this->ownsShop($shop['id']);
         $templateParams['shop'] = $shop;
         $templateParams['description_safe'] = HtmlSanitizer::sanitize($shop['description']);
+        $templateParams['icon_color'] = ContrastRatioChecker::getDarkerColor($shop['font_color'], $shop['theme_color']);
+
+        $templateParams['products'] = $products;
+
         $templateParams['media'] = $media;
 
         return view('templates/header')
@@ -178,6 +188,69 @@ class Shop extends AppBaseController
         throw new Exception("Bad request");
     }
 
+    public function inventory() {
+        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+
+        $ownedShopId = $this->getOwnedShopId();
+
+        /** @var \App\Models\ShopModel */
+        $model = model(ShopModel::class);
+        $shop = $model->getShop($ownedShopId);
+
+
+        /** @var \App\Models\ProductModel */
+        $productModel = model(ProductModel::class);
+        $products = $productModel->getForShop($ownedShopId);
+
+        $templateParams = $this->getUserTemplateParams();
+        $templateParams['shop'] = $shop;
+        $templateParams['page'] = 'inventory';
+        $templateParams['products'] = $products;
+
+        return view('templates/header')
+            . view('templates/top_bar', $templateParams)
+            . view('shop/inventory', $templateParams)
+            . view('templates/footer');
+    }
+
+    public function product(int $productId = -1) {
+        /** @var \App\Models\ProductModel */
+        $model = model(ProductModel::class);
+        $product = $model->getById($productId);
+
+        if (!$product) throw new PageNotFoundException("Product does not exist");
+        /** @var \App\Models\ShopModel */
+        $shopModel = model(ShopModel::class);
+        $shop = $shopModel->getShop($product['shop_id']);
+
+
+        /** @var \App\Models\ReviewModel */
+        $reviewModel = model(ReviewModel::class);
+        $reviews = $reviewModel->getForProduct($productId);
+
+
+        $templateParams = $this->getUserTemplateParams();
+        $templateParams['shop'] = $shop;
+        $templateParams['product'] = $product;
+        $templateParams['reviews'] = $reviews;
+        $templateParams['description_safe'] = HtmlSanitizer::sanitize($product['description']);
+        $templateParams['is_shop_owner'] = $this->ownsShop($product['shop_id']);
+        $templateParams['average_score'] = Shop::getAverageScore($reviews);
+
+        return view('templates/header')
+            . view('templates/top_bar', $templateParams)
+            . view('product/view', $templateParams)
+            . view('templates/footer');
+    }
+
+    public function productCreateEdit() {
+        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+
+
+    }
+
     private function handleSaveThumbnail(UploadedFile $file, string $mediaFileId) {
         $thumbnailName = Shop::getVideoThumnailPath($mediaFileId);
         FFMPregHelper::saveThumbnail( $file->getPathname(), $thumbnailName);
@@ -238,5 +311,16 @@ class Shop extends AppBaseController
 
     private static function getVideoThumnailPath(string $fileName) {
         return ROOTPATH . "public/uploads/" . ShopMediaModel::SHOP_MEDIA_PATH . substr($fileName, 0, strrpos($fileName, ".")) . ".jpg";
+    }
+
+    private static function getAverageScore(array &$reviews) {
+        if (count($reviews) === 0) return 0;
+
+        $total = 0;
+        foreach($reviews as &$review) {
+            $total += $review['rating'];
+        }
+
+        return $total / count($reviews);
     }
 }

@@ -8,6 +8,10 @@
     background-color: var(--indigo-muted);
 }
 
+.color-indigo {
+    color: var(--bs-indigo);
+}
+
 .bg-indigo-bright {
     background-color: var(--bs-indigo);
 }

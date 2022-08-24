@@ -18,7 +18,9 @@ class HtmlSanitizer {
         return HtmlSanitizer::$purifier;
     }
 
-    public static function sanitize(string $html) {
+    public static function sanitize(string|null $html) {
+        if (!$html) return $html;
+        
         return HtmlSanitizer::getPurifier()->purify($html);
     }
 

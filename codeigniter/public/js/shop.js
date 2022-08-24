@@ -36,8 +36,6 @@ for (var i = 0; i < mediaItemContainers.length; ++i) {
         const clickedImage = container.getElementsByClassName("media-item-img")[0];
 
         if (container.dataset.isVideo) {
-            console.log("Video!", container.dataset.id);
-
             mediaViewImage.style.display = 'none';
             mediaViewVideo.style.display = '';
 

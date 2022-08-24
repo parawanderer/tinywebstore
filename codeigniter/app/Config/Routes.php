@@ -60,6 +60,9 @@ $routes->get('shop/edit', 'Shop::edit');
 $routes->post('shop/edit', 'Shop::edit');
 $routes->post('shop/media/delete', 'Shop::deleteMedia');
 $routes->post('shop/media/add', 'Shop::addMedia');
+$routes->get('shop/inventory', 'Shop::inventory');
+
+$routes->get('product/(:num)', 'Shop::product/$1');
 
 /*
  * --------------------------------------------------------------------

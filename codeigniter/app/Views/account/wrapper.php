@@ -12,9 +12,15 @@
         </li>
         <?php if ($user['has_shop']): ?>
             <li class="<?= $page === 'shop' ? 'nav-item' : '' ?> fs-6">
-                <a href="<?= esc($user['shop_url']) ?>" class="nav-link <?= $page === 'shop' ? 'active' : 'link-dark' ?>">
+                <a href="<?= esc($user['shop_url']) ?>" class="nav-link link-dark">
                 <i class="bi bi-shop fs-5" aria-hidden="true"></i>
                 Shop (<?= esc($user['shop_name']) ?>)
+                </a>
+            </li>
+            <li class="<?= $page === 'shop' ? 'nav-item' : '' ?> fs-6">
+                <a href="/shop/inventory" class="nav-link <?= $page === 'inventory' ? 'active' : 'link-dark' ?>">
+                <i class="bi bi-boxes fs-5" aria-hidden="true"></i>
+                Shop Inventory
                 </a>
             </li>
         <?php endif ?> 
