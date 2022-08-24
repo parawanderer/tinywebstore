@@ -87,3 +87,25 @@
     height: 5rem;
     object-fit: cover;
 }
+
+.product-media-select {
+    width: 25rem;
+}
+
+.thumbnail-product-media-select {
+    height: 4.5rem !important;
+}
+
+.thumbnail-product-media-select .card-img-top {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.desc-container h1 {
+    font-size: 2em;
+}
+
+.desc-container h2 {
+    font-size: 1.25em;
+}

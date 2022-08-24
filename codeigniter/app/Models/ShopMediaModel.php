@@ -14,14 +14,39 @@ class ShopMediaModel extends Model
         'id',
         'shop_id',
         'mimetype',
-        'created'
+        'created',
+        "product_id",
     ];
 
     public function getForShop(int $shopId) {
-        $results = $this->where(["shop_id" => $shopId])->findAll(20);
-        ShopMediaModel::updateExtraInfo($results);
+        $results = $this->where([
+            "shop_id" => $shopId, 
+            "product_id" => null
+            ])
+            ->findAll(20);
 
+        ShopMediaModel::updateExtraInfo($results);
         return $results;
+    }
+
+    public function getForProduct(int $productId, int $limit = 20) {
+        $results = $this->where([
+            "product_id" => $productId
+            ])
+            ->findAll($limit);
+
+        ShopMediaModel::updateExtraInfo($results);
+        return $results;
+    }
+
+    public function getOneForProduct(int $productId) {
+        $result = $this->getForProduct($productId, 1);
+
+        if (count($result) > 0) {
+            return $result[0];
+        }
+        
+        return null;
     }
 
     public function getById(string $mediaId) {
@@ -32,11 +57,12 @@ class ShopMediaModel extends Model
         return $this->delete($mediaId);
     }
 
-    public function addForShop(string $mediaId, string $mimeType, int $shopId) {
+    public function addForShop(string $mediaId, string $mimeType, int $shopId, int $productId = null) {
         return $this->insert([
             "id" => $mediaId,
             "mimetype" => $mimeType,
             "shop_id" => $shopId,
+            "product_id" => $productId,
             "created" => date('Y-m-d H:i:s')
         ]);
     }

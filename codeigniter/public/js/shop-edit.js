@@ -74,6 +74,7 @@ form.addEventListener('submit', function (event) {
 
 });
 
+
 const descriptionInput = document.getElementById("description");
 
 const htmlEditor = pell.init({

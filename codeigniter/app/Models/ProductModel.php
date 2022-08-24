@@ -14,11 +14,16 @@ class ProductModel extends Model
         'title',
         'price',
         'availability',
-        'main_media'
+        'main_media',
+        'description'
     ];
 
     public function getForShop(int $shopId, int $limit = 200) {
         return $this->where(["shop_id" => $shopId])->findAll($limit);
+    }
+
+    public function getForShopExcluding(int $shopId, array $excludeIds, int $limit = 200) {
+        return $this->where(["shop_id" => $shopId])->whereNotIn("id", $excludeIds)->findAll($limit);
     }
 
     public function getById(int $productId) {

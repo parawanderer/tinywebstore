@@ -78,9 +78,18 @@
             <div class="row row-cols-1 row-cols-md-4 g-4">
                 <?php foreach ($media as $mediaItem) : ?>
                     <div class="col">
-                        <a class="media-item-clickable" data-is-video="<?= esc($mediaItem['is_video']) ?>" data-id="/uploads/shop/media/<?= esc($mediaItem['id']) ?>" data-poster="<?= esc('/uploads/shop/media/' . $mediaItem['thumbnail_id']) ?>">
+                        <a 
+                            class="media-item-clickable" 
+                            data-is-video="<?= esc($mediaItem['is_video']) ?>" 
+                            data-id="/uploads/shop/media/<?= esc($mediaItem['id']) ?>" 
+                            data-poster="<?= esc('/uploads/shop/media/' . $mediaItem['thumbnail_id']) ?>"
+                        >
                             <div class="card h-100 media-item-container">
-                                <img src="/uploads/shop/media/<?= esc($mediaItem['is_video'] ? $mediaItem['thumbnail_id'] : $mediaItem['id']) ?>" class="card-img-top media-item-img" alt="Shop uploaded media item">
+                                <img 
+                                    src="/uploads/shop/media/<?= esc($mediaItem['is_video'] ? $mediaItem['thumbnail_id'] : $mediaItem['id']) ?>" 
+                                    class="card-img-top media-item-img" 
+                                    alt="Shop uploaded media item"
+                                >
 
                                 <?php if ($logged_in && $owns_shop) : ?>
                                     <div class="card-img-overlay d-flex flex-row-reverse">
@@ -148,8 +157,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Are you sure that you'd like to delete this image?</p>
-                <img src="/img/pillows.jpg" alt="Image Being Deleted" class="image-popup-img" id="deletePreviewImage">
+                <p>Are you sure that you'd like to delete this media?</p>
+                <img src="" alt="Image Being Deleted" class="image-popup-img" id="deletePreviewImage">
             </div>
             <div class="modal-footer">
                 <form method="post" action="/shop/media/delete">
@@ -173,7 +182,7 @@
             </div>
             <form method="post" action="/shop/media/add" enctype="multipart/form-data">
                 <?= csrf_field() ?>
-                <div class="modal-body">
+                <div class="modal-body mx-2">
                     <p>Media to add to your store</p>
                     <div class="row">
                         <input class="form-control" type="file" id="mediaFile" name="mediaFile">

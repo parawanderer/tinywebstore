@@ -5,9 +5,20 @@
 <link rel="stylesheet" href="/css/shop.css">
 
 <div class="container px-4">
-    <h1>Inventory</h1>
-    <p class="text-muted fs-5">Inventory for <?= esc($shop['name']) ?></p>
-    <br />
+    <div class="row mb-3">
+        <div class="container d-flex justify-content-between">
+            <div>
+                <h1>Inventory</h1>
+                <p class="text-muted fs-5">Inventory for <?= esc($shop['name']) ?></p>
+            </div>    
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a href="/product/create" class="align-self-end btn btn-primary btn-lg bg-indigo" >
+                    Add New
+                </a>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col">
             <table class="table">

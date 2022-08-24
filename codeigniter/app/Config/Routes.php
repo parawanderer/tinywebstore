@@ -63,6 +63,12 @@ $routes->post('shop/media/add', 'Shop::addMedia');
 $routes->get('shop/inventory', 'Shop::inventory');
 
 $routes->get('product/(:num)', 'Shop::product/$1');
+$routes->get('product/edit/(:num)', 'Shop::productCreateEdit/$1');
+$routes->post('product/edit/(:num)', 'Shop::productCreateEdit/$1');
+$routes->post('product/media/(:num)', 'Shop::productAddMedia/$1');
+$routes->post('product/media/(:num)/delete', 'Shop::productDeleteMedia/$1');
+$routes->get('product/create', 'Shop::productCreateEdit');
+$routes->post('product/create', 'Shop::productCreateEdit');
 
 /*
  * --------------------------------------------------------------------

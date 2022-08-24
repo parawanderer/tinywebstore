@@ -2,10 +2,15 @@
     --indigo-muted: #6351ce;
     --indigo-dark : #5000d2;
     --line-light: #f0f3f6;
+    --grey-light: #dadada;
 }
 
 .bg-indigo {
     background-color: var(--indigo-muted);
+}
+
+.bg-grey-light {
+    background-color: var(--grey-light);
 }
 
 .color-indigo {
@@ -14,6 +19,10 @@
 
 .bg-indigo-bright {
     background-color: var(--bs-indigo);
+}
+
+.border-indigo {
+    border-color: var(--bs-indigo);
 }
 
 .btn.bg-indigo {
@@ -96,4 +105,14 @@
 
 .store-icon {
     margin-right: 0.5em;
+}
+
+/* Util */
+
+.pell-content h1 {
+    font-size: 2rem;
+}
+
+.pell-content h2 {
+    font-size: 1.25rem;
 }
