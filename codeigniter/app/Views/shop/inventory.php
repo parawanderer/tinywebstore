@@ -8,7 +8,7 @@
     <div class="row mb-3">
         <div class="container d-flex justify-content-between">
             <div>
-                <h1>Inventory</h1>
+                <h1>Inventory (<?= count($products) ?>)</h1>
                 <p class="text-muted fs-5">Inventory for <?= esc($shop['name']) ?></p>
             </div>    
 
@@ -36,9 +36,15 @@
                     <?php foreach ($products as $product): ?>
                     <tr>
                         <th scope="row">
-                            <a href="/product/<?= esc($product['id']) ?>">
-                                <img src="/img/pillows.jpg" class="img-thumbnail inventory-thumbnail" alt="Image thumbnail">
-                            </a>
+                            <?php if ($product['media_thumbnail_id']): ?>
+                                <a href="/product/<?= esc($product['id']) ?>">
+                                    <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="img-thumbnail inventory-thumbnail" alt="Image thumbnail">
+                                </a>
+                            <?php else: ?>
+                                <div class="rounded float-start bg-grey-light d-flex justify-content-center inventory-thumbnail">
+                                    <i class="bi bi-image text-white fs-1 align-self-center"></i>
+                                </div>
+                            <?php endif ?>
                         </th>
                         <th>
                             <a href="/product/<?= esc($product['id']) ?>" class="text-decoration-none text-reset">
@@ -48,7 +54,7 @@
                         <td>€ <?= esc($product['price']) ?></td>
                         <td><?= esc($product['availability']) ?></td>
                         <td>
-                            <?php if ($product['availability'] === 0): ?>
+                            <?php if ($product['availability'] == 0): ?>
                                 <span class="badge rounded-pill bg-secondary">Out of Stock</span>
                             <?php else: ?>
                                 <span class="badge rounded-pill bg-indigo">Available</span>
@@ -59,7 +65,7 @@
                                 <i class="bi bi-pencil-fill" aria-hidden="true"></i>
                                 Edit
                             </a>
-                            <a class="btn btn-primary bg-indigo" href="/product/delete/<?= esc($product['id']) ?>" role="button">
+                            <a class="btn btn-primary bg-indigo product-delete-button" data-id="<?= esc($product['id'], 'attr') ?>" data-product-name="<?= esc($product['title'], 'attr') ?>" href="#" role="button">
                                 <i class="bi bi-trash3-fill" aria-hidden="true"></i>
                                 Delete
                             </a>
@@ -72,4 +78,29 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteProductModalLabel">Delete Product ""</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure that you'd like to delete this product? This action cannot be reversed.</p>
+            </div>
+            <div class="modal-footer">
+                <form method="post" action="/product/delete" id="productDeleteForm">
+                    <?= csrf_field() ?>
+                    <input type="hidden" value="" id="deleteProductInput" name="deleteProductId">
+                    <button type="submit" class="btn btn-secondary" id="productDeleteButton">Delete Product</button>
+                </form>
+                <button type="button" class="btn btn-primary bg-indigo" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/inventory.js"></script>
+
 <?= $this->endSection() ?>

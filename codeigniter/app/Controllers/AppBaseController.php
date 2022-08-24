@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\ProductModel;
+
 class AppBaseController extends BaseController
 {
     protected function getUserTemplateParams() {
@@ -13,6 +15,8 @@ class AppBaseController extends BaseController
             $ownShopUrl = "/shop/{$session->get('shop_id')}";
         }
 
+        $cart = $this->buildCart();
+
         $params = [ 
             'logged_in' => !!$session->get('username'),
             'user' => [
@@ -23,6 +27,7 @@ class AppBaseController extends BaseController
                 'shop_name' => $session->get('shop_name'),
                 'shop_url' => $ownShopUrl
             ],
+            'cart' => $cart
         ];
 
         return $params;
@@ -50,5 +55,25 @@ class AppBaseController extends BaseController
     protected function getOwnedShopId() {
         $session = \Config\Services::session();
         return $session->get('shop_id');
+    }
+    
+    private function buildCart() {
+        $session = \Config\Services::session();
+
+        $cart = $session->get("cart") ?? [];
+
+        if (count($cart) === 0) {
+            return $cart;
+        }
+        
+        /** @var \App\Models\ProductModel */
+        $productModel = model(ProductModel::class);
+        $products = $productModel->getProductsByIds(array_keys($cart));
+        
+        foreach($products as &$product) {
+            $product['quantity'] = $cart[$product['id']];
+        }
+
+        return $products;
     }
 }

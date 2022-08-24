@@ -287,6 +287,41 @@ class Shop extends AppBaseController
             . view('templates/footer');
     }
 
+    public function productDelete() {
+        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+
+        $validationRules = [
+            'deleteProductId' => 'required|integer',
+        ];
+
+        if ($this->validate($validationRules)) {
+            $deleteId = $this->request->getPost("deleteProductId");
+
+            /** @var \App\Models\ProductModel */
+            $productModel = model(ProductModel::class);
+
+            $product = $productModel->getById($deleteId);
+
+            if (!$product) throw new PageNotFoundException("Product does ot exist");
+            if ($product['shop_id'] != $this->getOwnedShopId()) throw new Exception("No access");
+
+            // delete it and all its linked resources....
+            // media + product (not watchlist, purchases)
+
+            /** @var \App\Models\ShopMediaModel */
+            $mediaModel = model(ShopMediaModel::class);
+
+            $media = $mediaModel->getForProduct($deleteId);
+            $this->deleteMediaForProduct($media);
+            $productModel->deleteCascase($deleteId);
+
+            return redirect()->to("/shop/inventory");
+        }
+
+        throw new Exception("Bad request");
+    }
+
     public function productAddMedia(int $productId = -1) {
         if (!$this->loggedIn()) throw new Exception("No access");
         if (!$this->isShopOwner()) throw new Exception("No access");
@@ -417,12 +452,7 @@ class Shop extends AppBaseController
             }
 
             $model->deleteById($mediaId);
-
-            unlink(ROOTPATH . "public/uploads/" . ShopMediaModel::SHOP_MEDIA_PATH . $media['id']);
-            if (Shop::isVideoType($media['mimetype'])) {
-                $thumbnailName = Shop::getVideoThumnailPath($mediaId);
-                unlink($thumbnailName);
-            }
+            $this->deleteSingularMediaFiles($media);
 
             return $media;
         }
@@ -482,6 +512,20 @@ class Shop extends AppBaseController
         }
 
         return [$shopLogoName, $shopBannerName];
+    }
+
+    private function deleteMediaForProduct(array &$media) {
+        foreach($media as &$mediaEntry) {
+            $this->deleteSingularMediaFiles($mediaEntry);
+        }
+    }
+
+    private function deleteSingularMediaFiles(array &$mediaItem) {
+        unlink(ROOTPATH . "public/uploads/" . ShopMediaModel::SHOP_MEDIA_PATH . $mediaItem['id']);
+        if (Shop::isVideoType($mediaItem['mimetype'])) {
+            $thumbnailName = Shop::getVideoThumnailPath($mediaItem['id']);
+            unlink($thumbnailName);
+        }
     }
 
     private static function isVideoType(string $mimeType) {

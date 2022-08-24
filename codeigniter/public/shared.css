@@ -107,6 +107,32 @@
     margin-right: 0.5em;
 }
 
+.img-thumb-xs {
+    height: 3rem;
+    width: 3rem;
+    object-fit: cover;
+}
+
+.img-thumb-s {
+    height: 5rem;
+    width: 5rem;
+    object-fit: cover;
+}
+
+.img-thumb-m {
+    height: 8rem;
+    width: 8rem;
+    object-fit: cover;
+}
+
+.cart-dropdown {
+    width: 22rem;
+}
+
+.cart-dropdown > li:nth-last-child(3) > .container > .border-bottom {
+    border : 0 !important;
+}
+
 /* Util */
 
 .pell-content h1 {

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Exception;
 
 class ShopMediaModel extends Model
 {
@@ -29,11 +30,17 @@ class ShopMediaModel extends Model
         return $results;
     }
 
-    public function getForProduct(int $productId, int $limit = 20) {
-        $results = $this->where([
+    public function getForProduct(int $productId, ?int $limit = 20) {
+        $query = $this->where([
             "product_id" => $productId
-            ])
-            ->findAll($limit);
+        ]);
+        $results = null;
+
+        if ($limit !== null) {
+            $results = $query->findAll($limit);
+        } else {
+            $results = $query->findAll();
+        }
 
         ShopMediaModel::updateExtraInfo($results);
         return $results;
@@ -78,8 +85,6 @@ class ShopMediaModel extends Model
 
     public static function getThumbnailInfo(?string $mediaItemId, ?string $mimeType) {
         $isVideo = $mimeType === 'video/mp4'; // only mp4 supported in this project
-
-        $isVideo = false;
         $thumbnailId = null;
 
         if ($isVideo) {

@@ -79,46 +79,52 @@
                     € <?= esc($product['price']) ?>
                 </h3>
             </div>
+            
+            <form action="/cart/add" method="post">
+                <?= csrf_field() ?>
+                
+                <input type="hidden" value="<?= esc($product['id'], 'attr') ?>" name="productId" />
 
-            <div class="d-grid gap-2 d-md-block py-2">
-                <div class="row pb-4">
-                    <div class="col col-lg-4">
-                        <label for="productQuantity" class="pb-2">Quantity</label>
-                        <?php if ($product['availability'] > 0) : ?>
-                            <select class="form-select" aria-label="Select Product Quantity" id="productQuantity" name="productQuantity">
-                                <option value="1" selected>1</option>
-                                <?php if ($product['availability'] > 1) : ?>
-                                    <option value="2">2</option>
-                                <?php endif ?>
-                                <?php if ($product['availability'] > 2) : ?>
-                                    <option value="3">3</option>
-                                <?php endif ?>
-                                <?php if ($product['availability'] > 3) : ?>
-                                    <option value="4">4</option>
-                                <?php endif ?>
-                                <?php if ($product['availability'] > 4) : ?>
-                                    <option value="5">5</option>
-                                <?php endif ?>
-                            </select>
-                        <?php else : ?>
-                            <select class="form-select" aria-label="Select Count" id="productQuantity" name="productQuantity" aria-label="Product out of stock" disabled>
-                                <option selected>Product out of Stock</option>
-                            </select>
-                        <?php endif ?>
+                <div class="d-grid gap-2 d-md-block py-2">
+                    <div class="row pb-4">
+                        <div class="col col-lg-4">
+                            <label for="productQuantity" class="pb-2">Quantity</label>
+                            <?php if ($product['availability'] > 0) : ?>
+                                <select class="form-select" aria-label="Select Product Quantity" id="productQuantity" name="productQuantity">
+                                    <option value="1" selected>1</option>
+                                    <?php if ($product['availability'] > 1) : ?>
+                                        <option value="2">2</option>
+                                    <?php endif ?>
+                                    <?php if ($product['availability'] > 2) : ?>
+                                        <option value="3">3</option>
+                                    <?php endif ?>
+                                    <?php if ($product['availability'] > 3) : ?>
+                                        <option value="4">4</option>
+                                    <?php endif ?>
+                                    <?php if ($product['availability'] > 4) : ?>
+                                        <option value="5">5</option>
+                                    <?php endif ?>
+                                </select>
+                            <?php else : ?>
+                                <select class="form-select" aria-label="Select Count" id="productQuantity" name="productQuantity" aria-label="Product out of stock" disabled>
+                                    <option selected>Product out of Stock</option>
+                                </select>
+                            <?php endif ?>
+                        </div>
                     </div>
-                </div>
 
-                <button type="button" class="btn btn-lg btn-primary bg-indigo" <?= $product['availability'] == 0 ? 'disabled' : '' ?>>
-                    <i class="bi bi-basket px-1" aria-hidden="true"></i>
-                    Add To Cart
-                </button>
-                <?php if ($logged_in) : ?>
-                    <button type="button" class="btn btn-lg btn-secondary" aria-label="Add Product to your watch list">
-                        <i class="bi bi-eye px-1" aria-hidden="true"></i>
-                        Watch
+                    <button type="submit" class="btn btn-lg btn-primary bg-indigo" <?= $product['availability'] == 0 ? 'disabled' : '' ?>>
+                        <i class="bi bi-basket px-1" aria-hidden="true"></i>
+                        Add To Cart
                     </button>
-                <?php endif ?>
-            </div>
+                    <?php if ($logged_in) : ?>
+                        <button type="button" class="btn btn-lg btn-secondary" aria-label="Add Product to your watch list">
+                            <i class="bi bi-eye px-1" aria-hidden="true"></i>
+                            Watch
+                        </button>
+                    <?php endif ?>
+                </div>
+            </form>
             <div class="d-grid gap-2 d-md-block">
                 <?php if ($is_shop_owner) : ?>
                     <a class="btn btn-secondary" href="/product/edit/<?= esc($product['id']) ?>">Edit Product</a>

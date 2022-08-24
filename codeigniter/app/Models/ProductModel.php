@@ -41,8 +41,25 @@ class ProductModel extends Model
         return $result;
     }
 
+    public function getProductsByIds(array $itemIds) {
+        $result = $this->select("product.id, product.shop_id, product.title, product.price, product.availability, product.main_media, product.description, shop_media.mimetype as media_mimetype")
+                ->join('shop_media', 'product.main_media = shop_media.id', 'left')
+                ->whereIn("product.id", $itemIds)
+                ->findAll();
+        
+        ProductModel::updateMediaInfo($result);
+
+        return $result;
+    }
+
     public function getById(int $productId) {
         return $this->where(["id" => $productId])->first();
+    }
+
+    public function deleteCascase(int $productId) {
+        // delete media items for product
+        $this->db->table("shop_media")->delete(["product_id" => $productId]);
+        return $this->delete($productId);
     }
 
     private static function updateMediaInfo(array &$products) {

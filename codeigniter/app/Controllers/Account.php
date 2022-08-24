@@ -148,7 +148,6 @@ class Account extends AppBaseController
             . view('templates/footer');
     }
 
-
     public function messages() {
         if (!$this->loggedIn()) return redirect()->to('/account/login');
 

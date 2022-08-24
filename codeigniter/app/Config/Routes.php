@@ -62,13 +62,21 @@ $routes->post('shop/media/delete', 'Shop::deleteMedia');
 $routes->post('shop/media/add', 'Shop::addMedia');
 $routes->get('shop/inventory', 'Shop::inventory');
 
+// product
 $routes->get('product/(:num)', 'Shop::product/$1');
 $routes->get('product/edit/(:num)', 'Shop::productCreateEdit/$1');
 $routes->post('product/edit/(:num)', 'Shop::productCreateEdit/$1');
-$routes->post('product/media/(:num)', 'Shop::productAddMedia/$1');
-$routes->post('product/media/(:num)/delete', 'Shop::productDeleteMedia/$1');
+$routes->post('product/delete', 'Shop::productDelete');
 $routes->get('product/create', 'Shop::productCreateEdit');
 $routes->post('product/create', 'Shop::productCreateEdit');
+$routes->post('product/media/(:num)', 'Shop::productAddMedia/$1');
+$routes->post('product/media/(:num)/delete', 'Shop::productDeleteMedia/$1');
+
+
+//cart
+$routes->get('cart', 'Cart::index');
+$routes->post('cart/add', 'Cart::add');
+$routes->get('cart/remove/(:num)', 'Cart::remove/$1');
 
 /*
  * --------------------------------------------------------------------
