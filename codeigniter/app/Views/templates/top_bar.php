@@ -78,7 +78,9 @@
                         <li><a class="dropdown-item" href="/account"><i class="bi bi-person" aria-hidden="true"></i> Account</a></li>
                         <?php if ($user['has_shop']) : ?>
                             <li><a class="dropdown-item" href="<?= esc($user['shop_url']) ?>"><i class="bi bi-shop" aria-hidden="true"></i> Shop (<?= esc($user['shop_name']) ?>)</a></li>
+                            <li><a class="dropdown-item" href="/shop/stats"><i class="bi bi-bar-chart-line" aria-hidden="true"></i> Shop Stats</a></li>
                             <li><a class="dropdown-item" href="/shop/inventory"><i class="bi bi-boxes" aria-hidden="true"></i> Shop Inventory</a></li>
+                            <li><a class="dropdown-item" href="/shop/orders"><i class="bi bi-boxes" aria-hidden="true"></i> Shop Orders</a></li>
                         <?php endif ?>
                         <li><a class="dropdown-item" href="/account/orders"><i class="bi bi-receipt" aria-hidden="true"></i> Your Orders</a></li>
                         <li><a class="dropdown-item" href="/account/watchlist"><i class="bi bi-eye" aria-hidden="true"></i> Watchlist</a></li>

@@ -53,7 +53,7 @@
                             <?php if ($owns_shop) : ?>
                                 <a href="/shop/edit" class="btn btn-primary bg-indigo" style="<?= $shop['font_color'] ? "background-color: {$shop['font_color']}; border-color: {$shop['font_color']}; " : '' ?> <?= $shop['theme_color'] ? "color: {$shop['theme_color']}; " : '' ?>">Edit Shop</a>
                                 <a href="/shop/inventory" class="btn btn-primary bg-indigo" style="<?= $shop['font_color'] ? "background-color: {$shop['font_color']}; border-color: {$shop['font_color']}; " : '' ?> <?= $shop['theme_color'] ? "color: {$shop['theme_color']}; " : '' ?>">View Inventory</a>
-                            <?php else : ?>
+                            <?php elseif(!$user['has_shop']) : ?>
                                 <a href="/message?to=<?= esc($shop['id']) ?>" class="btn btn-primary bg-indigo" style="<?= $shop['font_color'] ? "background-color: {$shop['font_color']}; border-color: {$shop['font_color']}; " : '' ?> <?= $shop['theme_color'] ? "color: {$shop['theme_color']}; " : '' ?>">Contact Shop</a>
                             <?php endif ?>
                         </div>

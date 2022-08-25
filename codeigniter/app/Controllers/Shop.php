@@ -167,6 +167,115 @@ class Shop extends AppBaseController
             . view('templates/footer');
     }
 
+    public function orders() {
+        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+
+        $ownedShopId = $this->getOwnedShopId();
+
+        /** @var \App\Models\ShopModel */
+        $model = model(ShopModel::class);
+        $shop = $model->getShop($ownedShopId);
+
+        /** @var \App\Models\OrderModel */
+        $orderModel = model(OrderModel::class);
+        $latestOrders = $orderModel->getLatestOrdersForShop($ownedShopId, 50);
+
+
+        $templateParams = $this->getUserTemplateParams();
+        $templateParams['shop'] = $shop;
+        $templateParams['orders'] = $latestOrders;
+        $templateParams['page'] = 'shop-orders';
+
+        return view('templates/header')
+            . view('templates/top_bar', $templateParams)
+            . view('shop/orders', $templateParams)
+            . view('templates/footer');
+
+    }
+
+    public function order(int $orderId = -1) {
+        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+
+        $ownedShopId = $this->getOwnedShopId();
+
+        /** @var \App\Models\ShopModel */
+        $model = model(ShopModel::class);
+        $shop = $model->getShop($ownedShopId);
+
+        /** @var \App\Models\OrderModel */
+        $orderModel = model(OrderModel::class);
+        $filteredOrderDetails = $orderModel->getOrderDetailsForShop($ownedShopId, $orderId);
+
+        if (!$filteredOrderDetails || count($filteredOrderDetails) === 0)
+            throw new Exception("Bad request");
+
+        
+        $templateParams = $this->getUserTemplateParams();
+        $templateParams['shop'] = $shop;
+        $templateParams['order'] = $filteredOrderDetails;
+        $templateParams['page'] = 'shop-orders';
+
+        return view('templates/header')
+            . view('templates/top_bar', $templateParams)
+            . view('shop/order', $templateParams)
+            . view('templates/footer');
+    }
+
+    public function completeOrder() {
+        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+
+        if (!$this->validate(['orderId' => "required|integer"])) 
+            throw new Exception("Bad request");
+
+        $orderId = $this->request->getPost("orderId");
+        $ownedShopId = $this->getOwnedShopId();
+
+        /** @var \App\Models\OrderModel */
+        $orderModel = model(OrderModel::class);
+        $orderDetails = $orderModel->getOrderDetails($orderId);
+
+        // already complete
+        if ($orderDetails['status'] == OrderModel::STATUS_COMPLETE)
+            throw new Exception("Bad request");
+
+        // validate we even have any order belonging to this shop in this list?
+        if (!Shop::validateOwnsAnyOrderEntries($orderDetails, $ownedShopId))
+            throw new PageNotFoundException("Order does not exist");
+
+        // assuming we do, we could just override the ones belonging to us.
+        // we do want to see however if updating this order will result in the order going 
+        // into the completed state
+        [$completing, $updateStatus] = Shop::getCompletionDetails($orderDetails, $ownedShopId);
+
+        $orderModel->updateStoreOrderCompletion($orderId, $completing, $updateStatus);
+
+        return redirect()->to("/shop/order/{$orderId}");
+    }
+
+    private static function getCompletionDetails(array &$orderDetails, int $shopId) {
+        $completing = [];
+        $incompleteBesidesOurs = 0;
+
+        foreach($orderDetails['entries'] as &$det) {
+            if ($det['shop_id'] == $shopId) $completing[] = $det['id']; // entry id
+
+            if ($det['shop_id'] != $shopId && !$det['completed'])
+                $incompleteBesidesOurs++;
+        }
+
+        return [$completing, $incompleteBesidesOurs === 0];
+    }
+
+    private static function validateOwnsAnyOrderEntries(array &$orderDetails, int $shopId) {
+        foreach($orderDetails['entries'] as &$det) {
+            if ($det['shop_id'] == $shopId) return true;
+        }
+        return false;
+    }
+
     public function product(int $productId = -1) {
         /** @var \App\Models\ProductModel */
         $productModel = model(ProductModel::class);

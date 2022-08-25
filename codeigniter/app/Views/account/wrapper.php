@@ -17,10 +17,22 @@
                 Shop (<?= esc($user['shop_name']) ?>)
                 </a>
             </li>
-            <li class="<?= $page === 'shop' ? 'nav-item' : '' ?> fs-6">
+            <li class="<?= $page === 'stats' ? 'nav-item' : '' ?> fs-6">
+                <a href="/shop/stats" class="nav-link <?= $page === 'stats' ? 'active' : 'link-dark' ?>">
+                <i class="bi bi-bar-chart-line fs-5" aria-hidden="true"></i>
+                Shop Stats
+                </a>
+            </li>
+            <li class="<?= $page === 'inventory' ? 'nav-item' : '' ?> fs-6">
                 <a href="/shop/inventory" class="nav-link <?= $page === 'inventory' ? 'active' : 'link-dark' ?>">
                 <i class="bi bi-boxes fs-5" aria-hidden="true"></i>
                 Shop Inventory
+                </a>
+            </li>
+            <li class="<?= $page === 'shop-orders' ? 'nav-item' : '' ?> fs-6">
+                <a href="/shop/orders" class="nav-link <?= $page === 'shop-orders' ? 'active' : 'link-dark' ?>">
+                <i class="bi bi-boxes fs-5" aria-hidden="true"></i>
+                Shop Orders
                 </a>
             </li>
         <?php endif ?> 

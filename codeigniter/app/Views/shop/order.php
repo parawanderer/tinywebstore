@@ -6,9 +6,9 @@
     <div class="row">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/account/orders">Orders</a></li>
+                <li class="breadcrumb-item"><a href="/shop/orders">Shop Orders</a></li>
                 <li class="breadcrumb-item active" aria-current="Current Order">
-                    Order #<?= esc($order['id']) ?>
+                    Order #<?= esc($order['order_id']) ?>
                 </li>
             </ol>
         </nav>
@@ -16,14 +16,16 @@
     <div class="row">
         <div class="container d-flex justify-content-between mb-3">
             <h1 class="p-0 m-0">
-                Order #<?= esc($order['id']) ?>
+                Order #<?= esc($order['order_id']) ?>
             </h1>
 
-            <?php if ($order['status'] == 0) : ?>
+            <?php if ($order['completed'] == 0 && $order['status'] != 2) : ?>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <form action="/order/<?= esc($order['id']) ?>/cancel">
+                    <form action="/shop/order/complete" method="post">
+                        <?= csrf_field() ?>
+                        <input type="hidden" name="orderId" value="<?= esc($order['order_id']) ?>">
                         <button type="submit" class="align-self-end btn btn-primary btn-lg bg-indigo">
-                            Cancel Order
+                            Complete Order
                         </button>
                     </form>
                 </div>
@@ -35,11 +37,11 @@
                 <div class="d-flex position-relative">
 
                     <?php if ($productDetails['media_thumbnail_id']) : ?>
-                        <a href="/product/<?= esc($productDetails['id']) ?>">
+                        <a href="/product/<?= esc($productDetails['product_id']) ?>">
                             <img src="/uploads/shop/media/<?= esc($productDetails['media_thumbnail_id']) ?>" class="flex-shrink-0 me-3 img-thumb-m rounded" alt="Product Image">
                         </a>
                     <?php elseif (!$productDetails['is_deleted']) : ?>
-                        <a href="/product/<?= esc($productDetails['id']) ?>">
+                        <a href="/product/<?= esc($productDetails['product_id']) ?>">
                             <div class="rounded float-start bg-grey-light d-flex justify-content-center img-thumb-m">
                                 <i class="bi bi-image text-white fs-1 align-self-center"></i>
                             </div>
@@ -52,9 +54,9 @@
 
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-9">
+                            <div class="col">
                                 <h5 class="mt-0">
-                                    <?= esc($productDetails['is_deleted'] ? $productDetails['product_title_backup'] : $productDetails['product_title']) ?>
+                                    <?= esc($productDetails['product_title']) ?>
                                     <?php if ($productDetails['quantity'] > 1) : ?>
                                         <span class="badge rounded-pill bg-secondary">&times; <?= esc($productDetails['quantity']) ?></span>
                                     <?php endif ?>
@@ -69,16 +71,14 @@
                                         </span>
                                     <?php endif ?>
                                 </h5>
-                                <h5 class="color-indigo fw-bold">€ <?= esc($productDetails['price_per_unit'] * $productDetails['quantity']) ?></h5>
-                                <p>Sold by <a href="/shop/<?= esc($productDetails['shop_id']) ?>"><?= esc($productDetails['shop_name']) ?></a></p>
-                            </div>
-                            <div class="col-3 d-flex justify-content-end">
-                                <?php if ($productDetails['completed']) : ?>
-                                    <a href="/product/<?= esc($productDetails['product_id'], 'attr') ?>#reviews" class="btn btn-primary bg-indigo align-self-end mx-2">Leave Review</a>
-                                <?php endif ?>
+                                <h5 class="fw-bold">
+                                    <span class="color-indigo">
+                                        € <?= esc($productDetails['profit_total']) ?>
+                                    </span>
+                                    <span class="text-muted px-2 fs-6">(<?= esc($productDetails['quantity']) ?> &times; € <?= esc($productDetails['price_per_unit']) ?>)</span>
+                                </h5>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
             <div class="row">
                 <div class="col">
                     <h6 class="m-0">Order Number</h6>
-                    <p class="m-0 p-0 pb-2">#<?= esc($order['id']) ?></p>
+                    <p class="m-0 p-0 pb-2">#<?= esc($order['order_id']) ?></p>
                     <h6 class="m-0">Ordered on</h6>
                     <p class="m-0 p-0 pb-2"><?= date("F jS, Y \a\\t G\:i", strtotime($order['created'])) ?></p>
                 </div>
@@ -119,17 +119,17 @@
                     <?php endif ?>
                 </div>
                 <div class="col">
-                    <h6 class="m-0">Cost Total</h6>
+                    <h6 class="m-0">Profit Total</h6>
                     <p class="m-0 p-0 pb-2">
-                        € <?= esc($order['price_total']) ?>
+                        € <?= esc($order['profit']) ?>
                     </p>
                     <h6 class="m-0">Status</h6>
                     <p class="m-0 p-0 pb-2">
-                        <?php if ($order['status'] == 0) : ?>
+                        <?php if ($order['status'] != 2 && $order['completed'] == 0) : ?>
                             <span class="badge rounded-pill bg-warning text-dark">
                                 <i class="bi bi-hourglass-split" aria-hidden="true"></i> Pending
                             </span>
-                        <?php elseif ($order['status'] == 1) : ?>
+                        <?php elseif ($order['completed'] == 1) : ?>
                             <span class="badge rounded-pill bg-indigo">
                                 <i class="bi bi-check-lg" aria-hidden="true"></i> Completed
                             </span>

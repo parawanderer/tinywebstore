@@ -46,6 +46,10 @@ class OrderEntryModel extends Model
         return $result;
     }
 
+    public function completeEntries(array $entryIds) {
+        return $this->set('completed', 1)->whereIn("id", $entryIds)->update();
+    }
+
     private static function updateProductDetails(array &$products) {
         foreach($products as &$product) {
             [ $isVideo, $thumbnailId ] = ShopMediaModel::getThumbnailInfo($product['product_media'], $product['product_media_mimetype']);

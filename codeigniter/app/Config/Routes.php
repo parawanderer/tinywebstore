@@ -66,6 +66,9 @@ $routes->post('shop/edit', 'Shop::edit');
 $routes->post('shop/media/delete', 'Shop::deleteMedia');
 $routes->post('shop/media/add', 'Shop::addMedia');
 $routes->get('shop/inventory', 'Shop::inventory');
+$routes->get('shop/orders', 'Shop::orders');
+$routes->get('shop/order/(:num)', 'Shop::order/$1');
+$routes->post('shop/order/complete', 'Shop::completeOrder');
 
 // product
 $routes->get('product/(:num)', 'Shop::product/$1');
