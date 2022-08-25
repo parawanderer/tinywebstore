@@ -29,6 +29,26 @@ class ProductModel extends Model
         return $result;
     }
 
+    public function getNewest(int $limit = 8) {
+        $result = $this->select("product.id, product.shop_id, product.title, product.price, product.availability, product.main_media, product.description, shop_media.mimetype as media_mimetype")
+            ->join('shop_media', 'product.main_media = shop_media.id', 'left')
+            ->orderBy("product.id", "desc")
+            ->findAll($limit);
+
+        ProductModel::updateMediaInfo($result);
+        return $result;
+    }
+
+    public function nameSearch(string $titleSubstring, int $limit = 8) {
+        $result = $this->select("product.id, product.shop_id, product.title, product.price, product.availability, product.main_media, product.description, shop_media.mimetype as media_mimetype")
+            ->join('shop_media', 'product.main_media = shop_media.id', 'left')
+            ->like('product.title', $titleSubstring)
+            ->findAll($limit);
+
+        ProductModel::updateMediaInfo($result);
+        return $result;
+    }
+
     public function getForShopExcluding(int $shopId, array $excludeIds, int $limit = 200) {
         $result = $this->select("product.id, product.shop_id, product.title, product.price, product.availability, product.main_media, product.description, shop_media.mimetype as media_mimetype")
                 ->join('shop_media', 'product.main_media = shop_media.id', 'left')

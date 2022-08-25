@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark search-bar">
-    <div class="container-fluid">
+    <div class="row w-100">
+    <div class="col-3 d-flex justify-content-start align-items-center">
         <a class="navbar-brand" href="/">
             <i class="bi bi-shop store-icon"></i>
             <span class="fs-4">Web Store</span>
@@ -8,14 +9,19 @@
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
-    <div class="container-fluid">
-        <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+    <div class="col">
+        <form class="d-flex" action="/search" method="get">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Product Name..." aria-label="Product Name" aria-describedby="productSearchButton">
+                <button class="btn search-button btn-light" type="button" id="productSearchButton">
+                    <i class="bi bi-search color-indigo" aria-label="Search Button"></i>
+                </button>
+            </div>
         </form>
     </div>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <div class="col-3">
+    <div class="justify-content-end align-items-center collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
             <li class="nav-item dropdown">
                 <a class="nav-link active" href="#" id="navbarDropdown" role="button" aria-label="Basket" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="account-icon d-inline-flex">
@@ -102,5 +108,7 @@
                 </li>
             <?php endif ?>
         </ul>
+    </div>
+    </div>
     </div>
 </nav>

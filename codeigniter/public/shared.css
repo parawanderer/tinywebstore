@@ -46,7 +46,7 @@
 }
 
 .p-outer-block {
-    padding-top:3rem;
+    padding-top:2rem;
     padding-bottom:3rem;
 }
 
@@ -81,7 +81,7 @@
 
 .navbar.search-bar {
     background-color: var(--bs-indigo);
-    padding: 0.5rem 4rem;
+    padding: 0.5rem 10rem;
 }
 
 .navbar.search-bar .bi {
@@ -137,6 +137,10 @@
 
 .cart-dropdown > li:nth-last-child(3) > .container > .border-bottom {
     border : 0 !important;
+}
+
+.search-button {
+
 }
 
 /* Bootstrap edits */
