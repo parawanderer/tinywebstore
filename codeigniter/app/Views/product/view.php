@@ -22,45 +22,24 @@
 
                 <?php if ($primary_media) : ?>
 
-                    <a  href="#" 
-                        id="primaryMediaContainer" 
-                        class="media-item-clickable"
-                        data-is-video="<?= esc($primary_media['is_video']) ?>" 
-                        data-id="/uploads/shop/media/<?= esc($primary_media['id']) ?>" 
-                        data-poster="<?= esc('/uploads/shop/media/' . $primary_media['thumbnail_id']) ?>"
-                    >
-                        <img 
-                            src="/uploads/shop/media/<?= esc($primary_media['is_video'] ? $primary_media['thumbnail_id'] : $primary_media['id']) ?>" 
-                            class="rounded float-start product-img-current" 
-                            alt="Product Photo" 
-                            id="productMediaMainImage"
-                        >
+                    <a href="#" id="primaryMediaContainer" class="media-item-clickable" data-is-video="<?= esc($primary_media['is_video']) ?>" data-id="/uploads/shop/media/<?= esc($primary_media['id']) ?>" data-poster="<?= esc('/uploads/shop/media/' . $primary_media['thumbnail_id']) ?>">
+                        <img src="/uploads/shop/media/<?= esc($primary_media['is_video'] ? $primary_media['thumbnail_id'] : $primary_media['id']) ?>" class="rounded float-start product-img-current" alt="Product Photo" id="productMediaMainImage">
                     </a>
 
-                <?php else: ?>
+                <?php else : ?>
                     <div class="rounded float-start product-img-current bg-grey-light d-flex justify-content-center">
                         <i class="bi bi-image text-white fs-1 align-self-center"></i>
                     </div>
                 <?php endif ?>
             </div>
-            
+
             <div class="row row-cols-1 row-cols-md-4 g-4 product-media-select pt-4">
                 <?php foreach ($media as $mediaItem) : ?>
 
                     <div class="col">
-                        <a 
-                            href="#" 
-                            class="product-media-selector <?= $primary_media['id'] === $mediaItem['id'] ? 'current-selection' : '' ?> " 
-                            data-is-video="<?= esc($mediaItem['is_video']) ?>" 
-                            data-id="/uploads/shop/media/<?= esc($mediaItem['id']) ?>" 
-                            data-poster="<?= esc('/uploads/shop/media/' . $mediaItem['thumbnail_id']) ?>"
-                        >
-                            <div class="card thumbnail-product-media-select h-100 <?=$primary_media['id'] === $mediaItem['id']  ? 'border-3 border-indigo' : '' ?>">
-                                <img 
-                                    src="/uploads/shop/media/<?= esc($mediaItem['is_video'] ? $mediaItem['thumbnail_id'] : $mediaItem['id']) ?>"
-                                    class="card-img-top product-media-preview-img" 
-                                    alt="Media Open Preview Thumbnail"
-                                />
+                        <a href="#" class="product-media-selector <?= $primary_media['id'] === $mediaItem['id'] ? 'current-selection' : '' ?> " data-is-video="<?= esc($mediaItem['is_video']) ?>" data-id="/uploads/shop/media/<?= esc($mediaItem['id']) ?>" data-poster="<?= esc('/uploads/shop/media/' . $mediaItem['thumbnail_id']) ?>">
+                            <div class="card thumbnail-product-media-select h-100 <?= $primary_media['id'] === $mediaItem['id']  ? 'border-3 border-indigo' : '' ?>">
+                                <img src="/uploads/shop/media/<?= esc($mediaItem['is_video'] ? $mediaItem['thumbnail_id'] : $mediaItem['id']) ?>" class="card-img-top product-media-preview-img" alt="Media Open Preview Thumbnail" />
                             </div>
                         </a>
                     </div>
@@ -88,11 +67,8 @@
                     € <?= esc($product['price']) ?>
                 </h3>
             </div>
-            
-                
 
-                <div class="d-grid gap-2 d-md-block py-2">
-
+            <div class="d-grid gap-2 d-md-block py-2">
                 <form action="/cart/add" method="post">
                     <?= csrf_field() ?>
                     <input type="hidden" value="<?= esc($product['id'], 'attr') ?>" name="productId" />
@@ -130,29 +106,23 @@
                     </button>
 
                     <?php if ($logged_in) : ?>
-                        
-                        <?php if ($product['availability'] == 0 && !$is_watched): ?>
-                            <a 
-                                href="/watch/add/<?= esc($product['id'], 'attr') ?>" 
-                                class="btn btn-lg btn-secondary" 
-                                aria-label="Add Product to your watch list"
-                            >
+
+                        <?php if ($product['availability'] == 0 && !$is_watched) : ?>
+                            <a href="/watch/add/<?= esc($product['id'], 'attr') ?>" class="btn btn-lg btn-secondary" aria-label="Add Product to your watch list">
                                 <i class="bi bi-eye px-1" aria-hidden="true"></i>
                                 Watch
                             </a>
-                        <?php elseif($is_watched): ?> 
-                            <a 
-                                href="/watch/remove/<?= esc($product['id'], 'attr') ?>" 
-                                class="btn btn-lg btn-secondary" 
-                                aria-label="Add Product to your watch list"
-                            >
+                        <?php elseif ($is_watched) : ?>
+                            <a href="/watch/remove/<?= esc($product['id'], 'attr') ?>" class="btn btn-lg btn-secondary" aria-label="Add Product to your watch list">
                                 <i class="bi bi-eye-slash px-1" aria-hidden="true"></i>
                                 Unwatch
                             </a>
                         <?php endif ?>
                     <?php endif ?>
-                </div>
-            
+
+                </form>
+            </div>
+
             <div class="d-grid gap-2 d-md-block">
                 <?php if ($is_shop_owner) : ?>
                     <a class="btn btn-secondary" href="/product/edit/<?= esc($product['id']) ?>">Edit Product</a>
@@ -166,22 +136,22 @@
     <div class="row py-4">
         <div class="col">
             <?php if ($description_safe) : ?>
-            <div class="row">
-                <div class="col">
-                    <h3>
-                        Description
-                    </h3>
-                    <div class="desc-container">
-                        <?= $description_safe ?>
+                <div class="row">
+                    <div class="col">
+                        <h3>
+                            Description
+                        </h3>
+                        <div class="desc-container">
+                            <?= $description_safe ?>
+                        </div>
                     </div>
                 </div>
-            </div>
             <?php endif ?>
             <div class="row">
                 <div class="col">
-                    <h3 id="reviews">Reviews (<?= count($reviews) ?>)
+                    <h3 id="reviews" class="py-2">Reviews (<?= count($reviews) ?>)
 
-                        <span class="color-indigo px-2">
+                        <span class="color-indigo px-2 stars-top">
                             <?php
                             $stars = 0;
 
@@ -206,6 +176,53 @@
                         </span>
 
                     </h3>
+                    <?php if ($can_review) : ?>
+                        <div class="container p-0">
+                            <div class="col-10 my-4">
+                                <h5>
+                                    Leave Your Review!
+                                </h5>
+
+                                <form action="/product/<?= esc($product['id']) ?>/review" method="post" class="row g-3" id="productReviewForm" novalidate>
+                                    <?= csrf_field() ?>
+
+                                    <div class="mb-1">
+                                        <label for="reviewTitleInput" class="form-label">Title</label>
+                                        <input type="text" class="form-control" id="reviewTitleInput" name="reviewTitle" required>
+                                        <div class="invalid-feedback">
+                                            Please provide a title for your review
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-1">
+                                        <label aria-label="rating-selector" class="form-label">Rating</label>
+                                        <input type="hidden" value="1" id="starRatingInput" name="starRating"  aria-valuemin="1" aria-valuemax="5" aria-label="Star value input">
+                                        <div id="starRatingContainer" class="color-indigo">
+                                            <i class="bi bi-star-fill rating-star" aria-hidden="true" id="star1" data-star-val="1" data-bs-toggle="tooltip" data-bs-placement="top" title="Very Bad"></i>
+                                            <i class="bi bi-star rating-star" aria-hidden="true" id="star2" data-star-val="2" data-bs-toggle="tooltip" data-bs-placement="top" title="Poor"></i>
+                                            <i class="bi bi-star rating-star" aria-hidden="true"id="star3" data-star-val="3" data-bs-toggle="tooltip" data-bs-placement="top" title="OK"></i>
+                                            <i class="bi bi-star rating-star" aria-hidden="true" id="star4" data-star-val="4" data-bs-toggle="tooltip" data-bs-placement="top" title="Good"></i>
+                                            <i class="bi bi-star rating-star" aria-hidden="true" id="star5" data-star-val="5" data-bs-toggle="tooltip" data-bs-placement="top" title="Excellent"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-1">
+                                        <label for="reviewContent" class="form-label">Review Content</label>
+                                        <textarea class="form-control" id="description" name="reviewContent" rows="5" required></textarea>
+                                        <div class="invalid-feedback">
+                                            Please provide your review
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary bg-indigo align-self-end ">Leave Review</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    <?php endif ?>
+
                     <div class="container">
                         <?php foreach ($reviews as $review) : ?>
                             <div class="row py-2">
@@ -233,6 +250,9 @@
                                         <h5 class="card-title"><?= esc($review['title']) ?></h5>
                                         <h6 class="card-subtitle mb-2 text-muted">
                                             <?= esc($review['first_name']) ?> <?= esc($review['last_name']) ?>
+                                            <?php if ($review['author_id'] == $user['id']): ?>
+                                                <span class="badge rounded-pill bg-indigo mx-1">You</span>
+                                            <?php endif?>
                                         </h6>
                                         <p class="card-text py-2">
                                             <?= esc($review['content']) ?>
@@ -251,9 +271,9 @@
                 <?php foreach ($similar_products as $similarProduct) : ?>
                     <div class="col">
                         <div class="card h-100">
-                            <?php if ($similarProduct['media_thumbnail_id']): ?>
+                            <?php if ($similarProduct['media_thumbnail_id']) : ?>
                                 <img src="/uploads/shop/media/<?= esc($similarProduct['media_thumbnail_id']) ?>" class="card-img-top similar-products-img" alt="Similar Product Thumbnail">
-                            <?php else: ?>
+                            <?php else : ?>
                                 <div class="rounded float-start similar-products-img bg-grey-light d-flex justify-content-center">
                                     <i class="bi bi-image text-white fs-1 align-self-center"></i>
                                 </div>

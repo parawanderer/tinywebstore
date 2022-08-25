@@ -121,3 +121,12 @@
     width: 100%;
     object-fit: cover;
 }
+
+.stars-top .bi {
+    margin: 0 2pt;
+}
+
+.rating-star {
+    cursor: pointer;
+    font-size: 18pt;
+}

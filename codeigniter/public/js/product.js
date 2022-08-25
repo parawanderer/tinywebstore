@@ -64,3 +64,67 @@ if (primaryMediaContainer) {
         viewModal.show();
     });
 }
+
+
+// review
+const reviewForm = document.getElementById("productReviewForm");
+reviewForm.addEventListener('submit', function (event) {
+
+    if (!reviewForm.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    reviewForm.classList.add('was-validated');
+
+});
+
+
+//tooltips for stars
+// https://getbootstrap.com/docs/5.0/components/tooltips/#example-enable-tooltips-everywhere
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
+
+// review stars
+const stars = document.getElementsByClassName("rating-star");
+function renderStarRating(rating = 1) {
+    let i = 0;
+
+    for (; i < rating; ++i) {
+        stars[i].classList.remove("bi-star");
+        stars[i].classList.add("bi-star-fill");
+    }
+
+    for (; i < 5; ++i) {
+        stars[i].classList.remove("bi-star-fill");
+        stars[i].classList.add("bi-star");
+    }
+}
+
+const starRatingInput = document.getElementById("starRatingInput");
+
+var currentStar = 1;
+for (var i = 0; i < stars.length; ++i) {
+    const star = stars[i];
+
+    star.addEventListener("mouseenter", function(event) {
+        // preview rating but reset on mouse out
+        const val = parseInt(star.dataset.starVal);
+        renderStarRating(val);
+    });
+
+    star.addEventListener("mouseleave", function(event) {
+        // reset on mouse out
+        renderStarRating(currentStar);
+    });
+
+    star.addEventListener("click", function(event) {
+        // premanent new rating (for now)
+        currentStar = parseInt(star.dataset.starVal);
+        renderStarRating(currentStar);
+        starRatingInput.value = currentStar;
+    });
+}

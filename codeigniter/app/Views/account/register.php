@@ -31,7 +31,7 @@
                 <div class="col-12">
                     <label for="email" class="form-label">Email</label>
                     <?php if (!empty($email)): ?>
-                        <input type="email" aria-label="readonly input" readonly class="form-control" id="email" name="email" value="<?= esc($email) ?>">
+                        <input type="email" aria-label="readonly email input" readonly class="form-control" id="email" name="email" value="<?= esc($email) ?>">
                     <?php else: ?>
                         <input type="email" class="form-control" id="email" name="email" required>
                     <?php endif ?>

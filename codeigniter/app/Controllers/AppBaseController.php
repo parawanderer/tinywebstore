@@ -22,6 +22,7 @@ class AppBaseController extends BaseController
         $params = [ 
             'logged_in' => !!$session->get('username'),
             'user' => [
+                'id' => $session->get('user_id'),
                 'first_name' => $session->get('first_name'),
                 'last_name' => $session->get('last_name'),
                 'username' => $session->get('username'),

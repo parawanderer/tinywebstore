@@ -87,7 +87,7 @@ class OrderModel extends Model
     public function hasPurchasedBefore(int $userId, int $productId) {
         $result = $this->select("1")
                     ->join("order_entry", "order.id = order_entry.order_id", "inner")
-                    ->where(["order.user_id" => $userId, "order_entry.product_id" => $productId])
+                    ->where(["order.user_id" => $userId, "order_entry.product_id" => $productId, "status" => OrderModel::STATUS_COMPLETE ])
                     ->first();
 
         return !!$result;

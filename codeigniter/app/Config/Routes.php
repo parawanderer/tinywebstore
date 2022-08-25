@@ -72,6 +72,7 @@ $routes->get('product/create', 'Shop::productCreateEdit');
 $routes->post('product/create', 'Shop::productCreateEdit');
 $routes->post('product/media/(:num)', 'Shop::productAddMedia/$1');
 $routes->post('product/media/(:num)/delete', 'Shop::productDeleteMedia/$1');
+$routes->post('product/(:num)/review', 'Shop::productReview/$1');
 
 
 //cart

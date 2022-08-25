@@ -36,4 +36,17 @@ class ReviewModel extends Model
         $result = $this->select("1")->where([ "author_id" => $userId, "product_id" => $productId ])->first();
         return !!$result;
     }
+
+    public function addReview(int $userId, int $productId, string $title, int $rating, string $content) {
+        $result = $this->insert([
+            "author_id" => $userId,
+            "product_id" => $productId,
+            "timestamp" => date('Y-m-d H:i:s'),
+            "title" => $title,
+            "rating" => $rating,
+            "content" => $content
+        ]);
+
+        return $result;
+    }
 }

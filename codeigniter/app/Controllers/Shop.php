@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Helpers\HtmlSanitizer;
 use App\Helpers\ContrastRatioChecker;
 use App\Helpers\FFMPregHelper;
+use App\Models\OrderModel;
 use App\Models\ProductModel;
 use App\Models\ReviewModel;
 use App\Models\ShopMediaModel;
@@ -192,10 +193,18 @@ class Shop extends AppBaseController
 
 
         $isWatched = false;
+        $canReview = false;
         if ($this->loggedIn()) {
             /** @var \App\Models\WatchlistModel */
             $watchModel = model(WatchlistModel::class);
             $isWatched = $watchModel->isWatched($this->getCurrentUserId(), $product['id']); 
+
+            /** @var \App\Models\ReviewModel */
+            $reviewModel = model(ReviewModel::class);
+            /** @var \App\Models\OrderModel */
+            $orderModel = model(OrderModel::class);
+
+            $canReview = !$reviewModel->hasReviewedBefore($this->getCurrentUserId(), $product['id']) && $orderModel->hasPurchasedBefore($this->getCurrentUserId(), $product['id']);
         }
 
         $templateParams = $this->getUserTemplateParams();
@@ -209,6 +218,7 @@ class Shop extends AppBaseController
         $templateParams['average_score'] = Shop::getAverageScore($reviews);
         $templateParams['similar_products'] = $similarProducts;
         $templateParams['is_watched'] = $isWatched;
+        $templateParams['can_review'] = $canReview;
 
         return view('templates/header')
             . view('templates/top_bar', $templateParams)
@@ -405,6 +415,43 @@ class Shop extends AppBaseController
         }
 
         return redirect()->to("/product/edit/{$product['id']}");
+    }
+
+    public function productReview(int $productId = -1) {
+        if (!$this->loggedIn()) throw new Exception("No access");
+
+        $validationRules = [
+            "reviewTitle" => "required",
+            "reviewContent" => "required",
+            "starRating" => "required|integer|in_list[1, 2, 3, 4, 5]"
+        ];
+
+        if (!$this->validate($validationRules)) throw new Exception("Bad request");
+
+        /** @var \App\Models\ProductModel */
+        $productModel = model(ProductModel::class);
+
+        $product = $productModel->getById($productId);
+        if (!$product) throw new PageNotFoundException("Product does not exist");
+
+        /** @var \App\Models\ReviewModel */
+        $reviewModel = model(ReviewModel::class);
+        /** @var \App\Models\OrderModel */
+        $orderModel = model(OrderModel::class);
+
+        $canReview = !$reviewModel->hasReviewedBefore($this->getCurrentUserId(), $product['id'])
+                        && $orderModel->hasPurchasedBefore($this->getCurrentUserId(), $product['id']);
+
+        if (!$canReview) 
+            throw new Exception("Bad request");
+        
+        $reviewTitle = $this->request->getPost("reviewTitle");
+        $reviewContent = $this->request->getPost("reviewContent");
+        $starRating = $this->request->getPost("starRating");
+
+        $reviewModel->addReview($this->getCurrentUserId(), $product['id'], $reviewTitle, $starRating, $reviewContent);
+
+        return redirect()->to("/product/{$product['id']}#reviews");
     }
 
     private function handleAddMedia(int $productId = null) {
