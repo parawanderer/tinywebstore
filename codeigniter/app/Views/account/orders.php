@@ -21,8 +21,8 @@
                                                     <i class="bi bi-hourglass-split" aria-hidden="true"></i> Pending
                                                 </span>
                                             <?php elseif ($order['status'] == 1): ?>
-                                                <span class="badge rounded-pill bg-primary bg-indigo mx-2">
-                                                    <i class="bi bi-check" aria-hidden="true"></i> Completed
+                                                <span class="badge rounded-pill bg-indigo mx-2">
+                                                    <i class="bi bi-check-lg" aria-hidden="true"></i> Completed
                                                 </span>
                                             <?php else: ?>
                                                 <span class="badge rounded-pill bg-dark mx-2">
@@ -38,7 +38,6 @@
                                 </div>
                                 <div class="col-4 d-flex justify-content-end">
                                     <a href="/account/order/<?= esc($order['id'], 'attr') ?>" class="btn btn-primary bg-indigo align-self-end mx-2">Details</a>
-                                    <a href="#" class="btn btn-primary bg-indigo align-self-end mx-2">Cancel</a>
                                 </div>
                             </div>
                         </div>

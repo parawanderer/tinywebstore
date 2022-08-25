@@ -93,6 +93,14 @@ class OrderModel extends Model
         return !!$result;
     }
 
+    public function cancelOrder(int $orderId) {
+        $result = $this->update($orderId, [
+            "status" => OrderModel::STATUS_CANCELLED
+        ]);
+
+        return $result;
+    }
+
     public function getLatestOrdersForShop(int $shopId) {
 
     }

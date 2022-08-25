@@ -15,13 +15,19 @@
     </div>
     <div class="row">
         <div class="container d-flex justify-content-between mb-3">
-            <h1 class="p-0 m-0">Order #<?= esc($order['id']) ?></h1>  
+            <h1 class="p-0 m-0">
+                Order #<?= esc($order['id']) ?>
+            </h1>
 
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a href="/product/create" class="align-self-end btn btn-primary btn-lg bg-indigo" >
-                    Cancel Order
-                </a>
-            </div>
+            <?php if ($order['status'] == 0) : ?>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <form action="/order/<?= esc($order['id']) ?>/cancel">
+                        <button type="submit" href="/product/create" class="align-self-end btn btn-primary btn-lg bg-indigo">
+                            Cancel Order
+                        </button>
+                    </form>
+                </div>
+            <?php endif ?>
         </div>
 
         <?php foreach ($order['entries'] as &$productDetails) : ?>
@@ -54,8 +60,8 @@
                                     <?php endif ?>
 
                                     <?php if ($productDetails['completed']) : ?>
-                                        <span class="badge rounded-pill bg-primary bg-indigo mx-2">
-                                            <i class="bi bi-check" aria-hidden="true"></i> Completed
+                                        <span class="badge rounded-pill bg-indigo mx-2">
+                                            <i class="bi bi-check-lg" aria-hidden="true"></i> Completed
                                         </span>
                                     <?php else : ?>
                                         <span class="badge rounded-pill bg-warning text-dark mx-2">
@@ -96,7 +102,7 @@
                     <p class="m-0 p-0 pb-2">
                         <?php if ($order['type'] == 0) : ?>
                             Delivery
-                        <?php else: ?>
+                        <?php else : ?>
                             Pick Up
                         <?php endif ?>
                     </p>
@@ -105,7 +111,7 @@
                         <p class="m-0 p-0 pb-2">
                             <?= esc($order['address']) ?>
                         </p>
-                    <?php else: ?>
+                    <?php else : ?>
                         <h6 class="m-0">Picked Up Scheduled</h6>
                         <p class="m-0 p-0 pb-2">
                             <?= date("F jS, Y \a\\t G\:i", strtotime($order['pickup_datetime'])) ?>
@@ -116,6 +122,22 @@
                     <h6 class="m-0">Cost Total</h6>
                     <p class="m-0 p-0 pb-2">
                         € <?= esc($order['price_total']) ?>
+                    </p>
+                    <h6 class="m-0">Status</h6>
+                    <p class="m-0 p-0 pb-2">
+                        <?php if ($order['status'] == 0) : ?>
+                            <span class="badge rounded-pill bg-warning text-dark">
+                                <i class="bi bi-hourglass-split" aria-hidden="true"></i> Pending
+                            </span>
+                        <?php elseif ($order['status'] == 1) : ?>
+                            <span class="badge rounded-pill bg-indigo">
+                                <i class="bi bi-check-lg" aria-hidden="true"></i> Completed
+                            </span>
+                        <?php else : ?>
+                            <span class="badge rounded-pill bg-dark">
+                                <i class="bi bi-x-octagon-fill" aria-hidden="true"></i> Cancelled
+                            </span>
+                        <?php endif ?>
                     </p>
                 </div>
             </div>

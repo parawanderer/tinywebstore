@@ -45,6 +45,7 @@ $routes->get('pages', 'Pages::index');
 $routes->get('account', 'Account::index');
 $routes->get('account/orders', 'Account::orders');
 $routes->get('account/order/(:num)', 'Account::order/$1');
+$routes->get('account/order/(:num)/cancel', 'Account::orderCancel/$1');
 $routes->get('account/watchlist', 'Account::watchlist');
 $routes->get('account/messages', 'Account::messages');
 $routes->get('account/login', 'Account::login');

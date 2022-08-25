@@ -164,6 +164,29 @@ class Account extends AppBaseController
             . view('templates/footer');
     }
 
+    public function orderCancel(int $orderId = -1) {
+        if (!$this->loggedIn()) return redirect()->to('/account/login');
+
+        /** @var \App\Models\OrderModel */
+        $orderModel = model(OrderModel::class);
+
+        $orderDetails = $orderModel->getOrderDetails($orderId);
+        if (!$orderDetails || $orderDetails['user_id'] != $this->getCurrentUserId())
+            throw new PageNotFoundException("Order could not be found");
+
+        if ($orderDetails['status'] != 0)
+            throw new Exception("Bad request");
+
+        $orderModel->cancelOrder($orderId);
+
+        $referrer = $this->request->header("Referer");
+        if ($referrer) {
+            return redirect()->to($referrer->getValue(), 302, 'refresh'); // send back
+        }
+
+        return redirect()->to("/");
+    }
+
     public function watchlist() {
         if (!$this->loggedIn()) return redirect()->to('/account/login');
 
