@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\OrderModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
 use Exception;
 
 class Account extends AppBaseController
@@ -127,12 +129,38 @@ class Account extends AppBaseController
     public function orders() {
         if (!$this->loggedIn()) return redirect()->to('/account/login');
 
+        /** @var \App\Models\OrderModel */
+        $orderModel = model(OrderModel::class);
+
+        $orderHistory = $orderModel->getOrdersForUser($this->getCurrentUserId());
+
         $templateParams = $this->getUserTemplateParams();
         $templateParams['page'] = 'orders';
+        $templateParams['orders'] = $orderHistory;
 
         return view('templates/header')
             . view('templates/top_bar', $templateParams)
             . view('account/orders', $templateParams)
+            . view('templates/footer');
+    }
+
+    public function order(int $orderId = -1) {
+        if (!$this->loggedIn()) return redirect()->to('/account/login');
+
+        /** @var \App\Models\OrderModel */
+        $orderModel = model(OrderModel::class);
+
+        $orderDetails = $orderModel->getOrderDetails($orderId);
+        if (!$orderDetails || $orderDetails['user_id'] != $this->getCurrentUserId())
+            throw new PageNotFoundException("Order could not be found");
+
+        $templateParams = $this->getUserTemplateParams();
+        $templateParams['page'] = 'orders';
+        $templateParams['order'] = $orderDetails;
+        
+        return view('templates/header')
+            . view('templates/top_bar', $templateParams)
+            . view('account/order', $templateParams)
             . view('templates/footer');
     }
 

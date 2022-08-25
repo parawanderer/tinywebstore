@@ -1,12 +1,14 @@
 :root {
     --indigo-muted: #6351ce;
     --indigo-dark : #5000d2;
+    --indigo-light: #8c86fe;
+    --indigo-seethrough: rgb(67 49 253 / 50%);
     --line-light: #f0f3f6;
     --grey-light: #dadada;
 }
 
 .bg-indigo {
-    background-color: var(--indigo-muted);
+    background-color: var(--bs-indigo);
 }
 
 .bg-grey-light {
@@ -40,7 +42,7 @@
 }
 
 .btn.bg-indigo:focus {
-    box-shadow: 0 0 0 0.25rem rgb(67 49 253 / 50%);
+    box-shadow: 0 0 0 0.25rem var(--indigo-seethrough);
 }
 
 .p-outer-block {
@@ -74,7 +76,7 @@
 /* top nav / search */
 
 .navbar.search-bar {
-    background-color: var(--indigo-muted);
+    background-color: var(--bs-indigo);
     padding: 0.5rem 4rem;
 }
 
@@ -132,6 +134,24 @@
 .cart-dropdown > li:nth-last-child(3) > .container > .border-bottom {
     border : 0 !important;
 }
+
+/* Bootstrap edits */
+
+.accordion-button-indigo:focus {
+    box-shadow: 0 0 0 0.25rem var(--indigo-seethrough);
+    border-color: var(--indigo-light);
+}
+
+.accordion-button-indigo:not(.collapsed) {
+    color: var(--bs-white);
+    background-color: var(--bs-indigo);
+}
+
+.accordion-button-indigo:not(.collapsed)::after {
+    filter: brightness(10);
+}
+
+
 
 /* Util */
 

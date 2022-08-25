@@ -179,7 +179,7 @@
             <?php endif ?>
             <div class="row">
                 <div class="col">
-                    <h3>Reviews (<?= count($reviews) ?>)
+                    <h3 id="reviews">Reviews (<?= count($reviews) ?>)
 
                         <span class="color-indigo px-2">
                             <?php

@@ -28,4 +28,8 @@ class ShopModel extends Model
     public function getShop(int $shopId) {
         return $this->where(["id" => $shopId])->first();
     }
+
+    public function getShops(array $shopIds) {
+        return $this->whereIn("id", $shopIds)->findAll();
+    }
 }

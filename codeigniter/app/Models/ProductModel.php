@@ -42,14 +42,36 @@ class ProductModel extends Model
     }
 
     public function getProductsByIds(array $itemIds) {
-        $result = $this->select("product.id, product.shop_id, product.title, product.price, product.availability, product.main_media, product.description, shop_media.mimetype as media_mimetype")
+        $result = $this->select("product.id, product.shop_id, product.title, product.price, product.availability, product.main_media, product.description, shop_media.mimetype as media_mimetype, shop.name as shop_name, shop.id as shop_id")
                 ->join('shop_media', 'product.main_media = shop_media.id', 'left')
+                ->join('shop', 'product.shop_id = shop.id')
                 ->whereIn("product.id", $itemIds)
                 ->findAll();
         
         ProductModel::updateMediaInfo($result);
 
         return $result;
+    }
+
+    public function getProductsByIdsForUpdate(array $itemIds) {
+        $sql = "SELECT product.id, product.shop_id, product.title, product.price, product.availability, product.main_media, product.description 
+            FROM product WHERE product.id IN :itemIds: FOR UPDATE;";
+        
+        /** @var \CodeIgniter\Database\BaseResult */
+        $query = $this->db->query($sql, [
+            "itemIds" => $itemIds
+        ]);
+        $results = $query->getResultArray();
+
+        return $results;
+    }
+
+    public function updateProductAvailabilities(array &$productIdToAvailability) {
+        foreach($productIdToAvailability as $productId => $newAvailability) {
+            $this->update($productId, [
+                "availability" => $newAvailability
+            ]);
+        }
     }
 
     public function getById(int $productId) {

@@ -41,9 +41,11 @@
                                     <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="img-thumbnail inventory-thumbnail" alt="Image thumbnail">
                                 </a>
                             <?php else: ?>
-                                <div class="rounded float-start bg-grey-light d-flex justify-content-center inventory-thumbnail">
-                                    <i class="bi bi-image text-white fs-1 align-self-center"></i>
-                                </div>
+                                <a href="/product/<?= esc($product['id']) ?>">
+                                    <div class="rounded float-start bg-grey-light d-flex justify-content-center inventory-thumbnail">
+                                        <i class="bi bi-image text-white fs-1 align-self-center"></i>
+                                    </div>
+                                </a>
                             <?php endif ?>
                         </th>
                         <th>

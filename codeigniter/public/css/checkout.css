@@ -1,0 +1,8 @@
+.container.p-outer-block {
+    max-width: 55vw;
+}
+
+.success-container {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+}

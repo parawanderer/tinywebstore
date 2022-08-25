@@ -44,6 +44,7 @@ $routes->get('pages', 'Pages::index');
 
 $routes->get('account', 'Account::index');
 $routes->get('account/orders', 'Account::orders');
+$routes->get('account/order/(:num)', 'Account::order/$1');
 $routes->get('account/watchlist', 'Account::watchlist');
 $routes->get('account/messages', 'Account::messages');
 $routes->get('account/login', 'Account::login');
@@ -77,6 +78,8 @@ $routes->post('product/media/(:num)/delete', 'Shop::productDeleteMedia/$1');
 $routes->get('cart', 'Cart::index');
 $routes->post('cart/add', 'Cart::add');
 $routes->get('cart/remove/(:num)', 'Cart::remove/$1');
+$routes->post('cart/checkout', 'Cart::checkout');
+//$routes->get('cart/success', 'Cart::success');
 
 // watch
 $routes->get('watch/add/(:num)', 'Watch::watch/$1');

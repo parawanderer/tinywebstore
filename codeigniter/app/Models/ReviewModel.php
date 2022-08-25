@@ -31,4 +31,9 @@ class ReviewModel extends Model
 
         return $result;
     }
+
+    public function hasReviewedBefore(int $userId, int $productId) {
+        $result = $this->select("1")->where([ "author_id" => $userId, "product_id" => $productId ])->first();
+        return !!$result;
+    }
 }

@@ -13,6 +13,13 @@ class AccountModel extends Model
         LEFT JOIN shop s on a.id = s.user_id
         WHERE a.username = ?";
 
+    private const ACCOUNT_SELECT_BY_ID = "SELECT a.id, a.username, a.first_name, a.last_name, 
+        a.address, a.created, a.password_hash, (s.id is not null) as has_shop,
+        s.name as shop_name, s.id as shop_id
+        FROM account a 
+        LEFT JOIN shop s on a.id = s.user_id
+        WHERE a.id = ?";
+
     protected $primaryKey = "id";
     protected $table = 'account';
     protected $allowedFields = [
@@ -64,6 +71,16 @@ class AccountModel extends Model
 
     public function getUser(string $username) {
         $query = $this->db->query(AccountModel::ACCOUNT_SELECT, [ $username ]);
+        $user = $query->getRowArray();
+
+        unset($user['password_hash']);
+        AccountModel::convertTypes($user);
+
+        return $user;
+    }
+
+    public function getUserById(int $userId) {
+        $query = $this->db->query(AccountModel::ACCOUNT_SELECT_BY_ID, [ $userId ]);
         $user = $query->getRowArray();
 
         unset($user['password_hash']);

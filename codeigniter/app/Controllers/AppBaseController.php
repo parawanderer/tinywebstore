@@ -6,6 +6,8 @@ use App\Models\ProductModel;
 
 class AppBaseController extends BaseController
 {
+    private $cart = null;
+
     protected function getUserTemplateParams() {
         $session = \Config\Services::session();
 
@@ -61,24 +63,39 @@ class AppBaseController extends BaseController
         $session = \Config\Services::session();
         return $session->get('shop_id');
     }
+
+    protected function getCart() {
+        return $this->buildCart();
+    }
+
+    protected function getCartItemsToCounts() {
+        $session = \Config\Services::session();
+        return $session->get("cart") ?? [];
+    }
     
     private function buildCart() {
-        $session = \Config\Services::session();
+        if ($this->cart === null) { // "cached"
+            $session = \Config\Services::session();
 
-        $cart = $session->get("cart") ?? [];
+            $cart = $session->get("cart") ?? [];
 
-        if (count($cart) === 0) {
-            return $cart;
+            if (count($cart) === 0) {
+                $this->cart = [];
+                return $this->cart;
+            }
+            
+            /** @var \App\Models\ProductModel */
+            $productModel = model(ProductModel::class);
+            $products = $productModel->getProductsByIds(array_keys($cart));
+            
+            foreach($products as &$product) {
+                $product['quantity'] = $cart[$product['id']];
+            }
+
+            $this->cart = $products;
         }
-        
-        /** @var \App\Models\ProductModel */
-        $productModel = model(ProductModel::class);
-        $products = $productModel->getProductsByIds(array_keys($cart));
-        
-        foreach($products as &$product) {
-            $product['quantity'] = $cart[$product['id']];
-        }
 
-        return $products;
+        return $this->cart;
     }
+
 }
