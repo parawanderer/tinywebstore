@@ -114,7 +114,6 @@ class OrderModel extends Model
         return $result;
     }
 
-
     public function getLatestOrdersForShop(int $shopId, int $limit = 50) {
         $query = $this->db->query("SELECT o.id, o.user_id, o.created, o.`type`, o.`status`, SUM(e.completed) = COUNT(e.id) AS 'completed', SUM(e.quantity * e.price_per_unit) AS 'shop_total_price'
             FROM `order` o 
@@ -199,18 +198,23 @@ class OrderModel extends Model
     public function getTotalOrdersForShop(int $shopId, int $startingFrom = 0, int $endingAt = -1) {
         // I'll interpret this as orders that included an order from this shop, with the items from this shop grouped together as one unit
         // so this is not the sum of the total items, but the count of the total orders that included items ordered from this shop
-        $query = $this->db->query("SELECT COUNT(DISTINCT o.id) AS `count`
+        $query = $this->db->query("SELECT COUNT(DISTINCT o.user_id) as 'count', SUM(e.price_per_unit * e.quantity) as 'profit'
             FROM `order` o 
             INNER JOIN `order_entry` e ON e.order_id = o.id 
-            WHERE e.shop_id = :shop_id: AND o.`status` != 2 AND o.created >= :start_from: AND o.created <= :ending_at:",
+            WHERE e.shop_id = :shop_id: AND o.`status` != 2 AND o.created >= :start_from: AND o.created < :ending_at:",
             [
                 "shop_id" => $shopId,
                 "start_from" => date('Y-m-d H:i:s', $startingFrom),
                 "ending_at" => $endingAt !== -1 ? date('Y-m-d H:i:s', $endingAt) : date('Y-m-d H:i:s')
             ]);
-        
-        $result = $query->getFirstRow('array')['count'];
-        return $result;
+
+        $row = $query->getFirstRow('array');
+
+        if ($row) {
+            return [$row['count'], $row['profit']];
+        }
+
+        return [0, 0];
     }
 
     public function getTotalUnitsSoldAndValue(int $shopId, int $productId, int $startingFrom = 0, int $endingAt = -1) {
@@ -218,7 +222,7 @@ class OrderModel extends Model
         $query = $this->db->query("SELECT SUM(e.quantity) AS units_sold, SUM(e.quantity * e.price_per_unit) AS sales_value
             FROM `order` o 
             INNER JOIN `order_entry` e ON e.order_id = o.id 
-            WHERE e.shop_id = :shop_id: AND o.`status` != 2 AND e.product_id = :product_id: o.created >= :start_from: AND o.created <= :ending_at:
+            WHERE e.shop_id = :shop_id: AND o.`status` != 2 AND e.product_id = :product_id: o.created >= :start_from: AND o.created < :ending_at:
             GROUP BY e.product_id",
             [
                 "shop_id" => $shopId,
@@ -232,13 +236,15 @@ class OrderModel extends Model
     }
 
     public function getTopSoldItemsForShop(int $shopId, int $top = 10, int $startingFrom = 0, int $endingAt = -1) {
-        $query = $this->db->query("SELECT e.product_id, p.title, p.price, p.main_media, SUM(e.quantity) AS 'units_sold', SUM(e.quantity * e.price_per_unit) AS 'sales_value'
+        $query = $this->db->query("SELECT e.product_id, p.title, p.price, p.main_media, SUM(e.quantity) AS 'units_sold', 
+            SUM(e.quantity * e.price_per_unit) AS 'sales_value', m.mimetype
             FROM `order` o 
             INNER JOIN `order_entry` e ON e.order_id = o.id 
             LEFT JOIN `product` p ON e.product_id = p.id
-            WHERE e.shop_id = :shop_id: AND o.`status` != 2 AND o.created >= :start_from:  AND o.created <= :ending_at:
+            LEFT JOIN `shop_media` m on p.main_media = m.id
+            WHERE e.shop_id = :shop_id: AND o.`status` != 2 AND o.created >= :start_from:  AND o.created < :ending_at:
             GROUP BY e.product_id
-            ORDER BY 'sales_value'
+            ORDER BY 'sales_value' DESC
             LIMIT :lim:",
             [
                 "shop_id" => $shopId,
@@ -247,7 +253,33 @@ class OrderModel extends Model
                 "lim" => $top
             ]);
         
-        $result = $query->getFirstRow('array');
+        $result = $query->getResultArray();
+        
+        OrderModel::convertTopDetailStructure($result);
+        
+        return $result;
+    }
+
+    private static function convertTopDetailStructure(array &$results) {
+        foreach($results as &$detail) {
+            [ $isVideo, $thumbnailId ] = ShopMediaModel::getThumbnailInfo($detail['main_media'], $detail['mimetype']);
+
+            $detail['media_thumbnail_id'] = $thumbnailId ?? $detail['main_media'];
+        }
+    }
+
+    public function getUniqueCustomerCount(int $shopId, int $startingFrom = 0, int $endingAt = -1) {
+        $query = $this->db->query("SELECT COUNT(DISTINCT o.user_id) as 'count'
+            FROM `order` o 
+            INNER JOIN `order_entry` e ON e.order_id = o.id 
+            WHERE e.shop_id = :shop_id: AND o.`status` != 2 AND o.created >= :start_from: AND o.created < :ending_at:",
+            [
+                "shop_id" => $shopId,
+                "start_from" => date('Y-m-d H:i:s', $startingFrom),
+                "ending_at" => $endingAt !== -1 ? date('Y-m-d H:i:s', $endingAt) : date('Y-m-d H:i:s')
+            ]);
+        
+        $result = $query->getFirstRow('array')['count'];
         return $result;
     }
 }

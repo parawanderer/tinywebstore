@@ -19,6 +19,10 @@ use Exception;
 
 class Shop extends AppBaseController
 {
+    private const DAYS_30 = 2_592_000;
+    private const DAYS_7 = 604_800;
+    private const DAYS_1 = 86_400;
+
     public function index(int $shopId = -1) {
         $templateParams = $this->getUserTemplateParams();
 
@@ -191,7 +195,6 @@ class Shop extends AppBaseController
             . view('templates/top_bar', $templateParams)
             . view('shop/orders', $templateParams)
             . view('templates/footer');
-
     }
 
     public function order(int $orderId = -1) {
@@ -253,6 +256,96 @@ class Shop extends AppBaseController
         $orderModel->updateStoreOrderCompletion($orderId, $completing, $updateStatus);
 
         return redirect()->to("/shop/order/{$orderId}");
+    }
+
+    public function stats() {
+        // I would assume this exercise is not about me writing my own chart library so I'll use something open source for visuals...
+        // of course, in the real world, you would cache this and probably generate this in a bg process...
+        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+
+        $ownedShopId = $this->getOwnedShopId();
+
+        /** @var \App\Models\ShopModel */
+        $model = model(ShopModel::class);
+        $shop = $model->getShop($ownedShopId);
+
+
+        /** @var \App\Models\OrderModel */
+        $orderModel = model(OrderModel::class);
+        $now = time();
+
+        $uniqueCustomers30days = $orderModel->getUniqueCustomerCount($ownedShopId, $now - Shop::DAYS_30);
+        [$total30d, $profit30d] = $orderModel->getTotalOrdersForShop($ownedShopId, $now - Shop::DAYS_30);
+        $avgProfitPerOrder = $total30d > 0 ? $profit30d / $total30d : 0;
+
+        $lastWeekdayStats = $this->getLastWeekdayStats($ownedShopId, $now);
+        $last8WeeksStats = $this->getLast8WeeksStats($ownedShopId, $now);
+
+        $top10Selling = $orderModel->getTopSoldItemsForShop($ownedShopId, 10, $now - Shop::DAYS_30);
+
+
+        $templateParams = $this->getUserTemplateParams();
+        $templateParams['page'] = 'stats';
+        $templateParams['shop'] = $shop;
+
+        $templateParams['customers30d'] = $uniqueCustomers30days;
+        $templateParams['orders30d'] = $total30d;
+        $templateParams['profit30d'] = $profit30d;
+        $templateParams['avgProfit30d'] = $avgProfitPerOrder;
+
+        $templateParams['last7dStats'] = $lastWeekdayStats;
+        $templateParams['last8wStats'] = $last8WeeksStats;
+
+
+        $templateParams['top10selling'] = $top10Selling;
+
+        return view('templates/header')
+            . view('templates/top_bar', $templateParams)
+            . view('shop/stats', $templateParams)
+            . view('templates/footer');
+    }
+
+    private function getLastWeekdayStats(int $shopId, int $now) {
+        /** @var \App\Models\OrderModel */
+        $orderModel = model(OrderModel::class);
+        $baseToday = strtotime(date('Y-m-d', $now));
+
+        $result = [];
+
+        $last = $now;
+        $current = $baseToday;
+
+        for ($i = 0; $i < 7; ++$i) {
+            [$profit, $orders] = $orderModel->getTotalOrdersForShop($shopId, $current, $last);
+
+            $result[] = [date('D', $current), $profit, $orders];
+            $last = $current;
+            $current -= Shop::DAYS_1;
+        }
+
+        return $result;
+    }
+
+    private function getLast8WeeksStats(int $shopId, int $now) {
+        /** @var \App\Models\OrderModel */
+        $orderModel = model(OrderModel::class);
+        $baseToday = strtotime(date('Y-m-d', $now));
+
+        $result = [];
+
+        $last = $now;
+        $current = $baseToday;
+
+        for ($i = 0; $i < 7; ++$i) {
+            [$profit, $orders] = $orderModel->getTotalOrdersForShop($shopId, $current, $last);
+
+            $result[] = [date('M jS', $current), $profit, $orders];
+            $last = $current;
+            $current -= Shop::DAYS_7;
+        }
+
+        return $result;
     }
 
     private static function getCompletionDetails(array &$orderDetails, int $shopId) {

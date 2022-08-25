@@ -69,6 +69,7 @@ $routes->get('shop/inventory', 'Shop::inventory');
 $routes->get('shop/orders', 'Shop::orders');
 $routes->get('shop/order/(:num)', 'Shop::order/$1');
 $routes->post('shop/order/complete', 'Shop::completeOrder');
+$routes->get('shop/stats', 'Shop::stats');
 
 // product
 $routes->get('product/(:num)', 'Shop::product/$1');
