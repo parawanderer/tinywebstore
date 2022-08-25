@@ -40,7 +40,6 @@ $routes->get('/', 'Home::index');
 
 // custom
 $routes->get('pages', 'Pages::index');
-// $routes->get('(:any)', 'Pages::view/$1');
 
 $routes->get('account', 'Account::index');
 $routes->get('account/orders', 'Account::orders');
@@ -57,8 +56,8 @@ $routes->post('account/register', 'Account::register');
 $routes->get('account/register', 'Account::register');
 $routes->get('account/logout', 'Account::logout');
 
-
 $routes->get('search', 'Search::index');
+$routes->get('quicksearch', 'Search::quickSearch');
 
 $routes->get('shop/(:num)', 'Shop::index/$1');
 $routes->get('shop/edit', 'Shop::edit');
@@ -88,7 +87,6 @@ $routes->get('cart', 'Cart::index');
 $routes->post('cart/add', 'Cart::add');
 $routes->get('cart/remove/(:num)', 'Cart::remove/$1');
 $routes->post('cart/checkout', 'Cart::checkout');
-//$routes->get('cart/success', 'Cart::success');
 
 // watch
 $routes->get('watch/add/(:num)', 'Watch::watch/$1');

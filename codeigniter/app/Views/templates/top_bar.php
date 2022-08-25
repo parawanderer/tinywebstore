@@ -1,3 +1,4 @@
+<div class="search-overlay" id="searchOverlay"></div>
 <nav class="navbar navbar-expand-lg navbar-dark search-bar">
     <div class="row w-100">
     <div class="col-3 d-flex justify-content-start align-items-center">
@@ -11,11 +12,16 @@
     </div>
     <div class="col">
         <form class="d-flex" action="/search" method="get">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Product Name..." aria-label="Product Name" aria-describedby="productSearchButton">
+            <div class="input-group search-container" id="searchContainer">
+                <input autocomplete="off" type="text" name="q" class="form-control" placeholder="Product Name..." aria-label="Product Name" aria-describedby="productSearchButton" id="searchBarInput">
                 <button class="btn search-button btn-light" type="button" id="productSearchButton">
                     <i class="bi bi-search color-indigo" aria-label="Search Button"></i>
                 </button>
+                <ul class="dropdown-menu search-result-dropdown w-100" aria-label="Quick Search Results" id="searchResultsDropDown">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
             </div>
         </form>
     </div>

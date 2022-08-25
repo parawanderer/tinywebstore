@@ -139,3 +139,6 @@
     </div>
     <!-- Copyright -->
 </footer>
+
+<!-- used everywhere -->
+<script src="/js/search.js"></script>

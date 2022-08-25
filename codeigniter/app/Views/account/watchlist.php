@@ -49,7 +49,7 @@
                             </td>
                             <td>
                                 <?php if ($product['price']) : ?>
-                                    <?= esc($product['price']) ?>
+                                    € <?= esc($product['price']) ?>
                                 <?php endif ?>
                             </td>
 

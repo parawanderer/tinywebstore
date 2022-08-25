@@ -139,8 +139,32 @@
     border : 0 !important;
 }
 
-.search-button {
+.search-overlay {
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0 0 0 / 42%);
+    display: none;
+}
 
+.search-overlay.show {
+    display:block;
+}
+
+.search-container {
+    z-index: 2000;
+}
+
+.search-result-dropdown {
+    bottom: 0;
+    transform: translateY(100%);
+}
+
+.search-result-dropdown h6, .search-result-dropdown p {
+    font-size: .8125rem;
 }
 
 /* Bootstrap edits */
