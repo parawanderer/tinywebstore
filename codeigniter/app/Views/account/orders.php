@@ -44,6 +44,14 @@
                     </div>
                 </div>
             <?php endforeach ?>
+            <?php if (count($orders) === 0) : ?>
+            <div class="container">
+                <p class="text-muted">
+                    You have no orders
+                </p>
+            </div>
+
+        <?php endif ?>
         </div>
     </div>
 </div>

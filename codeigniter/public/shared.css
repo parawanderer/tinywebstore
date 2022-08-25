@@ -73,6 +73,10 @@
 }
 
 
+.max-height-85 {
+    max-height: 85vh;
+}
+
 /* top nav / search */
 
 .navbar.search-bar {
@@ -150,7 +154,6 @@
 .accordion-button-indigo:not(.collapsed)::after {
     filter: brightness(10);
 }
-
 
 
 /* Util */

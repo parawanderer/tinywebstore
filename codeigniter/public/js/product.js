@@ -68,7 +68,7 @@ if (primaryMediaContainer) {
 
 // review
 const reviewForm = document.getElementById("productReviewForm");
-reviewForm.addEventListener('submit', function (event) {
+reviewForm?.addEventListener('submit', function (event) {
 
     if (!reviewForm.checkValidity()) {
         event.preventDefault();

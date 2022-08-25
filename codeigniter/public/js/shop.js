@@ -60,6 +60,6 @@ const addMediaButton = document.getElementById("addMediaButton");
 
 const addModal = new bootstrap.Modal(addMediaModal, {});
 
-addMediaButton.addEventListener("click", function(event) {
+addMediaButton?.addEventListener("click", function(event) {
     addModal.show();
 });

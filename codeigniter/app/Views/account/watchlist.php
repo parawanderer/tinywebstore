@@ -4,8 +4,7 @@
 <?= $this->section('content') ?>
 <div class="container px-4">
     <h1>Watchlist (<?= count($watchlist) ?>)</h1>
-    <p class="text-muted fs-5">Your watched products. You will receive an alert when one of these becomes available.</p>
-    <br />
+    <p class="text-muted fs-5 pb-4">Your watched products. You will receive an alert when one of these becomes available.</p>
     <div class="row">
         <div class="col">
             <table class="table">
@@ -24,7 +23,7 @@
                         <tr class="align-middle">
                             <th scope="row">
                                 <?php if ($product['media_thumbnail_id']) : ?>
-                                    <a href="/product/<?= esc($product['id']) ?>">
+                                    <a href="/product/<?= esc($product['product_id']) ?>">
                                         <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="img-thumbnail img-thumb-s" alt="Image thumbnail">
                                     </a>
                                 <?php else : ?>
@@ -35,7 +34,7 @@
                             </th>
                             <th>
                                 <?php if ($product['title']) : ?>
-                                    <a href="/product/<?= esc($product['id']) ?>" class="text-decoration-none text-reset">
+                                    <a href="/product/<?= esc($product['product_id']) ?>" class="text-decoration-none text-reset">
                                         <?= esc($product['title']) ?>
                                     </a>
                                 <?php else : ?>

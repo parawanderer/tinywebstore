@@ -2,7 +2,11 @@
 
 namespace App\Controllers;
 
+use App\Models\AccountModel;
+use App\Models\MessageChainModel;
+use App\Models\MessageModel;
 use App\Models\OrderModel;
+use App\Models\ShopModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Exception;
 
@@ -208,12 +212,113 @@ class Account extends AppBaseController
     public function messages() {
         if (!$this->loggedIn()) return redirect()->to('/account/login');
 
+        /** @var \App\Models\MessageChainModel */
+        $model = model(MessageChainModel::class);
+
+        $chains = [];
+
+        if ($this->isShopOwner()) {
+            $chains = $model->getMessageChainsForStore($this->getOwnedShopId());
+        } else {
+            $chains = $model->getMessageChainsForUser($this->getCurrentUserId());
+        }
+
         $templateParams = $this->getUserTemplateParams();
+        $templateParams['messages'] = $chains;
+        $templateParams['is_shop'] = $this->isShopOwner();
         $templateParams['page'] = 'messages';
 
         return view('templates/header')
             . view('templates/top_bar', $templateParams)
             . view('account/messages', $templateParams)
+            . view('templates/footer');
+    }
+
+    public function initMessageChain() {
+        if (!$this->loggedIn()) return redirect()->to('/account/login');
+
+        $validationRules = [
+            'to' => 'required|integer' 
+        ];
+
+        if (!$this->validate($validationRules))
+            throw new Exception("Bad request");
+
+        $targetShopId = $this->request->getGet("to");
+        
+        /** @var \App\Models\ShopModel */
+        $shopModel = model(ShopModel::class);
+        $shop = $shopModel->getShop($targetShopId);
+
+        if (!$shop) throw new PageNotFoundException("Shop does not exist");
+
+        /** @var \App\Models\MessageChainModel */
+        $messageChainModel = model(MessageChainModel::class);
+        $conversation = $messageChainModel->getConversation($this->getCurrentUserId(), $targetShopId);
+
+        // existing
+        if ($conversation) {
+            return redirect()->to("/account/message/{$conversation['id']}");
+        }
+
+        // create new chain (not visible in shop's list until user messages the shop)
+        $newConversationId = $messageChainModel->startNewChain($this->getCurrentUserId(), $targetShopId);
+        return redirect()->to("/account/message/{$newConversationId}");
+    }
+
+    public function message(int $conversationId = -1) {
+        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        
+        /** @var \App\Models\MessageChainModel */
+        $messageChainModel = model(MessageChainModel::class);
+        $conversation = $messageChainModel->getConversationById($conversationId);
+
+        if ($this->isShopOwner() && $conversation['shop_id'] != $this->getOwnedShopId())
+            throw new Exception("Bad request");
+
+        if (!$this->isShopOwner() && $conversation['user_id'] != $this->getCurrentUserId())
+            throw new Exception("Bad request");
+        
+        /** @var \App\Models\MessageModel */
+        $messageModel = model(MessageModel::class);
+
+        /** @var \App\Models\ShopModel */
+        $shopModel = model(ShopModel::class);
+        $shop = $shopModel->getShop($conversation['shop_id']);
+
+        /** @var \App\Models\AccountModel */
+        $accountModel = model(AccountModel::class);
+        $sender = $accountModel->getUserById($conversation['user_id']);
+
+        if ($this->request->getMethod() === 'post' && $this->validate(['contentInput' => 'required'])) {
+            // add message
+            $now = time();
+            $messageContent = $this->request->getPost('contentInput');
+
+            $messageModel->addMessage(
+                $conversationId, 
+                $this->getCurrentUserId() == $conversation['user_id'],
+                $sender['first_name'] . ' ' . $sender['last_name'],
+                $shop['name'],
+                $messageContent,
+                $now
+            );
+            $messageChainModel->updateLastMessageTime($conversationId, $now);
+        }
+
+        $messages = $messageModel->getChainMessages($conversationId);
+
+        $templateParams = $this->getUserTemplateParams();
+        $templateParams['conversation'] = $conversation;
+        $templateParams['shop'] = $shop;
+        $templateParams['sender'] = $sender;
+        $templateParams['messages'] = $messages;
+        $templateParams['is_shop'] = $this->isShopOwner();
+        $templateParams['page'] = 'messages';
+
+        return view('templates/header')
+            . view('templates/top_bar', $templateParams)
+            . view('account/message', $templateParams)
             . view('templates/footer');
     }
 
