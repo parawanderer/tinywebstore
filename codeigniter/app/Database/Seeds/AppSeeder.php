@@ -8,15 +8,19 @@ class AppSeeder extends Seeder
 {
     public function run()
     {
-        // $data = [
-        //     'username' => 'darth',
-        //     'email'    => 'darth@theempire.com',
-        // ];
+        $exists = $this->db->tableExists('alert');
+        if ($exists) {
+            echo "table already exists. Will not run seeder.";
+            return;
+        }
 
-        // // Simple Queries
-        // $this->db->query('INSERT INTO users (username, email) VALUES(:username:, :email:)', $data);
+        $this->db->transStart();
 
-        // // Using Query Builder
-        // $this->db->table('users')->insert($data);
+        $seed = file_get_contents(ROOTPATH . "seed.sql");
+        $this->db->query($seed);
+
+        $this->db->transComplete();        
+
+        echo "Done seeding db with test data. Success: " . ($this->db->transStatus() ? "true" : "false");
     }
 }

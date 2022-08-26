@@ -22,8 +22,18 @@ docker-compose build
 docker-compose up
 ```
 
+#### Initialisation /Seeding
 
-## Test Accounts
+To initialise the database with some basic test data, send a get request to `/seed`
+or use the command line seeder as [described here](https://codeigniter4.github.io/CodeIgniter4/dbmgmt/seeds.html#command-line-seeding)
+
+The seeder name is `AppSeeder`. So e.g.
+```
+php spark db:seed AppSeeder
+```
+
+
+## Test Accounts (seeded)
 
 #### Regular user account:
 ```
