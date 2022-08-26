@@ -17,12 +17,12 @@
         </nav>
     </div>
     <div class="row">
-        <div class="col-6 px-5">
+        <div class="col-12 col-md-6 px-md-5">
             <div class="row">
 
                 <?php if ($primary_media) : ?>
 
-                    <a href="#" id="primaryMediaContainer" class="media-item-clickable" data-is-video="<?= esc($primary_media['is_video']) ?>" data-id="/uploads/shop/media/<?= esc($primary_media['id']) ?>" data-poster="<?= esc('/uploads/shop/media/' . $primary_media['thumbnail_id']) ?>">
+                    <a href="#" id="primaryMediaContainer" class="media-item-clickable px-0" data-is-video="<?= esc($primary_media['is_video']) ?>" data-id="/uploads/shop/media/<?= esc($primary_media['id']) ?>" data-poster="<?= esc('/uploads/shop/media/' . $primary_media['thumbnail_id']) ?>">
                         <img src="/uploads/shop/media/<?= esc($primary_media['is_video'] ? $primary_media['thumbnail_id'] : $primary_media['id']) ?>" class="rounded float-start product-img-current" alt="Product Photo" id="productMediaMainImage">
                     </a>
 
@@ -33,7 +33,7 @@
                 <?php endif ?>
             </div>
 
-            <div class="row row-cols-1 row-cols-md-4 g-4 product-media-select pt-4">
+            <div class="row row-cols-4 g-4 product-media-select pt-4">
                 <?php foreach ($media as $mediaItem) : ?>
 
                     <div class="col">
@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <div class="col-6">
+        <div class="col-12 col-md-6 pt-5 pt-md-0">
             <div class="row">
                 <h2>
                     <?= esc($product['title']) ?>
@@ -100,30 +100,34 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-lg btn-primary bg-indigo" <?= $product['availability'] == 0 ? 'disabled' : '' ?>>
-                        <i class="bi bi-basket px-1" aria-hidden="true"></i>
-                        Add To Cart
-                    </button>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <button type="submit" class="btn btn-lg btn-primary bg-indigo" <?= $product['availability'] == 0 ? 'disabled' : '' ?>>
+                                <i class="bi bi-basket px-1" aria-hidden="true"></i>
+                                Add To Cart
+                            </button>
+                        </div>
 
-                    <?php if ($logged_in) : ?>
-
-                        <?php if ($product['availability'] == 0 && !$is_watched) : ?>
-                            <a href="/watch/add/<?= esc($product['id'], 'attr') ?>" class="btn btn-lg btn-secondary" aria-label="Add Product to your watch list">
-                                <i class="bi bi-eye px-1" aria-hidden="true"></i>
-                                Watch
-                            </a>
-                        <?php elseif ($is_watched) : ?>
-                            <a href="/watch/remove/<?= esc($product['id'], 'attr') ?>" class="btn btn-lg btn-secondary" aria-label="Add Product to your watch list">
-                                <i class="bi bi-eye-slash px-1" aria-hidden="true"></i>
-                                Unwatch
-                            </a>
+                        <?php if ($logged_in) : ?>
+                            <div class="col-12 col-md-6">
+                            <?php if ($product['availability'] == 0 && !$is_watched) : ?>
+                                <a href="/watch/add/<?= esc($product['id'], 'attr') ?>" class="btn btn-lg btn-secondary" aria-label="Add Product to your watch list">
+                                    <i class="bi bi-eye px-1" aria-hidden="true"></i>
+                                    Watch
+                                </a>
+                            <?php elseif ($is_watched) : ?>
+                                <a href="/watch/remove/<?= esc($product['id'], 'attr') ?>" class="btn btn-lg btn-secondary" aria-label="Add Product to your watch list">
+                                    <i class="bi bi-eye-slash px-1" aria-hidden="true"></i>
+                                    Unwatch
+                                </a>
+                            <?php endif ?>
+                            </div>
                         <?php endif ?>
-                    <?php endif ?>
-
+                    </div>
                 </form>
             </div>
 
-            <div class="d-grid gap-2 d-md-block">
+            <div class="d-block">
                 <?php if ($is_shop_owner) : ?>
                     <a class="btn btn-secondary" href="/product/edit/<?= esc($product['id']) ?>">Edit Product</a>
                 <?php endif ?>
@@ -134,7 +138,7 @@
         <div class="product-divider title-underline"></div>
     </div>
     <div class="row py-4">
-        <div class="col">
+        <div class="col-12 col-md-6">
             <?php if ($description_safe) : ?>
                 <div class="row">
                     <div class="col">
@@ -178,7 +182,7 @@
                     </h3>
                     <?php if ($can_review) : ?>
                         <div class="container p-0">
-                            <div class="col-10 my-4">
+                            <div class="col-12 col-md-10 my-4">
                                 <h5>
                                     Leave Your Review!
                                 </h5>
@@ -265,7 +269,7 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-12 col-md-6">
             <h4 class="pb-4">Similar Products</h4>
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <?php foreach ($similar_products as $similarProduct) : ?>
@@ -279,12 +283,12 @@
                                 </div>
                             <?php endif ?>
                             <div class="card-body">
-                                <h6 class="card-title">
+                                <h6 class="card-title fs-4 fs-md-6">
                                     <a href="/product/<?= esc($similarProduct['id']) ?>" class="stretched-link text-decoration-none text-reset">
                                         <?= esc($similarProduct['title']) ?>
                                     </a>
                                 </h6>
-                                <h6 class="card-text color-indigo">
+                                <h6 class="card-text color-indigo fs-4 fs-md-6">
                                     € <?= esc($similarProduct['price']) ?>
                                 </h6>
                             </div>
@@ -296,7 +300,7 @@
     </div>
 </div>
 
-<div class="modal fade view-media-modal" id="viewMediaModal" tabindex="-1" aria-labelledby="viewMediaModalLabel" aria-hidden="true">
+<div class="modal fade view-media-modal z-3000" id="viewMediaModal" tabindex="-1" aria-labelledby="viewMediaModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -306,7 +310,7 @@
             <div class="modal-body image-view-image-container d-flex justify-content-center align-items-center">
                 <img src="" class="media-view-image" alt="Media Item" id="mediaViewImage">
 
-                <video controls src="" poster="" width="740" style="display: none;" id="mediaViewVideo">
+                <video controls src="" poster="" class="w-100 h-100" style="display: none;" id="mediaViewVideo">
                     Sorry, your browser doesn't support embedded videos,
                 </video>
             </div>

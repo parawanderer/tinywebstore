@@ -4,13 +4,13 @@
 <?= $this->section('content') ?>
 <link rel="stylesheet" href="/css/shop.css">
 
-<div class="container px-4">
+<div class="container px-0 px-md-4">
     <div class="row mb-3">
         <h1>Statistics</h1>
         <p class="text-muted fs-5">Statistics for <?= esc($shop['name']) ?></p>
     </div>
     <div class="row">
-        <div class="col">
+        <div class="col-6 col-md-3 mb-3 mb-md-0">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title color-indigo"><?= esc($customers30d) ?></h5>
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-6 col-md-3 mb-3 mb-md-0">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title color-indigo"><?= esc($orders30d) ?></h5>
@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-6 col-md-3 mb-3 mb-md-0">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title color-indigo">€ <?= esc($profit30d) ?></h5>
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-6 col-md-3 mb-3 mb-md-0">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title color-indigo">€ <?= esc($avgProfit30d) ?></h5>
@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="row pt-3">
-        <div class="col-8">
+        <div class="col-12 col-md-8">
             <div class="row">
                 <h2>Sales by Date <span class="badge rounded-pill bg-indigo mx-2 fs-6">7 Days</span></h2>
                 <div>
@@ -55,6 +55,7 @@
                 <h3 class="py-3 pt-5">
                     Top Selling Products <span class="badge rounded-pill bg-indigo mx-2 fs-6">Last 30 Days</span>
                 </h3>
+                <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
@@ -67,7 +68,7 @@
                     <tbody>
                         <?php foreach($top10selling as $product): ?>
                         <tr class="align-middle">
-                            <th scope="row">
+                            <th>
                                 <?php if ($product['media_thumbnail_id']): ?>
                                     <a href="/product/<?= esc($product['product_id']) ?>">
                                         <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="img-thumbnail img-thumb-xs" alt="Image thumbnail">
@@ -91,10 +92,10 @@
                         <?php endforeach ?>
                     </tbody>
                 </table>
-                                    
+                </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-12 col-md-4">
             <div class="row">
                 <div class="card py-3">
                     <h6>8 Week Sale History</h6>

@@ -6,3 +6,14 @@
     padding-top: 10rem;
     padding-bottom: 10rem;
 }
+
+
+/* mobile */
+
+
+
+@media (max-width: 768px) {
+    .container.p-outer-block {
+        max-width: unset;
+    }
+}

@@ -2,8 +2,8 @@
 
 <div class="container p-outer-block">
   <div class="row">
-    <div class="col col-lg-3 account-nav">
-        <ul class="nav nav-pills flex-column mb-auto">
+    <div class="col-12 col-md-3 account-nav">
+        <ul class="nav nav-pills flex-column mb-4 mb-md-auto border-1 rounded account-wrapper-container">
         <li class="<?= $page === '' ? 'nav-item' : '' ?> fs-6">
             <a href="/account" class="nav-link <?= $page === '' ? 'active' : 'link-dark' ?>" aria-current="page">
             <i class="bi bi-person fs-5" aria-hidden="true"></i>
@@ -54,7 +54,7 @@
             Messages
             </a>
         </li>
-        <li class="border-top my-3"></li>
+        <li class="border-top my-md-3"></li>
         <li class="fs-6">
             <a href="/account/logout" class="nav-link link-dark">
             <i class="bi bi-box-arrow-right fs-5" aria-hidden="true"></i>
@@ -63,7 +63,7 @@
         </li>
         </ul>
     </div>
-    <div class="col">
+    <div class="col-12 col-md-9">
         <?= $this->renderSection('content') ?>
     </div>
   </div>

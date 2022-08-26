@@ -2,7 +2,7 @@
 
 
 <?= $this->section('content') ?>
-<div class="container">
+<div class="container px-0 px-md-5">
     <div class="row">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -61,7 +61,7 @@
         <?php foreach ($messages as &$message) : ?>
 
             <div class="row mt-2">
-                <div class="col-1">
+                <div class="col-3 col-md-1">
                     <div class="row">
                         <div class="col d-flex justify-content-center align-items-end">
                             <?php if ($message['from_user']) : ?>
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-11">
+                <div class="col-9 col-md-11">
                     <div class="card text-dark bg-light mb-3 border-0">
                         <div class="card-body">
                             <h6 class="card-title">
@@ -131,12 +131,14 @@
             </div>
         <?php endif ?>
     </div>
-    <div class="row p-4">
+    <div class="row p-1 pt-3 p-md-4">
         <form method="post" action="/account/message/<?= esc($conversation['id']) ?>" id="messageForm">
             <?= csrf_field() ?>
             <div class="input-group input-group mb-3" >
                 <textarea name="contentInput" data-rows-min="1" aria-multiline="true" class="form-control" id="contentInput" placeholder="Enter your message..." aria-label="Your Message" aria-describedby="sendMessageButton" rows="1"></textarea>
-                <button class="btn btn-primary bg-indigo" type="submit" id="sendMessageButton" disabled aria-disabled="Disabled until message is input">Send Message</button>
+                <button class="btn btn-primary bg-indigo" type="submit" id="sendMessageButton" disabled aria-disabled="Disabled until message is input">
+                    <i class="bi bi-send-fill" aria-label="Send Message"></i>
+                </button>
             </div>
         </form>
     </div>

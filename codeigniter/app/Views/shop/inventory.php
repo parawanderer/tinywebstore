@@ -4,15 +4,15 @@
 <?= $this->section('content') ?>
 <link rel="stylesheet" href="/css/shop.css">
 
-<div class="container px-4">
+<div class="container px-0 px-md-4">
     <div class="row mb-3">
-        <div class="container d-flex justify-content-between">
-            <div>
+        <div class="container d-flex justify-content-between flex-column flex-md-row">
+            <div class="col-12 col-md-auto">
                 <h1>Inventory (<?= count($products) ?>)</h1>
                 <p class="text-muted fs-5">Inventory for <?= esc($shop['name']) ?></p>
             </div>    
 
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <div class="col-12 col-md-2 d-grid gap-2 d-md-flex justify-content-md-end">
                 <a href="/product/create" class="align-self-end btn btn-primary btn-lg bg-indigo" >
                     Add New
                 </a>
@@ -21,10 +21,11 @@
     </div>
     <div class="row">
         <div class="col">
+        <div class="table-responsive">
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col"></th>
+                        <th scope="col" class="hide-mobile"></th>
                         <th scope="col">Item</th>
                         <th scope="col">Price</th>
                         <th scope="col">Availability</th>
@@ -35,7 +36,7 @@
                 <tbody>
                     <?php foreach ($products as $product): ?>
                     <tr class="align-middle">
-                        <th scope="row">
+                        <th class="hide-mobile">
                             <?php if ($product['media_thumbnail_id']): ?>
                                 <a href="/product/<?= esc($product['id']) ?>">
                                     <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="img-thumbnail inventory-thumbnail" alt="Image thumbnail">
@@ -76,6 +77,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+        </div>
             
             <?php if (count($products) === 0): ?>
                 <div class="container">
@@ -89,7 +91,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+<div class="modal fade z-3000" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

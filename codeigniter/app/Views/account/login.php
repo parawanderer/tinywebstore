@@ -2,7 +2,7 @@
 
 <div class="container p-outer-block">
   <div class="row justify-content-md-center">
-    <div class="col col-lg-4 login-form-block">
+    <div class="col-12 col-md-4 login-form-block">
         <h3>Login</h3>
 
         <?= session()->getFlashdata('error') ?>
@@ -23,10 +23,12 @@
                 <input type="checkbox" class="form-check-input" id="loginRememberMe" name="loginRememberMe">
                 <label class="form-check-label" for="loginRememberMe">Remember me</label>
             </div>
-            <button type="submit" class="btn btn-primary bg-indigo">Login</button>
+            <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary bg-indigo">Login</button>
+            </div>
         </form>
     </div>
-    <div class="col col-lg-4 line-left signup-form-block">
+    <div class="col-12 col-md-4 line-left signup-form-block">
         <h3>Signup</h3>
 
         <h6>New user?</h6>
@@ -45,7 +47,9 @@
                 <label for="createUserEmail" class="form-label">Email address</label>
                 <input type="email" class="form-control" id="createUserEmail" name="email">
             </div>
-            <button type="submit" class="btn btn-primary bg-indigo">Sign Up</button>
+            <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary bg-indigo">Sign Up</button>
+            </div>
         </form>
     </div>
   </div>

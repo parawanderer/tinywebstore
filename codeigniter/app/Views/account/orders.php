@@ -2,14 +2,14 @@
 
 
 <?= $this->section('content') ?>
-<div class="container px-4">
+<div class="container px-2 px-md-4">
     <h1>Orders</h1>
     <p class="text-muted fs-5">Your latest orders</p>
     <div class="row">
         <div class="col">
             <?php foreach ($orders as $order) : ?>
                 <div class="row py-3">
-                    <div class="row">
+                    <div class="col-12">
                         <div class="card p-3">
                             <div class="row">
                                 <div class="col-8">
@@ -17,15 +17,15 @@
                                         <h5 class="card-title">
                                             Order #<?= esc($order['id']) ?>
                                             <?php if ($order['status'] == 0): ?>
-                                                <span class="badge rounded-pill bg-warning text-dark mx-2">
+                                                <span class="badge rounded-pill bg-warning text-dark mt-2 mt-md-0 mx-md-2">
                                                     <i class="bi bi-hourglass-split" aria-hidden="true"></i> Pending
                                                 </span>
                                             <?php elseif ($order['status'] == 1): ?>
-                                                <span class="badge rounded-pill bg-indigo mx-2">
+                                                <span class="badge rounded-pill bg-indigo mt-2 mt-md-0 mx-md-2">
                                                     <i class="bi bi-check-lg" aria-hidden="true"></i> Completed
                                                 </span>
                                             <?php else: ?>
-                                                <span class="badge rounded-pill bg-dark mx-2">
+                                                <span class="badge rounded-pill bg-dark mt-2 mt-md-0 mx-md-2">
                                                     <i class="bi bi-x-octagon-fill" aria-hidden="true"></i> Cancelled
                                                 </span>
                                             <?php endif ?>

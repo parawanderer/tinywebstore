@@ -4,7 +4,7 @@
 <?= $this->section('content') ?>
 <link rel="stylesheet" href="/css/shop.css">
 
-<div class="container px-4">
+<div class="container px-0 px-md-4">
     <div class="row mb-3">
         <div class="container d-flex justify-content-between">
             <div>
@@ -15,6 +15,7 @@
     </div>
     <div class="row">
         <div class="col">
+        <div class="table-responsive">
             <table class="table">
                 <thead>
                     <tr>
@@ -71,6 +72,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+        </div>
             
             <?php if (count($orders) === 0): ?>
                 <div class="container">

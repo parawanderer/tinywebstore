@@ -2,16 +2,15 @@
 
 
 <?= $this->section('content') ?>
-    <div class="container px-4">
+    <div class="container px-1 px-md-4">
 
         <h1>Account Info</h1>
         
         <p class="text-muted fs-5">Welcome, <?= esc($user['first_name']) ?></p>
         <br/>
 
-
         <div class="row">
-            <div class="col col-lg-4">
+            <div class="col-12 col-lg-4">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
@@ -33,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col col-lg-4">
+            <div class="col-12 col-lg-4 pt-3 pt-md-0">
             <?php if ($user['has_shop']): ?>
                 <div class="card">
                     <div class="card-body">
@@ -48,7 +47,6 @@
                 </div>
             <?php endif ?> 
             </div>
-            <div class="col col-lg-4"></div>
         </div>
     </div>
 <?= $this->endSection() ?>

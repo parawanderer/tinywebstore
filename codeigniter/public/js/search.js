@@ -3,26 +3,34 @@ const searchResultsDropDown = document.getElementById("searchResultsDropDown");
 const searchContainer = document.getElementById("searchContainer");
 const searchOverlay = document.getElementById("searchOverlay");
 
+function showSearchOverlay() {
+    searchOverlay.classList.add("show");
+    document.body.style.overflow = 'hidden';
+}
+
+function hideSearchOverlay() {
+    searchOverlay.classList.remove("show");
+    searchResultsDropDown.classList.remove("show");
+    document.body.style.overflow = '';
+}
 
 searchBarInput.addEventListener("focus", function(event) {
-    searchOverlay.classList.add("show");
+    showSearchOverlay();
 });
 
 
 searchBarInput.addEventListener("keyup", function(event) {
-    if (event.key === "Escape") {
-        searchOverlay.classList.remove("show");
-        searchResultsDropDown.classList.remove("show");
+    if (event.key == "Escape") {
+        hideSearchOverlay();
     }
 });
 
 searchBarInput.addEventListener("click", function(event) {
-    searchOverlay.classList.add("show");
+    showSearchOverlay();
 });
 
 searchOverlay.addEventListener("mousedown", function(event) {
-    searchOverlay.classList.remove("show");
-    searchResultsDropDown.classList.remove("show");
+    hideSearchOverlay();
 });
 
 

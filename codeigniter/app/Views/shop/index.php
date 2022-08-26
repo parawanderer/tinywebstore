@@ -159,7 +159,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="deleteMediaModal" tabindex="-1" aria-labelledby="deleteMediaModalLabel" aria-hidden="true">
+<div class="modal fade z-3000" id="deleteMediaModal" tabindex="-1" aria-labelledby="deleteMediaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -183,7 +183,7 @@
 </div>
 
 
-<div class="modal fade" id="addMediaModal" tabindex="-1" aria-labelledby="addMediaModalLabel" aria-hidden="true">
+<div class="modal fade z-3000" id="addMediaModal" tabindex="-1" aria-labelledby="addMediaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -208,7 +208,7 @@
 </div>
 
 
-<div class="modal fade view-media-modal" id="viewMediaModal" tabindex="-1" aria-labelledby="viewMediaModalLabel" aria-hidden="true">
+<div class="modal fade view-media-modal z-3000" id="viewMediaModal" tabindex="-1" aria-labelledby="viewMediaModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -218,7 +218,7 @@
             <div class="modal-body image-view-image-container d-flex justify-content-center align-items-center">
                 <img src="" class="media-view-image" alt="Media Item" id="mediaViewImage">
 
-                <video controls src="" poster="" width="740" style="display: none;" id="mediaViewVideo">
+                <video controls src="" poster="" class="w-100 h-100" style="display: none;" id="mediaViewVideo">
                     Sorry, your browser doesn't support embedded videos,
                 </video>
             </div>

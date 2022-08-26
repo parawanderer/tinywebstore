@@ -1,7 +1,20 @@
 .login-form-block {
-    padding-right: 2em;
+    padding-right: 2rem;
 }
 
 .signup-form-block {
-    padding-left: 2em;
+    padding-left: 2rem;
+}
+
+
+/* mobile */
+
+@media (max-width: 768px) {
+    .signup-form-block {
+        padding: 1.5rem;
+    }
+
+    .login-form-block {
+        padding: 1.5rem;
+    }
 }

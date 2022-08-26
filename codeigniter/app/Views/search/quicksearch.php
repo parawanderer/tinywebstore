@@ -1,7 +1,7 @@
 <ul id="resultContainer">
     <?php foreach ($results as &$product) : ?>
         <li>
-            <div class="d-flex position-relative dropdown-item">
+            <div class="d-flex position-relative dropdown-item px-md-2 px-0">
                 <div class="px-2">
                     <?php if ($product['media_thumbnail_id']) : ?>
                         <a href="/product/<?= esc($product['id']) ?>">
@@ -15,9 +15,9 @@
                 </div>
                 <div>
                     <a href="/product/<?= esc($product['id'], 'attr') ?>" class="stretched-link text-decoration-none text-reset">
-                        <h6 class="m-0 p-0"><?= esc($product['title']) ?></h6>
+                        <h6 class="m-0 p-0 fs-6"><?= esc($product['title']) ?></h6>
                     </a>
-                    <p class="color-indigo">€ <?= esc($product['price']) ?></p>
+                    <p class="color-indigo fs-6">€ <?= esc($product['price']) ?></p>
                 </div>
             </div>
         </li>

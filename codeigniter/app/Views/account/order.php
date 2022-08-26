@@ -61,15 +61,15 @@
                                     <?php endif ?>
 
                                     <?php if ($productDetails['completed']) : ?>
-                                        <span class="badge rounded-pill bg-indigo mx-2">
+                                        <span class="badge rounded-pill bg-indigo mx-2  mt-2 mt-md-0">
                                             <i class="bi bi-check-lg" aria-hidden="true"></i> Completed
                                         </span>
                                     <?php elseif ($order['status'] == 2): ?>
-                                        <span class="badge rounded-pill bg-dark">
+                                        <span class="badge rounded-pill bg-dark mt-2 mt-md-0">
                                             <i class="bi bi-x-octagon-fill" aria-hidden="true"></i> Cancelled
                                         </span>
                                     <?php else : ?>
-                                        <span class="badge rounded-pill bg-warning text-dark mx-2">
+                                        <span class="badge rounded-pill bg-warning text-dark mx-2 mt-2 mt-md-0">
                                             <i class="bi bi-hourglass-split" aria-hidden="true"></i> Pending
                                         </span>
                                     <?php endif ?>

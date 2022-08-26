@@ -2,7 +2,7 @@
 
 
 <?= $this->section('content') ?>
-<div class="container px-4">
+<div class="container px-2 px-md-4"">
     <h1>Messages</h1>
     <p class="text-muted fs-5 pb-1">Your message history</p>
     <div class="container p-0 m-0">
@@ -26,7 +26,7 @@
         <?php foreach ($messages as $message) : ?>
             <div class="card d-flex position-relative mb-2">
                 <div class="row px-3 py-2">
-                    <div class="col-1 d-flex justify-content-end align-items-center">
+                    <div class="col-1 d-flex justify-content-end align-items-center hide-mobile">
                         <?php if($is_shop): ?>
                             <div class="rounded float-start bg-indigo d-flex justify-content-center align-items-center img-thumb-xs">
                                 <span class="text-white fw-bold text-uppercase text-center">

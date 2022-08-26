@@ -1,8 +1,8 @@
-<div class="container p-outer-block px-5">
+<div class="container p-outer-block px-md-5">
     <form action="/search" method="get" id="extendedSearchForm">
         <input type="hidden" value="<?= esc($query['term'], 'attr') ?>" name="q">
         <div class="row">
-            <div class="col-3">
+            <div class="col-12 col-md-3 px-4 px-md-0">
 
                 <div class="row">
                     <h5>Filter Options</h5>
@@ -55,7 +55,7 @@
                     <label class="form-check-label" for="excludeOutOfStock">Exclude Out of Stock</label>
                 </div>
 
-                <div class="row py-3"></div>
+                <div class="row py-md-3"></div>
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <button type="submit" class="align-self-end btn btn-primary btn-lg bg-indigo">
@@ -64,8 +64,8 @@
                 </div>
 
             </div>
-            <div class="col-9 px-3">
-                <div class="container d-flex justify-content-between title-underline">
+            <div class="col-12 col-md-9 px-0 px-md-3 pt-4 pt-md-0">
+                <div class="container d-flex justify-content-between title-underline px-3">
                     <div>
                         <h3>Searched for "<?= esc($query['term']) ?>"</h3>
                         <p class="text-muted">Total <?= esc($total) ?> matches</p>
@@ -92,7 +92,7 @@
 
                                 <?php if ($product['media_thumbnail_id']) : ?>
                                     <a href="/product/<?= esc($product['id'], 'attr') ?>">
-                                        <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id'], 'attr') ?>" class="flex-shrink-0 me-3 img-thumb-m rounded" alt="Product Image">
+                                        <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id'], 'attr') ?>" class="flex-shrink-0 me-md-3 img-thumb-m rounded" alt="Product Image">
                                     </a>
                                 <?php else : ?>
                                     <a href="/product/<?= esc($product['id'], 'attr') ?>">
@@ -102,19 +102,21 @@
                                     </a>
                                 <?php endif ?>
 
-                                <div class="container-fluid">
+                                <div class="container-fluid px-3 px-md-4">
                                     <div class="row">
-                                        <div class="col-8">
-                                            <h5 class="mt-0">
-                                                <?= esc($product['title']) ?>
+                                        <div class="col-12 col-md-8">
+                                            <a href="/product/<?= esc($product['id'], 'attr') ?>" class="text-decoration-none text-reset">
+                                                <h5 class="mt-0">
+                                                    <?= esc($product['title']) ?>
 
-                                                <?php if ($product['availability'] == 0) : ?>
-                                                    <span class="badge rounded-pill bg-secondary mx-2">
-                                                        Out of Stock
-                                                    </span>
-                                                <?php endif ?>
-                                            </h5>
-                                            <p class="prod-search-rating">
+                                                    <?php if ($product['availability'] == 0) : ?>
+                                                        <span class="badge rounded-pill bg-secondary mx-2">
+                                                            Out of Stock
+                                                        </span>
+                                                    <?php endif ?>
+                                                </h5>
+                                            </a>
+                                            <p class="prod-search-rating mb-0 mb-md-2">
                                                 <span class="color-indigo px-2 stars-top">
                                                     <?php
                                                     $stars = 0;
@@ -143,11 +145,11 @@
                                                     (<?= esc($product['rating_count']) ?>)
                                                 <?php endif ?>
                                             </p>
-                                            <p class="text-muted pt-2">
+                                            <p class="text-muted pt-2 hide-mobile">
                                                 <?= ellipsize(strip_tags($product['description']), 100) ?>
                                             </p>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-12 col-md-4">
                                             <div class="row">
                                                 <h3 class="color-indigo fw-bold">€ <?= esc($product['price']) ?></h3>
                                             </div>
@@ -155,7 +157,7 @@
                                                 <p class="text-small">Sold by <a href="/shop/<?= esc($product['shop_id'], 'attr') ?>"><?= esc($product['shop_name']) ?></a></p>
                                             </div>
                                             <?php if ($product['availability'] > 0) : ?>
-                                                <div class="row">
+                                                <div class="row hide-mobile">
                                                     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                                                         <button type="button" class="btn btn-primary bg-indigo">
                                                             <i class="bi bi-basket" aria-hidden="true"></i>

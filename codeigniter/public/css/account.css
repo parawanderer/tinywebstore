@@ -2,9 +2,6 @@
     color: var(--bs-indigo);
 }
 
-/* .nav-link:focus, .nav-link:hover {
-    color: #0a58ca;
-} */
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     background-color: var(--bs-indigo);
@@ -12,4 +9,14 @@
 
 .account-nav .bi {
     margin-right: 0.5em;
+}
+
+
+
+/* mobile */
+
+@media (max-width: 768px) {
+    .account-wrapper-container {
+        border: 1px solid #dee2e6!important;
+    }
 }

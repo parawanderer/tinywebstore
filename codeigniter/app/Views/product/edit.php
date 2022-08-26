@@ -6,7 +6,7 @@
     <form action="<?= $is_edit ? "/product/edit/{$product['id']}" : '/product/create' ?>" method="post" id="productEditCreateForm" novalidate>
     <?= csrf_field() ?>
 
-        <div class="row">
+        <div class="row mb-3 mb-md-0">
             <div class="container d-flex justify-content-between">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -47,7 +47,7 @@
                 </div>
             <?php endif ?>
 
-            <div class="col-6 px-5">
+            <div class="col-12 col-md-6 px-md-5">
                 <div class="row">
                     <?php if ($is_edit && $primary_media) : ?>
                         <img 
@@ -69,9 +69,9 @@
 
                 <div class="row justify-content-start align-items-end">
                     <?php if ($is_edit) : ?>
-                    <div class="col">
+                    <div class="col-12 mb-4 mb-md-0">
                         <?php if (count($media) > 0): ?>
-                            <div class="row row-cols-1 row-cols-md-4 g-4 product-media-select">
+                            <div class="row row-cols-4 g-4 product-media-select pt-4">
                                 <?php foreach ($media as $mediaItem) : ?>
 
                                     <div class="col">
@@ -130,7 +130,7 @@
                 <input type="hidden" id="currentPrimaryImage" name="productPrimaryImage" value="<?= esc($primary_media ? $primary_media['id'] : '') ?>">
             </div>
 
-            <div class="col-6">
+            <div class="col-12 col-md-5 mt-4 mt-md-0">
 
                 <div class="row">
                     <div class="mb-3">
@@ -187,7 +187,7 @@
     </form>
 </div>
 
-<div class="modal fade" id="addMediaModal" tabindex="-1" aria-labelledby="addMediaModalLabel" aria-hidden="true">
+<div class="modal fade z-3000" id="addMediaModal" tabindex="-1" aria-labelledby="addMediaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -211,7 +211,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="deleteMediaModal" tabindex="-1" aria-labelledby="deleteMediaModalLabel" aria-hidden="true">
+<div class="modal fade z-3000" id="deleteMediaModal" tabindex="-1" aria-labelledby="deleteMediaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

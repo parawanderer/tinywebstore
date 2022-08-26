@@ -3,18 +3,15 @@
 </script>
 
 <div class="search-overlay" id="searchOverlay"></div>
-<nav class="navbar navbar-expand-lg navbar-dark search-bar">
+<nav class="navbar navbar-expand-lg navbar-dark search-bar justify-content-center justify-content-md-start">
     <div class="row w-100">
-    <div class="col-3 d-flex justify-content-start align-items-center">
+    <div class="order-1 order-md-1 col-6 col-md-3 d-flex justify-content-start align-items-center">
         <a class="navbar-brand" href="/">
             <i class="bi bi-shop store-icon"></i>
             <span class="fs-4">Web Store</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
     </div>
-    <div class="col">
+    <div class="col-12 col-md-6 order-3 order-md-2 pb-2 pb-md-0">
         <form class="d-flex" action="/search" method="get">
             <div class="input-group search-container" id="searchContainer">
                 <input autocomplete="off" type="text" name="q" class="form-control" placeholder="Product Name..." aria-label="Product Name" aria-describedby="productSearchButton" id="searchBarInput">
@@ -29,11 +26,11 @@
             </div>
         </form>
     </div>
-    <div class="col-3">
-    <div class="justify-content-end align-items-center collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-            <li class="nav-item dropdown">
-                <a class="nav-link active" href="#" id="navbarDropdown" role="button" aria-label="Basket" data-bs-toggle="dropdown" aria-expanded="false">
+    <div class="order-2 order-md-3 col-6 col-md-3">
+    <div class="justify-content-end align-items-center collapse navbar-collapse d-flex" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto mb-md-2 mb-lg-0 flex-row">
+            <li class="nav-item dropdown nav-main-dropdown-container">
+                <a class="nav-link active px-2" href="#" id="cartDropDown" role="button" aria-label="Basket" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="account-icon d-inline-flex">
                         <i class="bi bi-basket" aria-label="Basket"></i>
                         <?php if (count($cart) > 0) : ?>
@@ -42,10 +39,10 @@
                     </div>
                 </a>
                 <?php if (count($cart) > 0) : ?>
-                    <ul class="dropdown-menu dropdown-menu-end cart-dropdown" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu dropdown-menu-end cart-dropdown nav-dropdown" aria-labelledby="cartDropdown">
                         <?php foreach($cart as &$product): ?>
                         <li>
-                            <div class="container">
+                            <div class="container px-2 px-md-3">
                                 <div class="row py-2 border-bottom">
                                     <div class="col col-3">
                                         <?php if ($product['media_thumbnail_id']): ?>
@@ -83,14 +80,14 @@
                 <?php endif ?>
             </li>
             <?php if ($logged_in) : ?>
-                <li class="nav-item dropdown">
-                    <a class="nav-link active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <li class="nav-item dropdown nav-main-dropdown-container">
+                    <a class="nav-link active px-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="account-icon d-inline-flex">
                             <i class="bi bi-person" aria-label="Account"></i>
                             <span class="username"><?= esc($user['first_name']) ?></span>
                         </div>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu dropdown-menu-end nav-dropdown" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/account"><i class="bi bi-person" aria-hidden="true"></i> Account</a></li>
                         <?php if ($user['has_shop']) : ?>
                             <li><a class="dropdown-item" href="<?= esc($user['shop_url']) ?>"><i class="bi bi-shop" aria-hidden="true"></i> Shop (<?= esc($user['shop_name']) ?>)</a></li>

@@ -72,9 +72,8 @@
     font-size: 1.25rem;
 }
 
-
 .max-height-85 {
-    max-height: 85vh;
+    max-height: 75vh; /* funny */
 }
 
 /* top nav / search */
@@ -189,6 +188,10 @@
     z-index: 3000;
 }
 
+.z-3000 {
+    z-index: 3000;
+}
+
 /* Bootstrap edits */
 
 .accordion-button-indigo:focus {
@@ -214,4 +217,47 @@
 
 .pell-content h2 {
     font-size: 1.25rem;
+}
+
+
+/* mobile */
+
+@media (min-width: 768px) {
+    .fs-md-6 {
+        font-size: 1rem!important;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar.search-bar {
+        padding: inherit;
+        z-index: 3000;
+    }
+
+    .nav-dropdown {
+        position: absolute !important;
+        z-index: 3000;
+        box-shadow: 1px 2px 25px 2px rgb(0 0 0 / 39%);
+        right: 0.5rem !important;
+        top: 3rem !important;
+        max-width: 95vw;
+    }
+
+    .nav-main-dropdown-container {
+        position: unset !important;
+    }
+
+    .col-12.line-left {
+        border-left: 0;
+    }
+
+    .hide-mobile {
+        display: none !important;
+    }
+
+    .img-thumb-m {
+        height: 4rem;
+        width: 4rem;
+        margin-right: 0 !important;
+    }
 }
