@@ -1,5 +1,4 @@
-<!-- placeholder: https://mdbootstrap.com/snippets/standard/mdbootstrap/2885008?view=side -->
-
+<!-- this footer is here to look pretty. Taken from: https://mdbootstrap.com/snippets/standard/mdbootstrap/2885008?view=side -->
 <footer class="text-center text-lg-start text-white" style="background-color: #1c2331">
     <!-- Section: Social media -->
     <section class="d-flex justify-content-between p-4" style="background-color: #6351ce">
@@ -116,9 +115,11 @@
     </div>
     <!-- Copyright -->
 </footer>
+<!-- end footer -->
+
+
 
 <!-- alert system -->
-
 <div id="alertTemplate" style="display:none;">
     <div class="toast fade hide notification-outer" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
@@ -139,7 +140,6 @@
     <div class="toast-container" id="alertContainer">
     </div>
 </div>
-
 
 <!-- used everywhere -->
 <script src="/js/search.js"></script>
