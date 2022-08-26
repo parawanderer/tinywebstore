@@ -229,7 +229,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="float-end text-end">
-                                            <div class="review-score color-indigo">
+                                            <div class="color-indigo">
 
                                                 <?php
                                                 $i;

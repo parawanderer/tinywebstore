@@ -3,9 +3,15 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Exception;
 
 class ProductModel extends Model
 {
+    public const SORT_ALPHABETICAL = 0;
+    public const SORT_PRICE_ASC = 1;
+    public const SORT_PRICE_DESC = 2;
+    public const SORT_REVIEW_DESC = 3;
+
     protected $primaryKey = "id";
     protected $table = 'product';
     protected $allowedFields = [
@@ -46,6 +52,85 @@ class ProductModel extends Model
             ->findAll($limit);
 
         ProductModel::updateMediaInfo($result);
+        return $result;
+    }
+
+    public function nameSearchExtended(string $titleSubstring, int $limit = 8, array $options = []) {
+        $binds = [
+            "lim" => $limit,
+            "search" => "%$titleSubstring%"
+        ];
+
+        $sql = "SELECT p.id, p.shop_id, p.title, p.price, p.availability, p.main_media, p.`description`, 
+                s.`name` as shop_name, m.mimetype as media_mimetype, SUM(r.rating) / COUNT(r.rating) as `avg_rating`, COUNT(r.rating) as `rating_count`
+                FROM product p
+                LEFT JOIN shop_media m ON p.main_media = m.id
+                INNER JOIN shop s ON p.shop_id = s.id
+                LEFT JOIN review r ON p.id = r.product_id
+                WHERE p.title LIKE :search: ";
+
+        if ($options['mustBeInStock']) {
+            $sql .= " AND p.availability > 0 ";
+        }
+        if ($options['costMin'] != -1) {
+            $sql .= " AND price >= :costMin: ";
+            $binds['costMin'] = $options['costMin'];
+        }
+        if ($options['costMax'] != -1) {
+            $sql .= " AND price <= :costMax: ";
+            $binds['costMax'] = $options['costMax'];
+        }
+
+        $sql .= " GROUP BY r.product_id, p.id ";
+        
+        if ($options['reviewCount'] != -1 || $options['reviewScoreMin'] != -1) {
+            $sql .= " HAVING ";
+            $needsAnd = false;
+
+            if ($options['reviewCount'] != -1) {
+                $sql .= " `rating_count` >= :reviewCount: ";
+                $binds['reviewCount'] = $options['reviewCount'];
+                $needsAnd = true;
+            }
+            if ($options['reviewScoreMin'] != -1) {
+                if ($needsAnd) $sql .= ' AND ';
+                $sql .= " `avg_rating` >= :reviewScoreMin: ";
+                $binds['reviewScoreMin'] = $options['reviewScoreMin'];
+                $needsAnd = true;
+            }
+        }
+
+        switch(intval($options['sortOption'])) {
+            case ProductModel::SORT_PRICE_ASC:
+                $sql .= " ORDER BY p.price ASC ";
+                break;
+            case ProductModel::SORT_PRICE_DESC:
+                $sql .= " ORDER BY p.price DESC ";
+                break;
+            case ProductModel::SORT_REVIEW_DESC:
+                $sql .= " ORDER BY avg_rating DESC ";
+                break;
+            case ProductModel::SORT_ALPHABETICAL: default:
+                $sql .= " ORDER BY p.title ASC ";
+                break;
+        }
+
+        // this is inefficient, but I'm too tired to write something better. It'll do for this toy project
+        $counterSQL =  "SELECT COUNT(*) as `count` FROM (" . $sql . ") AS t;";
+
+        $sql .= " LIMIT :lim:";
+
+        $query = $this->db->query($sql, $binds);
+        $result = $query->getResultArray();
+
+        $resultsTotalCount = $this->db->query($counterSQL, $binds)->getFirstRow('array')["count"] ?? 0;
+        
+        ProductModel::updateMediaInfo($result);
+        return [$result, $resultsTotalCount];
+    }
+
+    public function countTotalNameSearchMatches(string $titleSubstring) {
+        $result = $this->select("*")->like('title', $titleSubstring)->countAllResults();
         return $result;
     }
 

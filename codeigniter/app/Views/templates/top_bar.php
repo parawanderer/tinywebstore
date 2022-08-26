@@ -14,7 +14,7 @@
         <form class="d-flex" action="/search" method="get">
             <div class="input-group search-container" id="searchContainer">
                 <input autocomplete="off" type="text" name="q" class="form-control" placeholder="Product Name..." aria-label="Product Name" aria-describedby="productSearchButton" id="searchBarInput">
-                <button class="btn search-button btn-light" type="button" id="productSearchButton">
+                <button class="btn search-button btn-light" type="submit" id="productSearchButton">
                     <i class="bi bi-search color-indigo" aria-label="Search Button"></i>
                 </button>
                 <ul class="dropdown-menu search-result-dropdown w-100" aria-label="Quick Search Results" id="searchResultsDropDown">

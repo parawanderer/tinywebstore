@@ -167,6 +167,14 @@
     font-size: .8125rem;
 }
 
+.text-small {
+    font-size: 10pt;
+}
+
+.prod-search-rating .bi {
+    padding: 0 1pt;
+}
+
 /* Bootstrap edits */
 
 .accordion-button-indigo:focus {
@@ -184,7 +192,7 @@
 }
 
 
-/* Util */
+/* Lib stuff */
 
 .pell-content h1 {
     font-size: 2rem;

@@ -21,8 +21,8 @@
                     <input type="password" class="form-control" id="loginPassword" name="loginPassword">
                 </div>
                 <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="loginRememberMe">
-                    <label class="form-check-label" for="loginRememberMe" name="loginRememberMe">Remember me</label>
+                    <input type="checkbox" class="form-check-input" id="loginRememberMe" name="loginRememberMe">
+                    <label class="form-check-label" for="loginRememberMe">Remember me</label>
                 </div>
                 <button type="submit" class="btn btn-primary bg-indigo">Login</button>
             </form>
