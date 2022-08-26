@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Helpers\AlertHelper;
 use App\Models\AccountModel;
 use App\Models\MessageChainModel;
 use App\Models\MessageModel;
@@ -31,6 +32,8 @@ class Account extends AppBaseController
                 $this->loginUser($user);
                 $topBar['name'] = $user['first_name'];
             }
+
+            return redirect()->to("/");
         }
 
         $templateParams = $this->getUserTemplateParams();
@@ -168,6 +171,7 @@ class Account extends AppBaseController
             . view('templates/footer');
     }
 
+    //the count update should also have been a background process in a real app...
     public function orderCancel(int $orderId = -1) {
         if (!$this->loggedIn()) return redirect()->to('/account/login');
 
@@ -182,6 +186,26 @@ class Account extends AppBaseController
             throw new Exception("Bad request");
 
         $orderModel->cancelOrder($orderId);
+        $countMap = Account::getOrderEntriesToCountMap($orderDetails);
+
+        // TRANSACTION: reset counts
+        $orderModel->startOrderTransaction();
+
+        /** @var \App\Models\ProductModel */
+        $productModel = model(ProductModel::class);
+        $products = $productModel->getProductsByIdsForUpdate(array_keys($countMap));
+        
+        $outOfStockResets = Account::mapNewAvailabilities($countMap, $products);
+        $productModel->incrementProductAvailabilities($countMap);
+
+        $result = $orderModel->completeOrderTransaction();
+        // TRANSACTION END        
+
+        if (!$result)
+            throw new Exception("Internal server error");
+        
+        $alertHelper = new AlertHelper();
+        $alertHelper->bulkWatchlistItemAvailableAlert($outOfStockResets);
 
         $referrer = $this->request->header("Referer");
         if ($referrer) {
@@ -334,5 +358,30 @@ class Account extends AppBaseController
             'shop_name' => $userData['shop_name'],
             'shop_id' => $userData['shop_id']
         ]);
+    }
+
+    private static function getOrderEntriesToCountMap(array &$orderDetails) {
+        $result = [];
+
+        foreach($orderDetails['entries'] as &$entry) {
+            $result[$entry['product_id']] = $entry['quantity'];
+        }
+
+        return $result;
+    }
+
+    private static function mapNewAvailabilities(array &$countMap, array &$productDetails) {
+        $nonZeroUpdateMap = [];
+
+        foreach($productDetails as &$product) {
+            $newAvailability = $product['availability'] + $countMap[$product['id']];
+            $countMap[$product['id']] = $newAvailability;
+
+            if ($product['availability'] == 0 && $newAvailability > 0) {
+                $nonZeroUpdateMap[$product['id']] = $product['title'];
+            }
+        }
+
+        return $nonZeroUpdateMap;
     }
 }

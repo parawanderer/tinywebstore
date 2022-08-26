@@ -11,21 +11,19 @@
         <form action="/account/login" method="post">
             <?= csrf_field() ?>
 
-            <form>
-                <div class="mb-3">
-                    <label for="loginEmail" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="loginEmail" name="loginEmail">
-                </div>
-                <div class="mb-3">
-                    <label for="loginPassword" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="loginPassword" name="loginPassword">
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="loginRememberMe" name="loginRememberMe">
-                    <label class="form-check-label" for="loginRememberMe">Remember me</label>
-                </div>
-                <button type="submit" class="btn btn-primary bg-indigo">Login</button>
-            </form>
+            <div class="mb-3">
+                <label for="loginEmail" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="loginEmail" name="loginEmail">
+            </div>
+            <div class="mb-3">
+                <label for="loginPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="loginPassword" name="loginPassword">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="loginRememberMe" name="loginRememberMe">
+                <label class="form-check-label" for="loginRememberMe">Remember me</label>
+            </div>
+            <button type="submit" class="btn btn-primary bg-indigo">Login</button>
         </form>
     </div>
     <div class="col col-lg-4 line-left signup-form-block">
@@ -43,13 +41,11 @@
         <form action="/account/register" method="post">
             <?= csrf_field() ?>
 
-            <form>
-                <div class="mb-3">
-                    <label for="createUserEmail" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="createUserEmail" name="email">
-                </div>
-                <button type="submit" class="btn btn-primary bg-indigo">Sign Up</button>
-            </form>
+            <div class="mb-3">
+                <label for="createUserEmail" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="createUserEmail" name="email">
+            </div>
+            <button type="submit" class="btn btn-primary bg-indigo">Sign Up</button>
         </form>
     </div>
   </div>

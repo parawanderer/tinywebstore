@@ -37,14 +37,12 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-
-// custom
-$routes->get('pages', 'Pages::index');
+//$routes->get('pages', 'Pages::index');
 
 $routes->get('account', 'Account::index');
 $routes->get('account/orders', 'Account::orders');
 $routes->get('account/order/(:num)', 'Account::order/$1');
-$routes->get('account/order/(:num)/cancel', 'Account::orderCancel/$1');
+$routes->post('account/order/(:num)/cancel', 'Account::orderCancel/$1');
 $routes->get('account/watchlist', 'Account::watchlist');
 $routes->get('account/messages', 'Account::messages');
 $routes->get('account/message/(:num)', 'Account::message/$1');
@@ -69,6 +67,10 @@ $routes->get('shop/orders', 'Shop::orders');
 $routes->get('shop/order/(:num)', 'Shop::order/$1');
 $routes->post('shop/order/complete', 'Shop::completeOrder');
 $routes->get('shop/stats', 'Shop::stats');
+
+
+$routes->get('alerts', 'Alerts::index');
+$routes->put('alerts/seen', 'Alerts::seen');
 
 // product
 $routes->get('product/(:num)', 'Shop::product/$1');

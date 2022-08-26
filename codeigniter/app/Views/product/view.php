@@ -255,7 +255,7 @@
                                             <?php endif?>
                                         </h6>
                                         <p class="card-text py-2">
-                                            <?= esc($review['content']) ?>
+                                            <?= nl2br(esc($review['content'])) ?>
                                         </p>
                                     </div>
                                 </div>
@@ -296,7 +296,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="viewMediaModal" tabindex="-1" aria-labelledby="viewMediaModalLabel" aria-hidden="true">
+<div class="modal fade view-media-modal" id="viewMediaModal" tabindex="-1" aria-labelledby="viewMediaModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">

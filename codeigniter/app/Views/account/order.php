@@ -21,7 +21,8 @@
 
             <?php if ($order['status'] == 0) : ?>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <form action="/order/<?= esc($order['id']) ?>/cancel">
+                    <form action="/account/order/<?= esc($order['id']) ?>/cancel" method="post">
+                        <?= csrf_field() ?>
                         <button type="submit" class="align-self-end btn btn-primary btn-lg bg-indigo">
                             Cancel Order
                         </button>
@@ -35,11 +36,11 @@
                 <div class="d-flex position-relative">
 
                     <?php if ($productDetails['media_thumbnail_id']) : ?>
-                        <a href="/product/<?= esc($productDetails['id']) ?>">
+                        <a href="/product/<?= esc($productDetails['product_id']) ?>">
                             <img src="/uploads/shop/media/<?= esc($productDetails['media_thumbnail_id']) ?>" class="flex-shrink-0 me-3 img-thumb-m rounded" alt="Product Image">
                         </a>
                     <?php elseif (!$productDetails['is_deleted']) : ?>
-                        <a href="/product/<?= esc($productDetails['id']) ?>">
+                        <a href="/product/<?= esc($productDetails['product_id']) ?>">
                             <div class="rounded float-start bg-grey-light d-flex justify-content-center img-thumb-m">
                                 <i class="bi bi-image text-white fs-1 align-self-center"></i>
                             </div>
@@ -62,6 +63,10 @@
                                     <?php if ($productDetails['completed']) : ?>
                                         <span class="badge rounded-pill bg-indigo mx-2">
                                             <i class="bi bi-check-lg" aria-hidden="true"></i> Completed
+                                        </span>
+                                    <?php elseif ($order['status'] == 2): ?>
+                                        <span class="badge rounded-pill bg-dark">
+                                            <i class="bi bi-x-octagon-fill" aria-hidden="true"></i> Cancelled
                                         </span>
                                     <?php else : ?>
                                         <span class="badge rounded-pill bg-warning text-dark mx-2">

@@ -46,6 +46,17 @@ class WatchlistModel extends Model
         return $result;
     }
 
+    public function getUsersWatching(int $productId) {
+        $userIds = $this->select("user_id")->where(["product_id" => $productId])->findAll();
+        $result = [];
+
+        foreach($userIds as &$userRecord) {
+            $result[] = $userRecord['user_id'];
+        }
+
+        return $result;
+    }
+
     private static function updateMediaInfo(array &$products) {
         foreach($products as &$product) {
             [ $isVideo, $thumbnailId ] = ShopMediaModel::getThumbnailInfo($product['main_media'], $product['mimetype']);

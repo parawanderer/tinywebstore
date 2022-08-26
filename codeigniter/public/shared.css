@@ -175,6 +175,20 @@
     padding: 0 1pt;
 }
 
+.toast-icon-container {
+    width: 1.2rem;
+    height: 1.2rem;
+    font-size: 10pt;
+}
+
+.notification-outer {
+    cursor: pointer;
+}
+
+.view-media-modal {
+    z-index: 3000;
+}
+
 /* Bootstrap edits */
 
 .accordion-button-indigo:focus {

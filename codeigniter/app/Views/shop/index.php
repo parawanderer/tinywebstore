@@ -1,6 +1,6 @@
 <link href="/css/shop.css" rel="stylesheet">
 
-<div class="container p-outer-block-s">
+<div class="container p-outer-block-s shop-container">
     <div class="card">
         <div class="card text-white shop-banner">
             <?php if ($shop['shop_banner_img']) : ?>
@@ -208,7 +208,7 @@
 </div>
 
 
-<div class="modal fade" id="viewMediaModal" tabindex="-1" aria-labelledby="viewMediaModalLabel" aria-hidden="true">
+<div class="modal fade view-media-modal" id="viewMediaModal" tabindex="-1" aria-labelledby="viewMediaModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">

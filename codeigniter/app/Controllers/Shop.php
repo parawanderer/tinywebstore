@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Helpers\AlertHelper;
 use App\Helpers\HtmlSanitizer;
 use App\Helpers\ContrastRatioChecker;
 use App\Helpers\FFMPregHelper;
@@ -241,7 +242,7 @@ class Shop extends AppBaseController
         $orderDetails = $orderModel->getOrderDetails($orderId);
 
         // already complete
-        if ($orderDetails['status'] == OrderModel::STATUS_COMPLETE)
+        if ($orderDetails['status'] != OrderModel::STATUS_PENDING)
             throw new Exception("Bad request");
 
         // validate we even have any order belonging to this shop in this list?
@@ -254,6 +255,9 @@ class Shop extends AppBaseController
         [$completing, $updateStatus] = Shop::getCompletionDetails($orderDetails, $ownedShopId);
 
         $orderModel->updateStoreOrderCompletion($orderId, $completing, $updateStatus);
+        
+        $alertHelper = new AlertHelper();
+        $alertHelper->orderCompleteAlert($orderDetails);
 
         return redirect()->to("/shop/order/{$orderId}");
     }
@@ -490,7 +494,13 @@ class Shop extends AppBaseController
 
                 // if creating, redirect to edit page to maybe add media
                 if ($isCreating)
-                    return redirect()->to("/product/edit/{$resultId}");                
+                    return redirect()->to("/product/edit/{$resultId}");        
+                    
+                if ($product['availability'] > 0) {
+                    // alerts
+                    $alertHelper = new AlertHelper();
+                    $alertHelper->watchlistItemAvailableAlert($resultId, $product['title']);
+                }
 
                 return redirect()->to("/product/{$resultId}");
 

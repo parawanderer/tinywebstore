@@ -115,12 +115,12 @@ class OrderModel extends Model
     }
 
     public function getLatestOrdersForShop(int $shopId, int $limit = 50) {
-        $query = $this->db->query("SELECT o.id, o.user_id, o.created, o.`type`, o.`status`, SUM(e.completed) = COUNT(e.id) AS 'completed', SUM(e.quantity * e.price_per_unit) AS 'shop_total_price'
+        $query = $this->db->query("SELECT o.id, o.user_id, o.created, o.`type`, o.`status`, SUM(e.completed) = COUNT(e.id) AS `completed`, SUM(e.quantity * e.price_per_unit) AS `shop_total_price`
             FROM `order` o 
             INNER JOIN `order_entry` e ON e.order_id = o.id 
             WHERE e.shop_id = :shop_id:
             GROUP BY o.id
-            ORDER BY o.`type` DESC, o.`created` DESC
+            ORDER BY o.`created` DESC
             LIMIT :lim:", 
             [
                 "lim" => $limit,
@@ -128,8 +128,21 @@ class OrderModel extends Model
             ]);
 
         $result = $query->getResultArray();
+        //OrderModel::sortOrderListForShop($result);
         
         return $result;
+    }
+
+    private static function sortOrderListForShop(array &$orders) {
+        usort($orders, function($a, $b) {
+            $truePendingStateA = $a['status'] == 0 && $a['completed'] == 0;
+            $truePendingStateB = $b['status'] == 0 && $b['completed'] == 0;
+
+            if ($truePendingStateA && !$truePendingStateB) return -1;
+            if (!$truePendingStateA && $truePendingStateB) return 1;
+
+            return strtotime($a['created']) - strtotime($b['created']);
+        });
     }
 
     public function getOrderDetailsForShop(int $shopId, int $orderId) {

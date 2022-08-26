@@ -1,3 +1,7 @@
+<script>
+    window.AppIsLoggedIn = <?= json_encode(boolval($logged_in) ?? false) ?>;
+</script>
+
 <div class="search-overlay" id="searchOverlay"></div>
 <nav class="navbar navbar-expand-lg navbar-dark search-bar">
     <div class="row w-100">

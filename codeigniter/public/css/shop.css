@@ -67,6 +67,10 @@
     overflow: hidden;
 }
 
+.shop-container {
+    max-width: 70vw;
+}
+
 
 /* manager */
 .inventory-thumbnail {
