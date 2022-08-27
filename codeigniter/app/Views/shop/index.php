@@ -8,7 +8,7 @@
 
                 <div class="card-img-overlay d-flex align-items-end">
                     <?php if ($shop['shop_logo_img']) : ?>
-                        <img src="/uploads/shop/logo/<?= esc($shop['shop_logo_img']) ?>" class="rounded shop-logo" alt="Shop logo">
+                        <img src="/uploads/shop/logo/<?= esc($shop['shop_logo_img_m']) ?>" class="rounded shop-logo" alt="Shop logo">
                     <?php else : ?>
                         <div class="text-avatar shop-logo rounded">
                             <?= esc($shop['name']) ?>
@@ -18,7 +18,7 @@
             <?php else : ?>
                 <div class="card-img-overlay d-flex align-items-end bg-indigo" style="<?= $shop['theme_color'] ? "background-color: {$shop['theme_color']};" : '' ?> <?= $shop['font_color'] ? "color: {$shop['font_color']}; " : '' ?>">
                     <?php if ($shop['shop_logo_img']) : ?>
-                        <img src="/uploads/shop/logo/<?= esc($shop['shop_logo_img']) ?>" class="rounded shop-logo" alt="Shop logo">
+                        <img src="/uploads/shop/logo/<?= esc($shop['shop_logo_img_m']) ?>" class="rounded shop-logo" alt="Shop logo">
                     <?php else : ?>
                         <div class="text-avatar shop-logo rounded">
                             <?= esc($shop['name']) ?>
@@ -72,7 +72,7 @@
     </div>
 
     <div class="card my-2">
-        <div class="card-body" style="background-color: <?= esc($shop['theme_color']) ?? 'transparent' ?>; color: <?= esc($shop['font_color']) ?? 'inherit' ?>;">
+        <div class="card-body" id="media" style="background-color: <?= esc($shop['theme_color']) ?? 'transparent' ?>; color: <?= esc($shop['font_color']) ?? 'inherit' ?>;">
             <h5 class="card-title">Media</h5>
 
             <div class="row row-cols-1 row-cols-md-4 g-4">

@@ -122,7 +122,7 @@ class Shop extends ShopDataControllerBase
         $deletedMedia = $this->handleDeleteMedia();
 
         if ($deletedMedia) {
-            return redirect()->to("/shop/{$deletedMedia['shop_id']}");
+            return redirect()->to("/shop/{$deletedMedia['shop_id']}#media");
         }
 
         throw new Exception("Bad request");
@@ -139,7 +139,7 @@ class Shop extends ShopDataControllerBase
             throw new Exception("Bad request");
         }
 
-        return redirect()->to("/shop/{$this->getOwnedShopId()}");
+        return redirect()->to("/shop/{$this->getOwnedShopId()}#media");
     }
 
     public function inventory() {
