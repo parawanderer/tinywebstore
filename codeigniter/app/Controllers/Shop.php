@@ -48,6 +48,9 @@ class Shop extends ShopDataControllerBase
         $templateParams['media'] = $media;
         $templateParams['title'] = "Shop | {$shop['name']}";
 
+
+        var_dump($media);
+
         return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('shop/index', $templateParams)

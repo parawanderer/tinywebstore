@@ -10,14 +10,14 @@
                     <article class="col">
                         <div class="card h-100 text-dark">
                             <?php if ($product['media_thumbnail_id']) : ?>
-                                <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_l']) ?>" class="card-img-top product-thumbnail-img" aria-labelledby="productTitle-<?= esc($product['id']) ?>">
+                                <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_l']) ?>" class="card-img-top product-thumbnail-img" alt="Product Thumbnail">
                             <?php else : ?>
                                 <div class="rounded float-start product-thumbnail-img bg-grey-light d-flex justify-content-center">
                                     <i class="bi bi-image text-white fs-1 align-self-center"></i>
                                 </div>
                             <?php endif ?>
                             <div class="card-body">
-                                <h4 class="card-title fs-5" id="productTitle-<?= esc($product['id']) ?>">
+                                <h4 class="card-title fs-5">
                                     <a href="/product/<?= esc($product['id']) ?>" class="stretched-link text-decoration-none text-reset">
                                         <?= esc($product['title']) ?>
                                     </a>
@@ -40,14 +40,14 @@
                     <article class="col-6 col-md-2 mb-4">
                         <div class="card h-100 text-dark">
                             <?php if ($product['media_thumbnail_id']) : ?>
-                                <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_m']) ?>" class="card-img-top product-thumbnail-img-s" aria-labelledby="productTitle-<?= esc($product['id']) ?>">
+                                <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_m']) ?>" class="card-img-top product-thumbnail-img-s" alt="Product Thumbnail">
                             <?php else : ?>
                                 <div class="rounded float-start product-thumbnail-img-s bg-grey-light d-flex justify-content-center">
                                     <i class="bi bi-image text-white fs-1 align-self-center"></i>
                                 </div>
                             <?php endif ?>
                             <div class="card-body">
-                                <h5 class="card-title fs-6" id="productTitle-<?= esc($product['id']) ?>">
+                                <h5 class="card-title fs-6">
                                     <a href="/product/<?= esc($product['id']) ?>" class="stretched-link text-decoration-none text-reset">
                                         <?= esc($product['title']) ?>
                                     </a>

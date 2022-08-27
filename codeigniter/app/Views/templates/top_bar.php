@@ -2,7 +2,7 @@
     window.AppIsLoggedIn = <?= json_encode(boolval($logged_in) ?? false) ?>;
 </script>
 
-<div class="search-overlay" id="searchOverlay"></div>
+<div class="search-overlay" id="searchOverlay" tabindex="0"></div>
 <nav class="navbar navbar-expand-lg navbar-dark search-bar justify-content-center justify-content-md-start">
     <div class="row w-100">
     <div class="order-1 order-md-1 col-6 col-md-3 d-flex justify-content-start align-items-center">
@@ -30,7 +30,7 @@
     <div class="justify-content-end align-items-center collapse navbar-collapse d-flex" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto mb-md-2 mb-lg-0 flex-row">
             <li class="nav-item dropdown nav-main-dropdown-container">
-                <a class="nav-link active px-2" href="#" id="cartDropDown" role="button" aria-label="Basket" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link active px-2" href="#" id="cartDropDown" role="button" aria-label="Basket" <?php if (count($cart) > 0) : ?>data-bs-toggle="dropdown" aria-expanded="false" <?php endif ?>>
                     <div class="account-icon d-inline-flex">
                         <i class="bi bi-basket"></i>
                         <?php if (count($cart) > 0) : ?>
@@ -81,9 +81,9 @@
             </li>
             <?php if ($logged_in) : ?>
                 <li class="nav-item dropdown nav-main-dropdown-container">
-                    <a class="nav-link active px-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link active px-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Account">
                         <div class="account-icon d-inline-flex">
-                            <i class="bi bi-person" aria-label="Account"></i>
+                            <i class="bi bi-person"></i>
                             <span class="username"><?= esc($user['first_name']) ?></span>
                         </div>
                     </a>

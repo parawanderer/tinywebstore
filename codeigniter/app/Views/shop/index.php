@@ -35,13 +35,13 @@
                     <p class="text-muted"><?= esc($shop['address']) ?></p>
 
                     <?php if ($shop['phone_number']) : ?>
-                        <p class="text-muted"><i class="bi bi-telephone-fill color-indigo" aria-label="Phone Number" <?= $icon_color ? "style=\"color: {$icon_color}; \"" : "" ?>></i>
+                        <p class="text-muted"><i class="bi bi-telephone-fill color-indigo" <?= $icon_color ? "style=\"color: {$icon_color}; \"" : "" ?>></i>
                             <?= esc($shop['phone_number']) ?>
                         </p>
                     <?php endif ?>
 
                     <?php if ($shop['support_email']) : ?>
-                        <p class="text-muted"><i class="bi bi bi-envelope color-indigo" aria-label="Support Email" <?= $icon_color ? "style=\"color: {$icon_color}; \"" : "" ?>></i>
+                        <p class="text-muted"><i class="bi bi bi-envelope color-indigo" <?= $icon_color ? "style=\"color: {$icon_color}; \"" : "" ?>></i>
                             <?= esc($shop['support_email']) ?>
                         </p>
                     <?php endif ?>
@@ -81,19 +81,25 @@
                         <a 
                             class="media-item-clickable" 
                             data-is-video="<?= esc($mediaItem['is_video']) ?>" 
-                            data-id="/uploads/shop/media/<?= esc($mediaItem['id']) ?>" 
+                            data-id="/uploads/shop/media/<?= esc($mediaItem['id']) ?>"
+                            data-media-fullsize-img="/uploads/shop/media/<?= esc($mediaItem['thumbnail_id']) ?>" 
                             data-poster="<?= esc('/uploads/shop/media/' . $mediaItem['thumbnail_id']) ?>"
                         >
                             <div class="card h-100 media-item-container">
                                 <img 
-                                    src="/uploads/shop/media/<?= esc($mediaItem['is_video'] ? $mediaItem['thumbnail_id'] : $mediaItem['id']) ?>" 
+                                    src="/uploads/shop/media/<?= esc($mediaItem['thumbnail_id_l']) ?>" 
                                     class="card-img-top media-item-img" 
                                     alt="Shop uploaded media item"
                                 >
 
                                 <?php if ($owns_shop) : ?>
                                     <div class="card-img-overlay d-flex flex-row-reverse">
-                                        <button data-media-id="<?= esc($mediaItem['id']) ?>" class="btn-close media-remove-button" aria-label="Delete Media"></button>
+                                        <button 
+                                            data-media-id="<?= esc($mediaItem['id']) ?>" 
+                                            data-media-fullsize-img="/uploads/shop/media/<?= esc($mediaItem['thumbnail_id']) ?>" 
+                                            class="btn-close media-remove-button" 
+                                            aria-label="Delete Media">
+                                        </button>
                                     </div>
                                 <?php endif ?>
                             </div>
@@ -130,14 +136,14 @@
                 <article class="col">
                     <div class="card h-100 text-dark">
                         <?php if ($product['media_thumbnail_id']): ?>
-                            <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="card-img-top product-thumbnail-img" alt="Product thumbnail">
+                            <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_l']) ?>" class="card-img-top product-thumbnail-img" alt="Product thumbnail">
                         <?php else: ?>
                             <div class="rounded float-start product-thumbnail-img bg-grey-light d-flex justify-content-center">
                                 <i class="bi bi-image text-white fs-1 align-self-center"></i>
                             </div>
                         <?php endif ?>
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h5 class="card-title fs-6">
                                 <a href="/product/<?= esc($product['id']) ?>" class="stretched-link text-decoration-none text-reset">
                                 <?= esc($product['title']) ?>
                                 </a>

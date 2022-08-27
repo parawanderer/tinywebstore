@@ -33,6 +33,9 @@ searchOverlay.addEventListener("mousedown", function(event) {
     hideSearchOverlay();
 });
 
+searchOverlay.addEventListener("keydown", function(event) {
+    hideSearchOverlay();
+});
 
 var lastSearch = null;
 var typingTimeout = null;

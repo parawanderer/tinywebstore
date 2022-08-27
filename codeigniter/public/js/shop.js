@@ -13,16 +13,14 @@ for (var i = 0; i < items.length; ++i) {
         event.preventDefault();
         event.stopPropagation();
 
-        deleteMediaInput.value = event.target.dataset['mediaId'];
-        deletePreviewImage.src = event.target.parentElement.parentElement.getElementsByClassName("card-img-top")[0].src;
+        deleteMediaInput.value = this.dataset['mediaId'];
+        deletePreviewImage.src = this.dataset['mediaFullsizeImg'];
 
         deleteModal.show();
     });
 }
 
 // view
-
-
 const mediaViewModal = document.getElementById('viewMediaModal');
 const mediaViewImage = document.getElementById("mediaViewImage");
 const mediaViewVideo = document.getElementById("mediaViewVideo");
@@ -34,8 +32,6 @@ for (var i = 0; i < mediaItemContainers.length; ++i) {
     const container = mediaItemContainers[i];
 
     container.addEventListener("click", function(event) {
-        const clickedImage = container.getElementsByClassName("media-item-img")[0];
-
         if (container.dataset.isVideo) {
             mediaViewImage.style.display = 'none';
             mediaViewVideo.style.display = '';
@@ -48,7 +44,7 @@ for (var i = 0; i < mediaItemContainers.length; ++i) {
             mediaViewImage.style.display = '';
             mediaViewVideo.style.display = 'none';
 
-            mediaViewImage.src = clickedImage.src;
+            mediaViewImage.src = container.dataset.mediaFullsizeImg;
         }
 
         viewModal.show();
