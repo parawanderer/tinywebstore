@@ -16,12 +16,15 @@ use Exception;
 
 class Product extends ShopDataControllerBase
 {
+    private const PRODUCT_HISTORY_LIMIT = 6;
+
     public function product(int $productId = -1) {
         /** @var \App\Models\ProductModel */
         $productModel = model(ProductModel::class);
         $product = $productModel->getById($productId);
 
         if (!$product) throw new PageNotFoundException("Product does not exist");
+        $this->rememberSeenProduct($product['id']);
 
         $similarProducts = $productModel->getForShopExcluding($product['shop_id'], [$productId], 9);
 
@@ -314,6 +317,25 @@ class Product extends ShopDataControllerBase
             $media = new MediaFile($mediaEntry['id'], MediaFile::TYPE_MEDIA, $mediaEntry['mimetype']);
             $media->deleteAllFiles();
         }
+    }
+
+    private function rememberSeenProduct(int $productId) {
+        $session = \Config\Services::session();
+
+        $history = $session->get("product_history") ?? [];
+        $newHistory = [$productId];
+
+        $i = 1;
+        foreach($history as $hProdId) {
+            if ($i >= Product::PRODUCT_HISTORY_LIMIT) break;
+
+            if ($hProdId != $productId) {
+                $newHistory[] = $hProdId;
+                $i++;
+            }
+        }
+
+        $session->set("product_history", $newHistory);
     }
 
     private static function sortMediaForProduct(array &$mediaItems, ?string $primaryMediaId) {

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Helpers\MediaFile;
 use CodeIgniter\Model;
-use Exception;
 
 class ProductModel extends Model
 {
@@ -43,6 +42,20 @@ class ProductModel extends Model
             ->findAll($limit);
 
         ProductModel::updateMediaInfo($result);
+        return $result;
+    }
+
+    public function getSortedByIds(array &$ids) {
+        if (count($ids) === 0) return [];
+
+        $result = $this->select("product.id, product.shop_id, product.title, product.price, product.availability, product.main_media, product.description, shop_media.mimetype as media_mimetype")
+            ->join('shop_media', 'product.main_media = shop_media.id', 'left')
+            ->whereIn("product.id", $ids)
+            ->findAll();
+
+        ProductModel::updateMediaInfo($result);
+        ProductModel::sortByIds($result, $ids);
+
         return $result;
     }
 
@@ -208,5 +221,22 @@ class ProductModel extends Model
                 $product['media_thumbnail_id_l'] = $media->getThumbnailId(MediaFile::SIZE_L);
             }
         }
+    }
+
+    private static function sortByIds(array &$products, array &$ids) {
+        $order = [];
+        
+        $i = 0;
+        foreach($ids as $id) {
+            $order[$id] = $i;
+            $i++;
+        }
+
+        usort($products, function($a, $b) use(&$order) {
+            $orderA = $order[$a['id']];
+            $orderB = $order[$b['id']];
+
+            return $orderA - $orderB;
+        });
     }
 }

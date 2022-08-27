@@ -44,9 +44,7 @@ class Shop extends ShopDataControllerBase
         $templateParams['shop'] = $shop;
         $templateParams['description_safe'] = HtmlSanitizer::sanitize($shop['description']);
         $templateParams['icon_color'] = ContrastRatioChecker::getDarkerColor($shop['font_color'], $shop['theme_color']);
-
         $templateParams['products'] = $products;
-
         $templateParams['media'] = $media;
         $templateParams['title'] = "Shop | {$shop['name']}";
 
