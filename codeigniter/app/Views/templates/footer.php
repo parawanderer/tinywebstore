@@ -77,16 +77,13 @@
                     <h6 class="text-uppercase fw-bold">Useful links</h6>
                     <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
                     <p>
-                        <a href="#!" class="text-white">Your Account</a>
+                        <a href="/account" class="text-white">Your Account</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-white">Become an Affiliate</a>
+                        <a href="/account/login" class="text-white">Become an Affiliate</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-white">Shipping Rates</a>
-                    </p>
-                    <p>
-                        <a href="#!" class="text-white">Help</a>
+                        <a href="/accessibility" class="text-white">Accessibility Statement</a>
                     </p>
                 </div>
                 <!-- Grid column -->

@@ -19,24 +19,38 @@ class Account extends AppBaseController
             'loginPassword' => 'required'
         ];
 
-        if ($this->request->getMethod() === 'post' && $this->validate($loginRules)) {
-            /** @var \App\Models\AccountModel */
-            $model = model(AccountModel::class);
-            
-            $loginUsername = $this->request->getPost('loginEmail');
-            $loginPassword = $this->request->getPost('loginPassword');
+        $templateParams = $this->getUserTemplateParams();
+        $templateParams['error'] = false;
+        $templateParams['generic_login_error'] = false;
 
-            $user = $model->login($loginUsername, $loginPassword);
+        if ($this->request->getMethod() === 'post') {
+            if ($this->validate($loginRules)) {
+                /** @var \App\Models\AccountModel */
+                $model = model(AccountModel::class);
                 
-            if ($user) {
-                $this->loginUser($user);
-                $topBar['name'] = $user['first_name'];
-            }
+                $loginUsername = $this->request->getPost('loginEmail');
+                $loginPassword = $this->request->getPost('loginPassword');
 
-            return redirect()->to("/");
+                $user = $model->login($loginUsername, $loginPassword);
+                    
+                if ($user) {
+                    $this->loginUser($user);
+                    $topBar['name'] = $user['first_name'];
+                    return redirect()->to($this->getPostLoginTargetPath());
+                }
+
+                $this->persistLoginTargetPath();
+                
+                $templateParams['error'] = true;
+                $templateParams['generic_login_error'] = true;
+
+            } else {
+                $templateParams['error'] = true;
+            }
+        } else {
+            $this->persistLoginTargetPath();
         }
 
-        $templateParams = $this->getUserTemplateParams();
         $templateParams['title'] = 'Login';
 
         return view('templates/header', $templateParams)
@@ -119,7 +133,7 @@ class Account extends AppBaseController
     }
 
     public function index() {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->loggedIn()) return $this->redirectToLoginPreAuth();
 
         /** @var \App\Models\AccountModel */
         $model = model(AccountModel::class);
@@ -138,7 +152,7 @@ class Account extends AppBaseController
     }
 
     public function orders() {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->loggedIn()) return $this->redirectToLoginPreAuth();
 
         /** @var \App\Models\OrderModel */
         $orderModel = model(OrderModel::class);
@@ -157,7 +171,7 @@ class Account extends AppBaseController
     }
 
     public function order(int $orderId = -1) {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->loggedIn()) return $this->redirectToLoginPreAuth();
 
         /** @var \App\Models\OrderModel */
         $orderModel = model(OrderModel::class);
@@ -179,7 +193,7 @@ class Account extends AppBaseController
 
     //the count update should also have been a background process in a real app...
     public function orderCancel(int $orderId = -1) {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->loggedIn()) return $this->redirectToLoginPreAuth();
 
         /** @var \App\Models\OrderModel */
         $orderModel = model(OrderModel::class);
@@ -222,7 +236,7 @@ class Account extends AppBaseController
     }
 
     public function watchlist() {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->loggedIn()) return $this->redirectToLoginPreAuth();
 
         /** @var \App\Models\WatchlistModel */
         $watchlistModel = model(WatchlistModel::class);
@@ -241,7 +255,7 @@ class Account extends AppBaseController
     }
 
     public function messages() {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->loggedIn()) return $this->redirectToLoginPreAuth();
 
         /** @var \App\Models\MessageChainModel */
         $model = model(MessageChainModel::class);
@@ -267,7 +281,7 @@ class Account extends AppBaseController
     }
 
     public function initMessageChain() {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->loggedIn()) return $this->redirectToLoginPreAuth();
 
         $validationRules = [
             'to' => 'required|integer' 
@@ -299,7 +313,7 @@ class Account extends AppBaseController
     }
 
     public function message(int $conversationId = -1) {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
+        if (!$this->loggedIn()) return $this->redirectToLoginPreAuth();
         
         /** @var \App\Models\MessageChainModel */
         $messageChainModel = model(MessageChainModel::class);

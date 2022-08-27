@@ -74,6 +74,29 @@ class AppBaseController extends BaseController
         return $session->get("cart") ?? [];
     }
     
+    protected function redirectToLoginPreAuth() {
+        // remember where we wanted to go
+        $session = \Config\Services::session();
+        $intendedTarget = $this->request->getPath();
+        $session->setFlashdata("intended_target", $intendedTarget);
+        return redirect()->to('/account/login');
+    }
+
+    protected function persistLoginTargetPath() {
+        $session = \Config\Services::session();
+        $intendedTarget = $session->getFlashdata("intended_target");
+
+        if ($intendedTarget) {
+            $session->setFlashdata("intended_target", $intendedTarget);
+        }
+    }
+
+    protected function getPostLoginTargetPath() {
+        $session = \Config\Services::session();
+        $intendedTarget = $session->getFlashdata("intended_target");
+        return $intendedTarget ?? "/";
+    }
+
     private function buildCart() {
         if ($this->cart === null) { // "cached"
             $session = \Config\Services::session();
@@ -98,5 +121,4 @@ class AppBaseController extends BaseController
 
         return $this->cart;
     }
-
 }

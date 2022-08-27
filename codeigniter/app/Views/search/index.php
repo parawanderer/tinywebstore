@@ -90,9 +90,9 @@
                         <div class="p-3 my-3 title-underline">
                             <article class="d-flex position-relative">
 
-                                <?php if ($product['media_thumbnail_id']) : ?>
+                                <?php if ($product['media_thumbnail_id_m']) : ?>
                                     <a href="/product/<?= esc($product['id'], 'attr') ?>">
-                                        <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id'], 'attr') ?>" class="flex-shrink-0 me-md-3 img-thumb-m rounded" alt="Product Image">
+                                        <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_m'], 'attr') ?>" class="flex-shrink-0 me-md-3 img-thumb-m rounded" alt="Product Image">
                                     </a>
                                 <?php else : ?>
                                     <a href="/product/<?= esc($product['id'], 'attr') ?>">

@@ -5,8 +5,16 @@
     <div class="col-12 col-md-4 login-form-block">
         <h3>Login</h3>
 
-        <?= session()->getFlashdata('error') ?>
-        <?= service('validation')->listErrors() ?>
+        
+        <?php if ($error): ?>
+            <div class="alert alert-danger" role="alert">
+                <?php if ($generic_login_error): ?>
+                    Failed to log you in
+                <?php else: ?>
+                    <?= service('validation')->listErrors() ?>
+                <?php endif ?>
+            </div>
+        <?php endif ?>
 
         <form action="/account/login" method="post">
             <?= csrf_field() ?>

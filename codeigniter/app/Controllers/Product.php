@@ -80,8 +80,7 @@ class Product extends ShopDataControllerBase
     }
 
     public function productCreateEdit(int $productId = -1) {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
-        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+        if (!$this->loggedIn() || !$this->isShopOwner()) return $this->redirectToLoginPreAuth();
         $isCreating = $productId === -1;
 
         /** @var \App\Models\ProductModel */
@@ -167,8 +166,7 @@ class Product extends ShopDataControllerBase
     }
 
     public function productDelete() {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
-        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+        if (!$this->loggedIn() || !$this->isShopOwner()) return $this->redirectToLoginPreAuth();
 
         $validationRules = [
             'deleteProductId' => 'required|integer',

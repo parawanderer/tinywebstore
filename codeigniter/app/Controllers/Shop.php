@@ -56,7 +56,7 @@ class Shop extends ShopDataControllerBase
 
     public function edit() {
         $ownedShopId = $this->getOwnedShopId();
-        if (!$ownedShopId) return redirect()->to("/");
+        if (!$ownedShopId) return $this->redirectToLoginPreAuth();
 
         /** @var \App\Models\ShopModel */
         $model = model(ShopModel::class);
@@ -143,8 +143,7 @@ class Shop extends ShopDataControllerBase
     }
 
     public function inventory() {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
-        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+        if (!$this->loggedIn() || !$this->isShopOwner()) return $this->redirectToLoginPreAuth();
 
         $ownedShopId = $this->getOwnedShopId();
 
@@ -170,8 +169,7 @@ class Shop extends ShopDataControllerBase
     }
 
     public function orders() {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
-        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+        if (!$this->loggedIn() || !$this->isShopOwner()) return $this->redirectToLoginPreAuth();
 
         $ownedShopId = $this->getOwnedShopId();
 
@@ -197,8 +195,7 @@ class Shop extends ShopDataControllerBase
     }
 
     public function order(int $orderId = -1) {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
-        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+        if (!$this->loggedIn() || !$this->isShopOwner()) return $this->redirectToLoginPreAuth();
 
         $ownedShopId = $this->getOwnedShopId();
 
@@ -227,8 +224,7 @@ class Shop extends ShopDataControllerBase
     }
 
     public function completeOrder() {
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
-        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+        if (!$this->loggedIn() || !$this->isShopOwner()) return $this->redirectToLoginPreAuth();
 
         if (!$this->validate(['orderId' => "required|integer"])) 
             throw new Exception("Bad request");
@@ -264,8 +260,7 @@ class Shop extends ShopDataControllerBase
     public function stats() {
         // I would assume this exercise is not about me writing my own chart library so I'll use something open source for visuals...
         // of course, in the real world, you would cache this and probably generate this in a bg process...
-        if (!$this->loggedIn()) return redirect()->to('/account/login');
-        if (!$this->isShopOwner()) return redirect()->to('/account/login');
+        if (!$this->loggedIn() || !$this->isShopOwner()) return $this->redirectToLoginPreAuth();
 
         $ownedShopId = $this->getOwnedShopId();
 
