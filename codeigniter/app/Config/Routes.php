@@ -60,6 +60,7 @@ $routes->get('account/logout', 'Account::logout');
 $routes->get('search', 'Search::index');
 $routes->get('quicksearch', 'Search::quickSearch');
 
+//shop
 $routes->get('shop/(:num)', 'Shop::index/$1');
 $routes->get('shop/edit', 'Shop::edit');
 $routes->post('shop/edit', 'Shop::edit');
@@ -76,15 +77,15 @@ $routes->get('alerts', 'Alerts::index');
 $routes->put('alerts/seen', 'Alerts::seen');
 
 // product
-$routes->get('product/(:num)', 'Shop::product/$1');
-$routes->get('product/edit/(:num)', 'Shop::productCreateEdit/$1');
-$routes->post('product/edit/(:num)', 'Shop::productCreateEdit/$1');
-$routes->post('product/delete', 'Shop::productDelete');
-$routes->get('product/create', 'Shop::productCreateEdit');
-$routes->post('product/create', 'Shop::productCreateEdit');
-$routes->post('product/media/(:num)', 'Shop::productAddMedia/$1');
-$routes->post('product/media/(:num)/delete', 'Shop::productDeleteMedia/$1');
-$routes->post('product/(:num)/review', 'Shop::productReview/$1');
+$routes->get('product/(:num)', 'Product::product/$1');
+$routes->get('product/edit/(:num)', 'Product::productCreateEdit/$1');
+$routes->post('product/edit/(:num)', 'Product::productCreateEdit/$1');
+$routes->post('product/delete', 'Product::productDelete');
+$routes->get('product/create', 'Product::productCreateEdit');
+$routes->post('product/create', 'Product::productCreateEdit');
+$routes->post('product/media/(:num)', 'Product::productAddMedia/$1');
+$routes->post('product/media/(:num)/delete', 'Product::productDeleteMedia/$1');
+$routes->post('product/(:num)/review', 'Product::productReview/$1');
 
 
 //cart
