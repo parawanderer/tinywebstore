@@ -35,15 +35,13 @@
 
             <div class="row row-cols-4 g-4 product-media-select pt-4">
                 <?php foreach ($media as $mediaItem) : ?>
-
-                    <div class="col">
+                    <article class="col">
                         <a href="#" class="product-media-selector <?= $primary_media['id'] === $mediaItem['id'] ? 'current-selection' : '' ?> " data-is-video="<?= esc($mediaItem['is_video']) ?>" data-id="/uploads/shop/media/<?= esc($mediaItem['id']) ?>" data-poster="<?= esc('/uploads/shop/media/' . $mediaItem['thumbnail_id']) ?>" data-media-fullsize-img="<?= esc('/uploads/shop/media/' . $mediaItem['thumbnail_id']) ?>">
                             <div class="card thumbnail-product-media-select h-100 <?= $primary_media['id'] === $mediaItem['id']  ? 'border-3 border-indigo' : '' ?>">
                                 <img src="/uploads/shop/media/<?= esc($mediaItem['thumbnail_id_s']) ?>" class="card-img-top product-media-preview-img" alt="Media Open Preview Thumbnail" />
                             </div>
                         </a>
-                    </div>
-
+                    </article>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -223,7 +221,7 @@
 
                     <div class="container">
                         <?php foreach ($reviews as $review) : ?>
-                            <div class="row py-2">
+                            <article class="row py-2">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="float-end text-end">
@@ -257,7 +255,7 @@
                                         </p>
                                     </div>
                                 </div>
-                            </div>
+                            </article>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -267,7 +265,7 @@
             <h4 class="pb-4">Similar Products</h4>
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <?php foreach ($similar_products as $similarProduct) : ?>
-                    <div class="col">
+                    <article class="col">
                         <div class="card h-100">
                             <?php if ($similarProduct['media_thumbnail_id_l']) : ?>
                                 <img src="/uploads/shop/media/<?= esc($similarProduct['media_thumbnail_id_l']) ?>" class="card-img-top similar-products-img" alt="Similar Product Thumbnail">
@@ -287,7 +285,7 @@
                                 </h6>
                             </div>
                         </div>
-                    </div>
+                    </article>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -305,7 +303,7 @@
                 <img src="" class="media-view-image" alt="Media Item" id="mediaViewImage">
 
                 <video controls src="" poster="" class="w-100 h-100" style="display: none;" id="mediaViewVideo">
-                    Sorry, your browser doesn't support embedded videos,
+                    Sorry, your browser doesn't support embedded videos. <a href="" id="videoLinkAlt">Here is a link to the video instead</a>.
                 </video>
             </div>
         </div>

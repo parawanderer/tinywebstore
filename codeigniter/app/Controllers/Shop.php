@@ -14,8 +14,6 @@ use App\Models\ShopMediaModel;
 use App\Models\ShopModel;
 use App\Models\WatchlistModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use CodeIgniter\Files\Exceptions\FileNotFoundException;
-use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use Exception;
 

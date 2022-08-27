@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table" summary="A list of your store's current inventory">
                 <thead>
                     <tr>
                         <th scope="col" class="hide-mobile"></th>

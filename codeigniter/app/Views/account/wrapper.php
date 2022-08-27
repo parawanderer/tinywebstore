@@ -3,6 +3,7 @@
 <div class="container p-outer-block">
   <div class="row">
     <div class="col-12 col-md-3 account-nav">
+        <aside>
         <ul class="nav nav-pills flex-column mb-4 mb-md-auto border-1 rounded account-wrapper-container">
         <li class="<?= $page === '' ? 'nav-item' : '' ?> fs-6">
             <a href="/account" class="nav-link <?= $page === '' ? 'active' : 'link-dark' ?>" aria-current="page">
@@ -62,9 +63,12 @@
             </a>
         </li>
         </ul>
+        </aside>
     </div>
     <div class="col-12 col-md-9">
+        <main>
         <?= $this->renderSection('content') ?>
+        </main>
     </div>
   </div>
 </div>

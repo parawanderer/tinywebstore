@@ -33,7 +33,7 @@
         </div>
 
         <?php foreach ($order['entries'] as &$productDetails) : ?>
-            <div class="card p-3 my-3">
+            <article class="card p-3 my-3">
                 <div class="d-flex position-relative">
 
                     <?php if ($productDetails['media_thumbnail_id']) : ?>
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </article>
         <?php endforeach ?>
 
         <div class="container">

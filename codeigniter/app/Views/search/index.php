@@ -3,7 +3,7 @@
         <input type="hidden" value="<?= esc($query['term'], 'attr') ?>" name="q">
         <div class="row">
             <div class="col-12 col-md-3 px-4 px-md-0">
-
+                <aside>
                 <div class="row">
                     <h5>Filter Options</h5>
                 </div>
@@ -62,9 +62,10 @@
                         Filter
                     </button>
                 </div>
-
+                </aside>
             </div>
             <div class="col-12 col-md-9 px-0 px-md-3 pt-4 pt-md-0">
+                <main>
                 <div class="container d-flex justify-content-between title-underline px-3">
                     <div>
                         <h3>Searched for "<?= esc($query['term']) ?>"</h3>
@@ -84,11 +85,10 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row w-100">
                     <?php foreach ($results as &$product) : ?>
-
                         <div class="p-3 my-3 title-underline">
-                            <div class="d-flex position-relative">
+                            <article class="d-flex position-relative">
 
                                 <?php if ($product['media_thumbnail_id']) : ?>
                                     <a href="/product/<?= esc($product['id'], 'attr') ?>">
@@ -170,11 +170,11 @@
                                     </div>
 
                                 </div>
-                            </div>
+                            </article>
                         </div>
-
                     <?php endforeach ?>
                 </div>
+                </main>
             </div>
         </div>
     </form>

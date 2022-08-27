@@ -43,6 +43,7 @@ for (var i = 0; i < mediaThumbnails.length; ++i) {
 const mediaViewModal = document.getElementById('viewMediaModal');
 const mediaViewImage = document.getElementById("mediaViewImage");
 const mediaViewVideo = document.getElementById("mediaViewVideo");
+const videoLinkAlt = document.getElementById("videoLinkAlt");
 const viewModal = new bootstrap.Modal(mediaViewModal, {});
 
 
@@ -54,6 +55,8 @@ if (primaryMediaContainer) {
 
             mediaViewVideo.src = primaryMediaContainer.dataset.id;
             mediaViewVideo.poster = primaryMediaContainer.dataset.poster;
+
+            videoLinkAlt.href = primaryMediaContainer.dataset.id;
         } else {
             mediaViewImage.style.display = '';
             mediaViewVideo.style.display = 'none';

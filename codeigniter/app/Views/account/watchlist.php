@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table"  summary="A list of your watched products, if you've watched any products. Watching a product means you get notifications when the product becomes available if it is currently unavailable or sold out.">
                 <thead>
                     <tr>
                         <th scope="col" class="hide-mobile"></th>
@@ -25,7 +25,7 @@
                             <th class="hide-mobile">
                                 <?php if ($product['media_thumbnail_id_s']) : ?>
                                     <a href="/product/<?= esc($product['product_id']) ?>">
-                                        <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_s']) ?>" class="img-thumbnail img-thumb-s" alt="Image thumbnail">
+                                        <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_s']) ?>" class="img-thumbnail img-thumb-s" aria-labelledby="productTitle-<?= esc($shop['id']) ?>">
                                     </a>
                                 <?php else : ?>
                                     <div class="rounded float-start bg-grey-light d-flex justify-content-center img-thumb-s">
@@ -35,7 +35,7 @@
                             </th>
                             <th>
                                 <?php if ($product['title']) : ?>
-                                    <a href="/product/<?= esc($product['product_id']) ?>" class="text-decoration-none text-reset">
+                                    <a href="/product/<?= esc($product['product_id']) ?>" class="text-decoration-none text-reset" id="productTitle-<?= esc($shop['id']) ?>">
                                         <?= esc($product['title']) ?>
                                     </a>
                                 <?php else : ?>
@@ -45,7 +45,9 @@
 
                             <td>
                                 <h6 class="text-muted">
-                                    <?= date("F jS, Y", strtotime($product['created'])) ?>
+                                    <time>
+                                        <?= date("F jS, Y", strtotime($product['created'])) ?>
+                                    </time>
                                 </h6>
                             </td>
                             <td>

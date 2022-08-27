@@ -26,6 +26,7 @@ for (var i = 0; i < items.length; ++i) {
 const mediaViewModal = document.getElementById('viewMediaModal');
 const mediaViewImage = document.getElementById("mediaViewImage");
 const mediaViewVideo = document.getElementById("mediaViewVideo");
+const videoLinkAlt = document.getElementById("videoLinkAlt");
 const viewModal = new bootstrap.Modal(mediaViewModal, {});
 
 const mediaItemContainers = document.getElementsByClassName("media-item-clickable");
@@ -41,6 +42,8 @@ for (var i = 0; i < mediaItemContainers.length; ++i) {
 
             mediaViewVideo.src = container.dataset.id;
             mediaViewVideo.poster = container.dataset.poster;
+
+            videoLinkAlt.href = container.dataset.id;
         } else {
             mediaViewImage.style.display = '';
             mediaViewVideo.style.display = 'none';

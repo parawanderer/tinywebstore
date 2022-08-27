@@ -77,7 +77,7 @@
 
             <div class="row row-cols-1 row-cols-md-4 g-4">
                 <?php foreach ($media as $mediaItem) : ?>
-                    <div class="col">
+                    <article class="col">
                         <a 
                             class="media-item-clickable" 
                             data-is-video="<?= esc($mediaItem['is_video']) ?>" 
@@ -98,7 +98,7 @@
                                 <?php endif ?>
                             </div>
                         </a>
-                    </div>
+                    </article>
                 <?php endforeach; ?>
                 <?php if (count($media) === 0) : ?>
                     <p>
@@ -127,7 +127,7 @@
             <div class="row row-cols-1 row-cols-md-4 g-4">
 
             <?php foreach ($products as $product): ?>
-                <div class="col">
+                <article class="col">
                     <div class="card h-100 text-dark">
                         <?php if ($product['media_thumbnail_id']): ?>
                             <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="card-img-top product-thumbnail-img" alt="Product thumbnail">
@@ -145,7 +145,7 @@
                             <h6 class="card-text color-indigo">€ <?= esc($product['price']) ?></h6>
                         </div>
                     </div>
-                </div>
+                </article>
             <?php endforeach; ?>
             </div>
         </div>
@@ -219,7 +219,7 @@
                 <img src="" class="media-view-image" alt="Media Item" id="mediaViewImage">
 
                 <video controls src="" poster="" class="w-100 h-100" style="display: none;" id="mediaViewVideo">
-                    Sorry, your browser doesn't support embedded videos,
+                Sorry, your browser doesn't support embedded videos. <a href="" id="videoLinkAlt">Here is a link to the video instead</a>.
                 </video>
             </div>
         </div>

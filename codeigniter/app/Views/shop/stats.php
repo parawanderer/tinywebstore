@@ -56,7 +56,7 @@
                     Top Selling Products <span class="badge rounded-pill bg-indigo mx-2 fs-6">Last 30 Days</span>
                 </h3>
                 <div class="table-responsive">
-                <table class="table">
+                <table class="table" summary="A list of the top 10 best selling products in the last 30 days">
                     <thead>
                         <tr>
                             <th scope="col"></th>

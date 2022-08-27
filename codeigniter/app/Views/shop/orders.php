@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table" summary="A list of the most recent orders the shop has received, with newest orders higher in the table">
                 <thead>
                     <tr>
                         <th scope="col">Order Id</th>

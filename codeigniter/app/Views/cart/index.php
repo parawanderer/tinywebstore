@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table" summary="A list of the products currently in your cart, as well as the current availability of your choices. Checking out will only allow you to purchase up to the available products">
                     <thead>
                         <tr>
                             <th scope="col"></th>
@@ -137,7 +137,7 @@
                                     The shops will prepare the products to be available starting at the given time.
                                 </p>
 
-                                <table class="table">
+                                <table class="table" summary="A list of the stores you have ordered products from and their locations and contact details.">
                                     <thead>
                                         <tr>
                                             <th scope="col">Shop Name</th>

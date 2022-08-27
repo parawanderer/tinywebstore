@@ -33,7 +33,7 @@
                 <?php else : ?>
                     <?php if ($shop['shop_logo_img_l']) : ?>
                         <a href="/shop/<?= esc($shop['id']) ?>">
-                            <img src="/uploads/shop/logo/<?= esc($shop['shop_logo_img_l']) ?>" class="img-thumbnail img-thumb-s" alt="Shop thumbnail">
+                            <img src="/uploads/shop/logo/<?= esc($shop['shop_logo_img_l']) ?>" class="img-thumbnail img-thumb-s" alt="Shop Logo">
                         </a>
                     <?php else : ?>
                         <a href="/shop/<?= esc($shop['id']) ?>">
@@ -45,7 +45,7 @@
                 <?php endif ?>
             </div>
             <div class="px-3 d-flex justify-content-start align-items-center">
-                <h4 class="mt-0">
+                <h4 class="mt-0" id="shopName-<?= esc($shop['id']) ?>">
                     <?php if ($is_shop) : ?>
                         <?= esc($sender['first_name']) ?> <?= esc($sender['last_name']) ?>
                     <?php else : ?>
@@ -59,8 +59,7 @@
     </div>
     <div class="row py-4 overflow-auto max-height-85 title-underline" id="messageList">
         <?php foreach ($messages as &$message) : ?>
-
-            <div class="row mt-2">
+            <article class="row mt-2">
                 <div class="col-3 col-md-1">
                     <div class="row">
                         <div class="col d-flex justify-content-center align-items-end">
@@ -71,7 +70,7 @@
                             <?php else : ?>
                                 <?php if ($shop['shop_logo_img_s']) : ?>
                                     <a href="/shop/<?= esc($shop['id']) ?>">
-                                        <img src="/uploads/shop/logo/<?= esc($shop['shop_logo_img_s']) ?>" class="img-thumbnail img-thumb-xs" alt="Shop thumbnail">
+                                        <img src="/uploads/shop/logo/<?= esc($shop['shop_logo_img_s']) ?>" class="img-thumbnail img-thumb-xs" alt="Shop Logo">
                                     </a>
                                 <?php else : ?>
                                     <a href="/shop/<?= esc($shop['id']) ?>">
@@ -86,6 +85,7 @@
                     <div class="row pt-2">
                         <div class="col d-flex justify-content-center align-items-end">
                             <p class="text-muted">
+                            <time datetime="<?= esc(date("Y-m-d H:i", strtotime($message['timestamp'])), 'attr') ?>">
                                 <?php
                                 $time = strtotime($message['timestamp']);
                                 $now = time();
@@ -99,6 +99,7 @@
                                     echo date("M Y", $time);
                                 }
                                 ?>
+                            </time>
                             </p>
                         </div>
                     </div>
@@ -119,8 +120,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </article>
         <?php endforeach ?>
 
         <?php if (count($messages) === 0): ?>

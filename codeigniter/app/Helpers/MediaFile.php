@@ -74,46 +74,6 @@ class MediaFile {
         return $this->type;
     }
 
-    private function saveMedia(UploadedFile $file) {
-        if ($file->isValid() && !$file->hasMoved()) {
-            if ($this->isVideoType()) { // prerequisite for derived
-                $thumbnailName = $this->getVideoThumbnailPath();
-                FFMPregHelper::saveThumbnail($file->getPathname(), $thumbnailName);
-            }
-            $basePath = $this->getBasePath();
-            $file->move($basePath, $this->fileId);
-            
-            $this->createAndSaveDerivedSizes();
-        }
-    }
-
-    private function createAndSaveDerivedSizes() {
-        $image = \Config\Services::image('gd');
-
-        $mainFile = $this->getThumbnailFilePathNoCheck(MediaFile::SIZE_XL);
-        
-        $sizeLPath = $this->getThumbnailFilePathNoCheck(MediaFile::SIZE_L);
-        $sizeMPath = $this->getThumbnailFilePathNoCheck(MediaFile::SIZE_M);
-        $sizeSPath = $this->getThumbnailFilePathNoCheck(MediaFile::SIZE_S);
-        $sizeXSPath = $this->getThumbnailFilePathNoCheck(MediaFile::SIZE_XS);
-
-        $image->withFile($mainFile)
-            ->resize(360, 360, true, 'auto')
-            ->save($sizeLPath);
-
-        $image->withFile($mainFile)
-            ->resize(160, 160, true, 'auto')
-            ->save($sizeMPath);
-
-        $image->withFile($mainFile)
-            ->fit(80, 80, 'center')
-            ->save($sizeSPath);
-        
-        $image->withFile($mainFile)
-            ->fit(48, 48, 'center')
-            ->save($sizeXSPath);
-    }
-
     public function isVideoType() {
         if ($this->mimeType == null) {
             if ($this->getFileExt() === ".mp4") return true;
@@ -156,22 +116,7 @@ class MediaFile {
         }
     }
 
-    private function getThumbnailIdNoCheck(int $fileSize = MediaFile::SIZE_XL) { // just to get the path
-        // subsizes
-        switch($fileSize) {
-            case MediaFile::SIZE_XL:
-                return $this->getIdNoExt() . $this->getThumbnailFileExt(); // default one
-            case MediaFile::SIZE_XS:
-                return $this->getIdNoExt() . MediaFile::SIZE_POSTFIX_XS . $this->getThumbnailFileExt();
-            case MediaFile::SIZE_S:
-                return $this->getIdNoExt() . MediaFile::SIZE_POSTFIX_S . $this->getThumbnailFileExt();
-            case MediaFile::SIZE_M:
-                return $this->getIdNoExt() . MediaFile::SIZE_POSTFIX_M . $this->getThumbnailFileExt();
-            case MediaFile::SIZE_L: default:
-                return $this->getIdNoExt() . MediaFile::SIZE_POSTFIX_L . $this->getThumbnailFileExt();
-        }
-    }
-
+    
     public function getVideoThumbnailPath() {
         return ROOTPATH . "public/uploads/" . ShopMediaModel::SHOP_MEDIA_PATH . $this->getIdNoExt() . ".jpg";
     }
@@ -233,6 +178,62 @@ class MediaFile {
     public function getThumbnailFilePath(int $fileSize = MediaFile::SIZE_XL) {
         $sub = $this->getSubPathPiece();
         return ROOTPATH . "public/uploads/" . $sub . $this->getThumbnailId($fileSize);
+    }
+
+    private function getThumbnailIdNoCheck(int $fileSize = MediaFile::SIZE_XL) { // just to get the path
+        // subsizes
+        switch($fileSize) {
+            case MediaFile::SIZE_XL:
+                return $this->getIdNoExt() . $this->getThumbnailFileExt(); // default one
+            case MediaFile::SIZE_XS:
+                return $this->getIdNoExt() . MediaFile::SIZE_POSTFIX_XS . $this->getThumbnailFileExt();
+            case MediaFile::SIZE_S:
+                return $this->getIdNoExt() . MediaFile::SIZE_POSTFIX_S . $this->getThumbnailFileExt();
+            case MediaFile::SIZE_M:
+                return $this->getIdNoExt() . MediaFile::SIZE_POSTFIX_M . $this->getThumbnailFileExt();
+            case MediaFile::SIZE_L: default:
+                return $this->getIdNoExt() . MediaFile::SIZE_POSTFIX_L . $this->getThumbnailFileExt();
+        }
+    }
+
+    private function saveMedia(UploadedFile $file) {
+        if ($file->isValid() && !$file->hasMoved()) {
+            if ($this->isVideoType()) { // prerequisite for derived
+                $thumbnailName = $this->getVideoThumbnailPath();
+                FFMPregHelper::saveThumbnail($file->getPathname(), $thumbnailName);
+            }
+            $basePath = $this->getBasePath();
+            $file->move($basePath, $this->fileId);
+            
+            $this->createAndSaveDerivedSizes();
+        }
+    }
+
+    private function createAndSaveDerivedSizes() {
+        $image = \Config\Services::image('gd');
+
+        $mainFile = $this->getThumbnailFilePathNoCheck(MediaFile::SIZE_XL);
+        
+        $sizeLPath = $this->getThumbnailFilePathNoCheck(MediaFile::SIZE_L);
+        $sizeMPath = $this->getThumbnailFilePathNoCheck(MediaFile::SIZE_M);
+        $sizeSPath = $this->getThumbnailFilePathNoCheck(MediaFile::SIZE_S);
+        $sizeXSPath = $this->getThumbnailFilePathNoCheck(MediaFile::SIZE_XS);
+
+        $image->withFile($mainFile)
+            ->resize(360, 360, true, 'auto')
+            ->save($sizeLPath);
+
+        $image->withFile($mainFile)
+            ->resize(160, 160, true, 'auto')
+            ->save($sizeMPath);
+
+        $image->withFile($mainFile)
+            ->fit(80, 80, 'center')
+            ->save($sizeSPath);
+        
+        $image->withFile($mainFile)
+            ->fit(48, 48, 'center')
+            ->save($sizeXSPath);
     }
 
     private function getThumbnailFilePathNoCheck(int $fileSize = MediaFile::SIZE_XL) {

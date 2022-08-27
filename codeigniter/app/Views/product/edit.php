@@ -73,8 +73,7 @@
                         <?php if (count($media) > 0): ?>
                             <div class="row row-cols-4 g-4 product-media-select pt-4">
                                 <?php foreach ($media as $mediaItem) : ?>
-
-                                    <div class="col">
+                                    <article class="col">
                                         <a 
                                             href="#" 
                                             class="product-media-selector <?=  $primary_media && $primary_media['id'] === $mediaItem['id'] ? 'current-selection' : '' ?> "
@@ -89,7 +88,7 @@
                                                 />
                                                 <div class="card-img-overlay d-flex flex-row-reverse px-1 py-1">
                                                     <button 
-                                                        data-media-id="<?= esc($mediaItem['thumbnail_id_s']) ?>" 
+                                                        data-media-id="<?= esc($mediaItem['id']) ?>" 
                                                         data-media-fullsize-img="/uploads/shop/media/<?= esc($mediaItem['thumbnail_id']) ?>" 
                                                         class="btn-close media-remove-button" 
                                                         aria-label="Delete Media"
@@ -99,8 +98,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                    </div>
-
+                                    </article>
                                 <?php endforeach; ?>
                             </div>
                         <?php else: ?>

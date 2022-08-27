@@ -24,7 +24,7 @@
         </div>
 
         <?php foreach ($messages as $message) : ?>
-            <div class="card d-flex position-relative mb-2">
+            <article class="card d-flex position-relative mb-2">
                 <div class="row px-3 py-2">
                     <div class="col-1 d-flex justify-content-end align-items-center hide-mobile">
                         <?php if($is_shop): ?>
@@ -35,7 +35,7 @@
                             </div>
                         <?php else: ?>
                             <?php if($message['shop_logo_img_s']): ?>
-                                <img src="/uploads/shop/logo/<?= esc($message['shop_logo_img']) ?>" class="img-thumbnail img-thumb-xs" alt="Shop thumbnail">
+                                <img src="/uploads/shop/logo/<?= esc($message['shop_logo_img']) ?>" class="img-thumbnail img-thumb-xs" alt="Shop Logo">
                             <?php else: ?>
                                 <div class="rounded float-start bg-indigo d-flex justify-content-center align-items-center img-thumb-xs">
                                     <span class="text-white fw-bold text-uppercase text-center"><?= esc($message['shop_name']) ?></span>
@@ -59,13 +59,14 @@
                     <div class="col-3 d-flex justify-content-end align-items-center">
                         <?php if($message['updated']): ?>
                         <h6 class="text-muted">
-                            <?= date("F jS, Y \a\\t G\:i", strtotime($message['updated'])) ?>
+                            <time datetime="<?= esc(date("Y-m-d H:i", strtotime($message['updated'])), 'attr') ?>">
+                                <?= date("F jS, Y \a\\t G\:i", strtotime($message['updated'])) ?>
+                            </time>
                         </h6>
                         <?php endif ?>
                     </div>
                 </div>
-            </div>
-
+            </article>
         <?php endforeach ?>
         <?php if (count($messages) === 0) : ?>
             <div class="container">

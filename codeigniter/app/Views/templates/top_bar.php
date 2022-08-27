@@ -42,7 +42,7 @@
                     <ul class="dropdown-menu dropdown-menu-end cart-dropdown nav-dropdown" aria-labelledby="cartDropdown">
                         <?php foreach($cart as &$product): ?>
                         <li>
-                            <div class="container px-2 px-md-3">
+                            <article class="container px-2 px-md-3">
                                 <div class="row py-2 border-bottom">
                                     <div class="col col-3">
                                         <?php if ($product['media_thumbnail_id']): ?>
@@ -69,7 +69,7 @@
                                         <a href="/cart/remove/<?= esc($product['id']) ?>" class="btn btn-close" aria-label="Remove Product"></a>
                                     </div>
                                 </div>
-                            </div>
+                            </article>
                         </li>
                         <?php endforeach; ?>
                         <li>

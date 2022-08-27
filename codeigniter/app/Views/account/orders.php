@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col">
             <?php foreach ($orders as $order) : ?>
-                <div class="row py-3">
+                <article class="row py-3">
                     <div class="col-12">
                         <div class="card p-3">
                             <div class="row">
@@ -42,7 +42,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </article>
             <?php endforeach ?>
             <?php if (count($orders) === 0) : ?>
             <div class="container">
