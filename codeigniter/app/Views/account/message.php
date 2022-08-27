@@ -31,9 +31,9 @@
                         <span class="text-white fw-bold text-uppercase"><?= esc(substr($sender['first_name'], 0, 1) . substr($sender['last_name'], 0, 1)) ?></span>
                     </div>
                 <?php else : ?>
-                    <?php if ($shop['shop_logo_img']) : ?>
+                    <?php if ($shop['shop_logo_img_l']) : ?>
                         <a href="/shop/<?= esc($shop['id']) ?>">
-                            <img src="/uploads/shop/logo/<?= esc($shop['shop_logo_img']) ?>" class="img-thumbnail img-thumb-s" alt="Shop thumbnail">
+                            <img src="/uploads/shop/logo/<?= esc($shop['shop_logo_img_l']) ?>" class="img-thumbnail img-thumb-s" alt="Shop thumbnail">
                         </a>
                     <?php else : ?>
                         <a href="/shop/<?= esc($shop['id']) ?>">
@@ -69,9 +69,9 @@
                                     <span class="text-white fw-bold text-uppercase"><?= esc(substr($sender['first_name'], 0, 1) . substr($sender['last_name'], 0, 1)) ?></span>
                                 </div>
                             <?php else : ?>
-                                <?php if ($shop['shop_logo_img']) : ?>
+                                <?php if ($shop['shop_logo_img_s']) : ?>
                                     <a href="/shop/<?= esc($shop['id']) ?>">
-                                        <img src="/uploads/shop/logo/<?= esc($shop['shop_logo_img']) ?>" class="img-thumbnail img-thumb-xs" alt="Shop thumbnail">
+                                        <img src="/uploads/shop/logo/<?= esc($shop['shop_logo_img_s']) ?>" class="img-thumbnail img-thumb-xs" alt="Shop thumbnail">
                                     </a>
                                 <?php else : ?>
                                     <a href="/shop/<?= esc($shop['id']) ?>">

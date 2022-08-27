@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\MediaFile;
 use CodeIgniter\Model;
 use Exception;
 
@@ -188,7 +189,7 @@ class OrderModel extends Model
             $overallCompletion += $detail['completed'];
             $overallProfit += $detail['profit_total'];
 
-            [ $isVideo, $thumbnailId ] = ShopMediaModel::getThumbnailInfo($detail['product_main_media'], $detail['mimetype']);
+            $thumbnails = MediaFile::getThumbnailsOrNulls($detail['product_main_media'], $detail['mimetype']);
 
             $result['entries'][] = [
                 "completed" => $detail['completed'],
@@ -198,7 +199,11 @@ class OrderModel extends Model
                 "product_id" => $detail['product_id'],
                 "product_title" => $detail['product_title'] ?? $detail['product_title_fallback'],
                 "is_deleted" => !$detail['product_title'],
-                "media_thumbnail_id" => $thumbnailId ?? $detail['product_main_media']
+                "media_thumbnail_id" => $thumbnails['xl'],
+                "media_thumbnail_id_l" => $thumbnails['l'],
+                "media_thumbnail_id_m" => $thumbnails['m'],
+                "media_thumbnail_id_s" => $thumbnails['s'],
+                "media_thumbnail_id_xs" => $thumbnails['xs'],
             ];
         }
 
@@ -275,9 +280,21 @@ class OrderModel extends Model
 
     private static function convertTopDetailStructure(array &$results) {
         foreach($results as &$detail) {
-            [ $isVideo, $thumbnailId ] = ShopMediaModel::getThumbnailInfo($detail['main_media'], $detail['mimetype']);
+            $detail['media_thumbnail_id'] = $detail['main_media'];
+            $product['media_thumbnail_id_xs'] = null;
+            $product['media_thumbnail_id_s'] = null;
+            $product['media_thumbnail_id_m'] = null;
+            $product['media_thumbnail_id_l'] = null;
 
-            $detail['media_thumbnail_id'] = $thumbnailId ?? $detail['main_media'];
+            if ($detail['main_media'] && $detail['mimetype']) {
+                $media = new MediaFile($detail['main_media'], MediaFile::TYPE_MEDIA, $detail['mimetype']);
+                $detail['media_thumbnail_id'] = $media->getThumbnailId();
+
+                $detail['media_thumbnail_id_xs'] = $media->getThumbnailId(MediaFile::SIZE_XS);
+                $detail['media_thumbnail_id_s'] = $media->getThumbnailId(MediaFile::SIZE_S);
+                $detail['media_thumbnail_id_m'] = $media->getThumbnailId(MediaFile::SIZE_M);
+                $detail['media_thumbnail_id_l'] = $media->getThumbnailId(MediaFile::SIZE_L);
+            }
         }
     }
 

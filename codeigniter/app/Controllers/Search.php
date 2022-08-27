@@ -64,8 +64,9 @@ class Search extends AppBaseController
             'costMax' => $costMax,
             'sortOption' => $sortOption
         ];
+        $templateParams['title'] = 'Search';
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('search/index', $templateParams)
             . view('templates/footer');

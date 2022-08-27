@@ -15,8 +15,9 @@ class Home extends AppBaseController
 
         $templateParams = $this->getUserTemplateParams();
         $templateParams['products'] = $products;
+        $templateParams['title'] = 'Home';
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('index', $templateParams)
             . view('templates/footer');

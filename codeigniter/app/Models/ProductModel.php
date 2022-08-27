@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\MediaFile;
 use CodeIgniter\Model;
 use Exception;
 
@@ -191,9 +192,21 @@ class ProductModel extends Model
 
     private static function updateMediaInfo(array &$products) {
         foreach($products as &$product) {
-            [ $isVideo, $thumbnailId ] = ShopMediaModel::getThumbnailInfo($product['main_media'], $product['media_mimetype']);
+            $product['media_thumbnail_id'] = $product['main_media'];
+            $product['media_thumbnail_id_xs'] = null;
+            $product['media_thumbnail_id_s'] = null;
+            $product['media_thumbnail_id_m'] = null;
+            $product['media_thumbnail_id_l'] = null;
 
-            $product['media_thumbnail_id'] = $thumbnailId ?? $product['main_media'];
+            if ($product['main_media'] && $product['media_mimetype']) {
+                $media = new MediaFile($product['main_media'], MediaFile::TYPE_MEDIA, $product['media_mimetype']);
+                $product['media_thumbnail_id'] = $media->getThumbnailId();
+
+                $product['media_thumbnail_id_xs'] = $media->getThumbnailId(MediaFile::SIZE_XS);
+                $product['media_thumbnail_id_s'] = $media->getThumbnailId(MediaFile::SIZE_S);
+                $product['media_thumbnail_id_m'] = $media->getThumbnailId(MediaFile::SIZE_M);
+                $product['media_thumbnail_id_l'] = $media->getThumbnailId(MediaFile::SIZE_L);
+            }
         }
     }
 }

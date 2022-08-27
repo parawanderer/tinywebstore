@@ -3,7 +3,7 @@
 
 <?= $this->section('content') ?>
 <div class="container px-2 px-md-4">
-    <h1>Orders</h1>
+    <h1>My Orders</h1>
     <p class="text-muted fs-5">Your latest orders</p>
     <div class="row">
         <div class="col">

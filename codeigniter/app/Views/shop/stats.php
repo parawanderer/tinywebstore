@@ -71,7 +71,7 @@
                             <th>
                                 <?php if ($product['media_thumbnail_id']): ?>
                                     <a href="/product/<?= esc($product['product_id']) ?>">
-                                        <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="img-thumbnail img-thumb-xs" alt="Image thumbnail">
+                                        <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_xs']) ?>" class="img-thumbnail img-thumb-xs" alt="Image thumbnail">
                                     </a>
                                 <?php else: ?>
                                     <a href="/product/<?= esc($product['product_id']) ?>">

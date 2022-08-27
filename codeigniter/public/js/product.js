@@ -34,7 +34,7 @@ for (var i = 0; i < mediaThumbnails.length; ++i) {
         }
 
         if (productMediaMainImage)
-            productMediaMainImage.src = selector.getElementsByClassName("product-media-preview-img")[0].src;
+            productMediaMainImage.src = selector.dataset.mediaFullsizeImg;;
     });
 }
 

@@ -15,8 +15,8 @@
         <form class="d-flex" action="/search" method="get">
             <div class="input-group search-container" id="searchContainer">
                 <input autocomplete="off" type="text" name="q" class="form-control" placeholder="Product Name..." aria-label="Product Name" aria-describedby="productSearchButton" id="searchBarInput">
-                <button class="btn search-button btn-light" type="submit" id="productSearchButton">
-                    <i class="bi bi-search color-indigo" aria-label="Search Button"></i>
+                <button class="btn search-button btn-light" type="submit" id="productSearchButton" aria-label="Search Button">
+                    <i class="bi bi-search color-indigo"></i>
                 </button>
                 <ul class="dropdown-menu search-result-dropdown w-100" aria-label="Quick Search Results" id="searchResultsDropDown">
                     <li><a class="dropdown-item" href="#">Action</a></li>
@@ -32,7 +32,7 @@
             <li class="nav-item dropdown nav-main-dropdown-container">
                 <a class="nav-link active px-2" href="#" id="cartDropDown" role="button" aria-label="Basket" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="account-icon d-inline-flex">
-                        <i class="bi bi-basket" aria-label="Basket"></i>
+                        <i class="bi bi-basket"></i>
                         <?php if (count($cart) > 0) : ?>
                             <span class="px-2">(<?= count($cart) ?>)</span>
                         <?php endif ?>

@@ -39,7 +39,7 @@
                         <th class="hide-mobile">
                             <?php if ($product['media_thumbnail_id']): ?>
                                 <a href="/product/<?= esc($product['id']) ?>">
-                                    <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="img-thumbnail inventory-thumbnail" alt="Image thumbnail">
+                                    <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_s']) ?>" class="img-thumbnail inventory-thumbnail" alt="Image thumbnail">
                                 </a>
                             <?php else: ?>
                                 <a href="/product/<?= esc($product['id']) ?>">

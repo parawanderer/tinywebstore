@@ -6,6 +6,7 @@ use App\Helpers\AlertHelper;
 use App\Helpers\HtmlSanitizer;
 use App\Helpers\ContrastRatioChecker;
 use App\Helpers\FFMPregHelper;
+use App\Helpers\MediaFile;
 use App\Models\OrderModel;
 use App\Models\ProductModel;
 use App\Models\ReviewModel;
@@ -52,8 +53,9 @@ class Shop extends AppBaseController
         $templateParams['products'] = $products;
 
         $templateParams['media'] = $media;
+        $templateParams['title'] = "Shop | {$shop['name']}";
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('shop/index', $templateParams)
             . view('templates/footer');
@@ -70,6 +72,7 @@ class Shop extends AppBaseController
         $templateParams = $this->getUserTemplateParams();
         $templateParams['shop'] = $shop;
         $templateParams['error'] = false;
+        $templateParams['title'] = "Shop | {$shop['name']} | Edit";
 
 
         $shopEditRules = [
@@ -114,7 +117,7 @@ class Shop extends AppBaseController
             }   
         }
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('shop/edit', $templateParams)
             . view('templates/footer');
@@ -165,8 +168,9 @@ class Shop extends AppBaseController
         $templateParams['shop'] = $shop;
         $templateParams['page'] = 'inventory';
         $templateParams['products'] = $products;
+        $templateParams['title'] = "Shop | {$shop['name']} | Inventory";
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('shop/inventory', $templateParams)
             . view('templates/footer');
@@ -191,8 +195,9 @@ class Shop extends AppBaseController
         $templateParams['shop'] = $shop;
         $templateParams['orders'] = $latestOrders;
         $templateParams['page'] = 'shop-orders';
+        $templateParams['title'] = "Shop | {$shop['name']} | Orders";
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('shop/orders', $templateParams)
             . view('templates/footer');
@@ -220,8 +225,9 @@ class Shop extends AppBaseController
         $templateParams['shop'] = $shop;
         $templateParams['order'] = $filteredOrderDetails;
         $templateParams['page'] = 'shop-orders';
+        $templateParams['title'] = "Shop | {$shop['name']} | Order #{$orderId}";
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('shop/order', $templateParams)
             . view('templates/footer');
@@ -303,8 +309,10 @@ class Shop extends AppBaseController
 
 
         $templateParams['top10selling'] = $top10Selling;
+        
+        $templateParams['title'] = "Shop | {$shop['name']} | Statistics";
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('shop/stats', $templateParams)
             . view('templates/footer');
@@ -425,8 +433,9 @@ class Shop extends AppBaseController
         $templateParams['similar_products'] = $similarProducts;
         $templateParams['is_watched'] = $isWatched;
         $templateParams['can_review'] = $canReview;
+        $templateParams['title'] = "Product | {$product['title']}";
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('product/view', $templateParams)
             . view('templates/footer');
@@ -468,7 +477,6 @@ class Shop extends AppBaseController
             /** @var \App\Models\ShopMediaModel */
             $mediaModel = model(ShopMediaModel::class);
             $mediaForProduct = $mediaModel->getForProduct($productId);
-
             Shop::sortMediaForProduct($mediaForProduct, $product['main_media']);
         }
 
@@ -512,8 +520,9 @@ class Shop extends AppBaseController
         $templateParams['product'] = $product;
         $templateParams['media'] = $mediaForProduct;
         $templateParams['primary_media'] = Shop::getMediaPrimary($mediaForProduct, $product['main_media']);
+        $templateParams['title'] = $isCreating ? "Product | Create New" : "Product | {$product['title']} | Edit";
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('product/edit', $templateParams)
             . view('templates/footer');
@@ -612,7 +621,6 @@ class Shop extends AppBaseController
         if (!$resultMedia)
             throw new Exception("Internal Server Error");
 
-
         // need to replace with any other item as main item
         if ($product['main_media'] === $resultMedia['id']) {
             $anyOtherMedia = $mediaModel->getOneForProduct($product['id']);
@@ -674,25 +682,15 @@ class Shop extends AppBaseController
         if ($this->validate($mediaUploadRules)) {
             $shopId = $this->getOwnedShopId();
             $mediaFile = $this->request->getFile('mediaFile');
-            $mediaFileId = null;
-            $mimeType = $mediaFile->getMimeType();
             // store media file
-            if (!$mediaFile->hasMoved()) {
-                $mediaFileId = $mediaFile->getRandomName();
 
-                if (Shop::isVideoType($mimeType)) {
-                    $this->handleSaveThumbnail($mediaFile, $mediaFileId);
-                }
-
-                $mediaFile->move(ROOTPATH . "public/uploads/" . ShopMediaModel::SHOP_MEDIA_PATH, $mediaFileId);
-            } else {
-                throw new Exception("Error processing request");
-            }
+            $media = MediaFile::saveFromFile($mediaFile, MediaFile::TYPE_MEDIA);
+            $mediaFileId = $media->getId();
 
             // link media file to store
             /** @var \App\Models\ShopMediaModel */
             $model = model(ShopMediaModel::class);
-            $model->addForShop($mediaFileId, $mimeType, $shopId, $productId);
+            $model->addForShop($mediaFileId, $media->getMimeType(), $shopId, $productId);
 
             return $mediaFileId;
         } 
@@ -721,17 +719,14 @@ class Shop extends AppBaseController
             }
 
             $model->deleteById($mediaId);
-            $this->deleteSingularMediaFiles($media);
+
+            $mediaFile = new MediaFile($media['id'], MediaFile::TYPE_MEDIA, $media['mimetype']);
+            $mediaFile->deleteAllFiles();
 
             return $media;
         }
 
         return null;
-    }
-
-    private function handleSaveThumbnail(UploadedFile $file, string $mediaFileId) {
-        $thumbnailName = Shop::getVideoThumnailPath($mediaFileId);
-        FFMPregHelper::saveThumbnail( $file->getPathname(), $thumbnailName);
     }
 
     private function validateColorContrast() {
@@ -752,32 +747,26 @@ class Shop extends AppBaseController
         
         // delete old
         if (($removeCurrentLogo || $shopLogo->isValid()) && $shop['shop_logo_img']) {
-            try {
-                $oldShopImg = new File(ROOTPATH . "public/uploads/" . ShopModel::SHOP_LOGO_PATH . $shop['shop_logo_img'], true);
-                unlink($oldShopImg->getPathname());
-            } catch (FileNotFoundException $e) {}
-
+            $media = new MediaFile($shop['shop_logo_img'], MediaFile::TYPE_LOGO, null);
+            $media->deleteAllFiles();
             $shopLogoName = null;
         }
 
         if (($removeCurrentBanner || $shopBanner->isValid()) && $shop['shop_banner_img']) {
-            try {
-                $oldShopImg = new File(ROOTPATH . "public/uploads/" . ShopModel::SHOP_BANNER_PATH . $shop['shop_banner_img'], true);
-                unlink($oldShopImg->getPathname());
-            } catch (FileNotFoundException $e) {}
-
+            $media = new MediaFile($shop['shop_banner_img'], MediaFile::TYPE_BANNER, null);
+            $media->deleteAllFiles();
             $shopBannerName = null;
         }
 
         //add new
         if ($shopLogo->isValid() && !$shopLogo->hasMoved()) {
-            $shopLogoName = $shopLogo->getRandomName();
-            $shopLogo->move(ROOTPATH . "public/uploads/" . ShopModel::SHOP_LOGO_PATH, $shopLogoName);
+            $media = MediaFile::saveFromFile($shopLogo, MediaFile::TYPE_LOGO);
+            $shopLogoName = $media->getId();
         }
 
         if ($shopBanner->isValid() && !$shopBanner->hasMoved()) {
-            $shopBannerName = $shopBanner->getRandomName();
-            $shopBanner->move(ROOTPATH . "public/uploads/" . ShopModel::SHOP_BANNER_PATH, $shopBannerName);
+            $media = MediaFile::saveFromFile($shopBanner, MediaFile::TYPE_BANNER);
+            $shopBannerName = $media->getId();
         }
 
         return [$shopLogoName, $shopBannerName];
@@ -785,24 +774,9 @@ class Shop extends AppBaseController
 
     private function deleteMediaForProduct(array &$media) {
         foreach($media as &$mediaEntry) {
-            $this->deleteSingularMediaFiles($mediaEntry);
+            $media = new MediaFile($mediaEntry['id'], MediaFile::TYPE_MEDIA, $mediaEntry['mimetype']);
+            $media->deleteAllFiles();
         }
-    }
-
-    private function deleteSingularMediaFiles(array &$mediaItem) {
-        unlink(ROOTPATH . "public/uploads/" . ShopMediaModel::SHOP_MEDIA_PATH . $mediaItem['id']);
-        if (Shop::isVideoType($mediaItem['mimetype'])) {
-            $thumbnailName = Shop::getVideoThumnailPath($mediaItem['id']);
-            unlink($thumbnailName);
-        }
-    }
-
-    private static function isVideoType(string $mimeType) {
-        return $mimeType === "video/mp4"; // only mp4 supported for this implementation
-    }
-
-    private static function getVideoThumnailPath(string $fileName) {
-        return ROOTPATH . "public/uploads/" . ShopMediaModel::SHOP_MEDIA_PATH . substr($fileName, 0, strrpos($fileName, ".")) . ".jpg";
     }
 
     private static function getAverageScore(array &$reviews) {

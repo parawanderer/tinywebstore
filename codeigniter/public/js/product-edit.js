@@ -77,7 +77,7 @@ for (var i = 0; i < mediaSelection.length; ++i) {
 
         // update preview image
         if (mediaPreviewImage)
-            mediaPreviewImage.src = selector.getElementsByClassName("product-media-preview-img")[0].src;
+            mediaPreviewImage.src = selector.dataset["mediaFullsizeImg"];
 
         //update input
         productPrimaryImageInput.value = selector.dataset.id;
@@ -137,7 +137,7 @@ for (var i = 0; i < removeMediaButtons.length; ++i) {
         event.stopPropagation();
 
         deleteMediaInput.value = event.target.dataset['mediaId'];
-        deletePreviewImage.src = event.target.parentElement.parentElement.getElementsByClassName("card-img-top")[0].src;
+        deletePreviewImage.src = event.target.dataset['mediaFullsizeImg'];
 
         deleteModal.show();
     });

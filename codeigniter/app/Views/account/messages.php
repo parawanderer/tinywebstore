@@ -34,7 +34,7 @@
                                 </span>
                             </div>
                         <?php else: ?>
-                            <?php if($message['shop_logo_img']): ?>
+                            <?php if($message['shop_logo_img_s']): ?>
                                 <img src="/uploads/shop/logo/<?= esc($message['shop_logo_img']) ?>" class="img-thumbnail img-thumb-xs" alt="Shop thumbnail">
                             <?php else: ?>
                                 <div class="rounded float-start bg-indigo d-flex justify-content-center align-items-center img-thumb-xs">

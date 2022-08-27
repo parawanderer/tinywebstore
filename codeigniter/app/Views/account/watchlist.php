@@ -3,7 +3,7 @@
 
 <?= $this->section('content') ?>
 <div class="container px-0 px-md-4">
-    <h1>Watchlist (<?= count($watchlist) ?>)</h1>
+    <h1>My Watchlist (<?= count($watchlist) ?>)</h1>
     <p class="text-muted fs-5 pb-4">Your watched products. You will receive an alert when one of these becomes available.</p>
     <div class="row">
         <div class="col">
@@ -23,9 +23,9 @@
                     <?php foreach ($watchlist as $product) : ?>
                         <tr class="align-middle">
                             <th class="hide-mobile">
-                                <?php if ($product['media_thumbnail_id']) : ?>
+                                <?php if ($product['media_thumbnail_id_s']) : ?>
                                     <a href="/product/<?= esc($product['product_id']) ?>">
-                                        <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="img-thumbnail img-thumb-s" alt="Image thumbnail">
+                                        <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_s']) ?>" class="img-thumbnail img-thumb-s" alt="Image thumbnail">
                                     </a>
                                 <?php else : ?>
                                     <div class="rounded float-start bg-grey-light d-flex justify-content-center img-thumb-s">

@@ -11,7 +11,7 @@
                     <div class="col">
                         <div class="card h-100 text-dark">
                             <?php if ($product['media_thumbnail_id']) : ?>
-                                <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="card-img-top product-thumbnail-img" alt="Product thumbnail">
+                                <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_l']) ?>" class="card-img-top product-thumbnail-img" alt="Product thumbnail">
                             <?php else : ?>
                                 <div class="rounded float-start product-thumbnail-img bg-grey-light d-flex justify-content-center">
                                     <i class="bi bi-image text-white fs-1 align-self-center"></i>

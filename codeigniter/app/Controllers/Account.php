@@ -37,8 +37,9 @@ class Account extends AppBaseController
         }
 
         $templateParams = $this->getUserTemplateParams();
+        $templateParams['title'] = 'Login';
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('account/login')
             . view('templates/footer');
@@ -109,7 +110,9 @@ class Account extends AppBaseController
         }
 
         $templateParams = $this->getUserTemplateParams();
-        return view('templates/header')
+        $templateParams['title'] = 'Register Account';
+
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('account/register', $registerParams)
             . view('templates/footer');
@@ -126,8 +129,9 @@ class Account extends AppBaseController
         $templateParams = $this->getUserTemplateParams();
         $templateParams['page'] = '';
         $templateParams['user_address'] = $currentUser['address'];
+        $templateParams['title'] = 'Account Info';
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('account/index', $templateParams)
             . view('templates/footer');
@@ -144,8 +148,9 @@ class Account extends AppBaseController
         $templateParams = $this->getUserTemplateParams();
         $templateParams['page'] = 'orders';
         $templateParams['orders'] = $orderHistory;
+        $templateParams['title'] = 'Account | My Orders';
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('account/orders', $templateParams)
             . view('templates/footer');
@@ -164,8 +169,9 @@ class Account extends AppBaseController
         $templateParams = $this->getUserTemplateParams();
         $templateParams['page'] = 'orders';
         $templateParams['order'] = $orderDetails;
+        $templateParams['title'] = "Account | Order #$orderId";
         
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('account/order', $templateParams)
             . view('templates/footer');
@@ -226,8 +232,9 @@ class Account extends AppBaseController
         $templateParams = $this->getUserTemplateParams();
         $templateParams['page'] = 'watchlist';
         $templateParams['watchlist'] = $watchlist;
+        $templateParams['title'] = 'Account | My Watchlist';
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('account/watchlist', $templateParams)
             . view('templates/footer');
@@ -251,8 +258,9 @@ class Account extends AppBaseController
         $templateParams['messages'] = $chains;
         $templateParams['is_shop'] = $this->isShopOwner();
         $templateParams['page'] = 'messages';
+        $templateParams['title'] = 'Account | Messages';
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('account/messages', $templateParams)
             . view('templates/footer');
@@ -339,8 +347,9 @@ class Account extends AppBaseController
         $templateParams['messages'] = $messages;
         $templateParams['is_shop'] = $this->isShopOwner();
         $templateParams['page'] = 'messages';
+        $templateParams['title'] = $this->isShopOwner() ? "Account | Messaging {$sender['first_name']} {$sender['last_name']}" : "Account | Messaging {$shop['name']}";
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('account/message', $templateParams)
             . view('templates/footer');

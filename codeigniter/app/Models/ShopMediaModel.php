@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\MediaFile;
 use CodeIgniter\Model;
 use Exception;
 
@@ -76,22 +77,31 @@ class ShopMediaModel extends Model
 
     private static function updateExtraInfo(array &$mediaItems) {
         foreach ($mediaItems as &$item) {
-            [$isVideo, $thumbnailId] = ShopMediaModel::getThumbnailInfo($item['id'], $item['mimetype']);
+            $item['is_video'] = false;
+            $item['thumbnail_id'] = $item['id'];
+            $item['thumbnail_id_xs'] = null;
+            $item['thumbnail_id_s'] = null;
+            $item['thumbnail_id_m'] = null;
+            $item['thumbnail_id_l'] = null;
 
-            $item['is_video'] = $isVideo;
-            $item['thumbnail_id'] = $thumbnailId;
+            if ($item['id'] && $item['mimetype']) {
+                $media = new MediaFile($item['id'], MediaFile::TYPE_MEDIA, $item['mimetype']);
+                $item['is_video'] = $media->isVideoType();
+                $item['thumbnail_id'] = $media->getThumbnailId();
+
+                $item['thumbnail_id_xs'] = $media->getThumbnailId(MediaFile::SIZE_XS);
+                $item['thumbnail_id_s'] = $media->getThumbnailId(MediaFile::SIZE_S);
+                $item['thumbnail_id_m'] = $media->getThumbnailId(MediaFile::SIZE_M);
+                $item['thumbnail_id_l'] = $media->getThumbnailId(MediaFile::SIZE_L);
+            }
         }
     }
 
     public static function getThumbnailInfo(?string $mediaItemId, ?string $mimeType) {
-        $isVideo = $mimeType === 'video/mp4'; // only mp4 supported in this project
-        $thumbnailId = null;
+        if (!$mediaItemId || !$mimeType) return [ false,  null ];
 
-        if ($isVideo) {
-            $isVideo = true;
-            $thumbnailId = substr($mediaItemId, 0, strrpos($mediaItemId, ".")) . ".jpg";
-        }
+        $media = new MediaFile($mediaItemId, MediaFile::TYPE_MEDIA, $mimeType);
 
-        return [ $isVideo, $thumbnailId ];
+        return [ $media->isVideoType(), $media->getThumbnailId() ];
     }
 }

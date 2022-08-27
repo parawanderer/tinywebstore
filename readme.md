@@ -70,7 +70,6 @@ Password: anotherPasswrod323
 As this is a toy project, I did not do some things that I would have done in a real project.
 This includes:
 
-- Optimizing uploaded files/compressing uploaded files/incoming request body limits. Although the actual implementation does not itself provide any custom assets outside of user-uploaded files, just using bootstrap assets that are already optimized.
 - Offloading long running processes to background process
 - Long polling instead of regular polling for "alerts" (though it is debatable if it is needed in this sort of app)
 - Messaging to be a modern websocket based, live system. Websocket wasn't covered in the course.

@@ -38,7 +38,7 @@
 
                     <?php if ($productDetails['media_thumbnail_id']) : ?>
                         <a href="/product/<?= esc($productDetails['product_id']) ?>">
-                            <img src="/uploads/shop/media/<?= esc($productDetails['media_thumbnail_id']) ?>" class="flex-shrink-0 me-3 img-thumb-m rounded" alt="Product Image">
+                            <img src="/uploads/shop/media/<?= esc($productDetails['media_thumbnail_id_m']) ?>" class="flex-shrink-0 me-3 img-thumb-m rounded" alt="Product Image">
                         </a>
                     <?php elseif (!$productDetails['is_deleted']) : ?>
                         <a href="/product/<?= esc($productDetails['product_id']) ?>">

@@ -29,21 +29,11 @@ class Cart extends AppBaseController
         $templateParams['userDetails'] = $userDetails;
         $templateParams['shops'] = $shopDetails;
         $templateParams['priceTotal'] = $this->countTotalForAvailability();
+        $templateParams['title'] = 'Cart';
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('cart/index', $templateParams)
-            . view('templates/footer');
-    }
-
-    
-    private function success() {
-        // unused
-        $templateParams = $this->getUserTemplateParams();
-
-        return view('templates/header')
-            . view('templates/top_bar', $templateParams)
-            . view('cart/success', $templateParams)
             . view('templates/footer');
     }
 
@@ -102,8 +92,9 @@ class Cart extends AppBaseController
 
         $templateParams = $this->getUserTemplateParams();
         $templateParams['order_value'] = $purchaseValue;
+        $templateParams['title'] = 'Cart | Checkout Success';
 
-        return view('templates/header')
+        return view('templates/header', $templateParams)
             . view('templates/top_bar', $templateParams)
             . view('cart/success', $templateParams)
             . view('templates/footer');

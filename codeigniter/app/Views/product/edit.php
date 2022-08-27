@@ -51,7 +51,7 @@
                 <div class="row">
                     <?php if ($is_edit && $primary_media) : ?>
                         <img 
-                            src="/uploads/shop/media/<?= esc($primary_media['is_video'] ? $primary_media['thumbnail_id'] : $primary_media['id']) ?>" 
+                            src="/uploads/shop/media/<?= esc($primary_media['thumbnail_id']) ?>" 
                             class="rounded float-start product-img-current" 
                             alt="Product Photo" 
                             id="productMediaMainImage"
@@ -79,16 +79,18 @@
                                             href="#" 
                                             class="product-media-selector <?=  $primary_media && $primary_media['id'] === $mediaItem['id'] ? 'current-selection' : '' ?> "
                                             data-id="<?= esc($mediaItem['id']) ?>"
+                                            data-media-fullsize-img="/uploads/shop/media/<?= esc($mediaItem['thumbnail_id']) ?>" 
                                         >
                                             <div class="card thumbnail-product-media-select h-100 <?=  $primary_media && $primary_media['id'] === $mediaItem['id']  ? 'border-3 border-indigo' : '' ?>">
                                                 <img 
-                                                    src="/uploads/shop/media/<?= esc($mediaItem['is_video'] ? $mediaItem['thumbnail_id'] : $mediaItem['id']) ?>"
+                                                    src="/uploads/shop/media/<?= esc($mediaItem['thumbnail_id_s']) ?>"
                                                     class="card-img-top product-media-preview-img" 
                                                     alt="Media Select Primary Thumbnail"
                                                 />
                                                 <div class="card-img-overlay d-flex flex-row-reverse px-1 py-1">
                                                     <button 
-                                                        data-media-id="<?= esc($mediaItem['id']) ?>" 
+                                                        data-media-id="<?= esc($mediaItem['thumbnail_id_s']) ?>" 
+                                                        data-media-fullsize-img="/uploads/shop/media/<?= esc($mediaItem['thumbnail_id']) ?>" 
                                                         class="btn-close media-remove-button" 
                                                         aria-label="Delete Media"
                                                         type="button"

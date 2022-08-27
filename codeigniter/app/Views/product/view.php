@@ -23,7 +23,7 @@
                 <?php if ($primary_media) : ?>
 
                     <a href="#" id="primaryMediaContainer" class="media-item-clickable px-0" data-is-video="<?= esc($primary_media['is_video']) ?>" data-id="/uploads/shop/media/<?= esc($primary_media['id']) ?>" data-poster="<?= esc('/uploads/shop/media/' . $primary_media['thumbnail_id']) ?>">
-                        <img src="/uploads/shop/media/<?= esc($primary_media['is_video'] ? $primary_media['thumbnail_id'] : $primary_media['id']) ?>" class="rounded float-start product-img-current" alt="Product Photo" id="productMediaMainImage">
+                        <img src="/uploads/shop/media/<?= esc($primary_media['thumbnail_id']) ?>" class="rounded float-start product-img-current" alt="Product Photo" id="productMediaMainImage">
                     </a>
 
                 <?php else : ?>
@@ -37,9 +37,9 @@
                 <?php foreach ($media as $mediaItem) : ?>
 
                     <div class="col">
-                        <a href="#" class="product-media-selector <?= $primary_media['id'] === $mediaItem['id'] ? 'current-selection' : '' ?> " data-is-video="<?= esc($mediaItem['is_video']) ?>" data-id="/uploads/shop/media/<?= esc($mediaItem['id']) ?>" data-poster="<?= esc('/uploads/shop/media/' . $mediaItem['thumbnail_id']) ?>">
+                        <a href="#" class="product-media-selector <?= $primary_media['id'] === $mediaItem['id'] ? 'current-selection' : '' ?> " data-is-video="<?= esc($mediaItem['is_video']) ?>" data-id="/uploads/shop/media/<?= esc($mediaItem['id']) ?>" data-poster="<?= esc('/uploads/shop/media/' . $mediaItem['thumbnail_id']) ?>" data-media-fullsize-img="<?= esc('/uploads/shop/media/' . $mediaItem['thumbnail_id']) ?>">
                             <div class="card thumbnail-product-media-select h-100 <?= $primary_media['id'] === $mediaItem['id']  ? 'border-3 border-indigo' : '' ?>">
-                                <img src="/uploads/shop/media/<?= esc($mediaItem['is_video'] ? $mediaItem['thumbnail_id'] : $mediaItem['id']) ?>" class="card-img-top product-media-preview-img" alt="Media Open Preview Thumbnail" />
+                                <img src="/uploads/shop/media/<?= esc($mediaItem['thumbnail_id_s']) ?>" class="card-img-top product-media-preview-img" alt="Media Open Preview Thumbnail" />
                             </div>
                         </a>
                     </div>
@@ -100,30 +100,24 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <button type="submit" class="btn btn-lg btn-primary bg-indigo" <?= $product['availability'] == 0 ? 'disabled' : '' ?>>
-                                <i class="bi bi-basket px-1" aria-hidden="true"></i>
-                                Add To Cart
-                            </button>
-                        </div>
+                    <button type="submit" class="btn btn-lg btn-primary bg-indigo" <?= $product['availability'] == 0 ? 'disabled' : '' ?>>
+                        <i class="bi bi-basket px-1" aria-hidden="true"></i>
+                        Add To Cart
+                    </button>
 
-                        <?php if ($logged_in) : ?>
-                            <div class="col-12 col-md-6">
-                            <?php if ($product['availability'] == 0 && !$is_watched) : ?>
-                                <a href="/watch/add/<?= esc($product['id'], 'attr') ?>" class="btn btn-lg btn-secondary" aria-label="Add Product to your watch list">
-                                    <i class="bi bi-eye px-1" aria-hidden="true"></i>
-                                    Watch
-                                </a>
-                            <?php elseif ($is_watched) : ?>
-                                <a href="/watch/remove/<?= esc($product['id'], 'attr') ?>" class="btn btn-lg btn-secondary" aria-label="Add Product to your watch list">
-                                    <i class="bi bi-eye-slash px-1" aria-hidden="true"></i>
-                                    Unwatch
-                                </a>
-                            <?php endif ?>
-                            </div>
+                    <?php if ($logged_in) : ?>
+                        <?php if ($product['availability'] == 0 && !$is_watched) : ?>
+                            <a href="/watch/add/<?= esc($product['id'], 'attr') ?>" class="btn btn-lg btn-secondary" aria-label="Add Product to your watch list">
+                                <i class="bi bi-eye px-1" aria-hidden="true"></i>
+                                Watch
+                            </a>
+                        <?php elseif ($is_watched) : ?>
+                            <a href="/watch/remove/<?= esc($product['id'], 'attr') ?>" class="btn btn-lg btn-secondary" aria-label="Add Product to your watch list">
+                                <i class="bi bi-eye-slash px-1" aria-hidden="true"></i>
+                                Unwatch
+                            </a>
                         <?php endif ?>
-                    </div>
+                    <?php endif ?>
                 </form>
             </div>
 
@@ -275,8 +269,8 @@
                 <?php foreach ($similar_products as $similarProduct) : ?>
                     <div class="col">
                         <div class="card h-100">
-                            <?php if ($similarProduct['media_thumbnail_id']) : ?>
-                                <img src="/uploads/shop/media/<?= esc($similarProduct['media_thumbnail_id']) ?>" class="card-img-top similar-products-img" alt="Similar Product Thumbnail">
+                            <?php if ($similarProduct['media_thumbnail_id_l']) : ?>
+                                <img src="/uploads/shop/media/<?= esc($similarProduct['media_thumbnail_id_l']) ?>" class="card-img-top similar-products-img" alt="Similar Product Thumbnail">
                             <?php else : ?>
                                 <div class="rounded float-start similar-products-img bg-grey-light d-flex justify-content-center">
                                     <i class="bi bi-image text-white fs-1 align-self-center"></i>

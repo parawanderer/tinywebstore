@@ -37,6 +37,8 @@ class MessageChainModel extends Model
             ->orderBy("message_chain.timestamp", "desc")
             ->findAll();
         
+        MessageChainModel::extendShopMedia($result);
+
         return $result;
     }
 
@@ -72,5 +74,11 @@ class MessageChainModel extends Model
         ]);
 
         return $result;
+    }
+
+    private static function extendShopMedia(array &$results) {
+        foreach($results as &$record) {
+            ShopModel::extendShopMedia($record);
+        }
     }
 }

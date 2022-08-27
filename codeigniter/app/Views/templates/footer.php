@@ -9,7 +9,7 @@
         <!-- Left -->
 
         <!-- Right -->
-        <div>
+        <!-- <div>
             <a href="" class="text-white me-4">
                 <i class="fab fa-facebook-f"></i>
             </a>
@@ -28,7 +28,7 @@
             <a href="" class="text-white me-4">
                 <i class="fab fa-github"></i>
             </a>
-        </div>
+        </div> -->
         <!-- Right -->
     </section>
     <!-- Section: Social media -->

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\MediaFile;
 use CodeIgniter\Model;
 
 class OrderEntryModel extends Model
@@ -52,10 +53,22 @@ class OrderEntryModel extends Model
 
     private static function updateProductDetails(array &$products) {
         foreach($products as &$product) {
-            [ $isVideo, $thumbnailId ] = ShopMediaModel::getThumbnailInfo($product['product_media'], $product['product_media_mimetype']);
-
-            $product['media_thumbnail_id'] = $thumbnailId ?? $product['product_media'];
             $product['is_deleted'] = !$product['product_title'];
+            $product['media_thumbnail_id'] = $product['product_media'];
+            $product['media_thumbnail_id_xs'] = null;
+            $product['media_thumbnail_id_s'] = null;
+            $product['media_thumbnail_id_m'] = null;
+            $product['media_thumbnail_id_l'] = null;
+
+            if ($product['product_title'] && $product['product_media']) {
+                $media = new MediaFile($product['product_media'], MediaFile::TYPE_MEDIA, $product['product_media_mimetype']);
+                $product['media_thumbnail_id'] = $media->getThumbnailId();
+
+                $product['media_thumbnail_id_xs'] = $media->getThumbnailId(MediaFile::SIZE_XS);
+                $product['media_thumbnail_id_s'] = $media->getThumbnailId(MediaFile::SIZE_S);
+                $product['media_thumbnail_id_m'] = $media->getThumbnailId(MediaFile::SIZE_M);
+                $product['media_thumbnail_id_l'] = $media->getThumbnailId(MediaFile::SIZE_L);
+            }
         }
     } 
 }
