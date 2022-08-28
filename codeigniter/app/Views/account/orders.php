@@ -33,7 +33,13 @@
                                         <h4 class="card-text color-indigo">
                                             € <?= esc($order['price_total']) ?>
                                         </h4>
-                                        <p class="card-text"><small class="text-muted"><?= date("F jS, Y", strtotime($order['created'])) ?></small></p>
+                                        <p class="card-text">
+                                            <small class="text-muted">
+                                                <time datetime="<?= esc(date("Y-m-d H:i", strtotime($order['created'])), 'attr') ?>">
+                                                    <?= date("F jS, Y", strtotime($order['created'])) ?>
+                                                </time>
+                                            </small>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="col-4 d-flex justify-content-end">

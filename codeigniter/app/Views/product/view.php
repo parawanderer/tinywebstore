@@ -16,7 +16,7 @@
             </ol>
         </nav>
     </div>
-    <div class="row">
+    <section class="row">
         <div class="col-12 col-md-6 px-md-5">
             <div class="row">
 
@@ -125,14 +125,14 @@
                 <?php endif ?>
             </div>
         </div>
-    </div>
+    </section>
     <div class="row pt-4">
         <div class="product-divider title-underline"></div>
     </div>
     <div class="row py-4">
         <div class="col-12 col-md-6">
             <?php if ($description_safe) : ?>
-                <div class="row">
+                <section class="row">
                     <div class="col">
                         <h3>
                             Description
@@ -141,9 +141,9 @@
                             <?= $description_safe ?>
                         </div>
                     </div>
-                </div>
+                </section>
             <?php endif ?>
-            <div class="row">
+            <section class="row">
                 <div class="col">
                     <h3 id="reviews" class="py-2">Reviews (<?= count($reviews) ?>)
 
@@ -240,7 +240,9 @@
 
                                             </div>
                                             <h6 class="text-muted">
-                                                <?= date("F jS, Y", strtotime($review['timestamp'])) ?>
+                                                <time datetime="<?= esc(date("Y-m-d H:i", strtotime($review['timestamp'])), 'attr') ?>">
+                                                    <?= date("F jS, Y", strtotime($review['timestamp'])) ?>
+                                                </time>
                                             </h6>
                                         </div>
                                         <h5 class="card-title"><?= esc($review['title']) ?></h5>
@@ -259,9 +261,9 @@
                         <?php endforeach; ?>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
-        <div class="col-12 col-md-6">
+        <section class="col-12 col-md-6">
             <h4 class="pb-4">Similar Products</h4>
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <?php foreach ($similar_products as $similarProduct) : ?>
@@ -288,7 +290,7 @@
                     </article>
                 <?php endforeach; ?>
             </div>
-        </div>
+        </section>
     </div>
 </div>
 

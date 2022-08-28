@@ -2,7 +2,7 @@
 
 <div class="container p-outer-block">
   <div class="row justify-content-md-center">
-    <div class="col-12 col-md-4 login-form-block">
+    <section class="col-12 col-md-4 login-form-block">
         <h3>Login</h3>
 
         
@@ -35,8 +35,8 @@
                 <button type="submit" class="btn btn-primary bg-indigo">Login</button>
             </div>
         </form>
-    </div>
-    <div class="col-12 col-md-4 line-left signup-form-block">
+    </section>
+    <section class="col-12 col-md-4 line-left signup-form-block">
         <h3>Signup</h3>
 
         <h6>New user?</h6>
@@ -59,6 +59,6 @@
                 <button type="submit" class="btn btn-primary bg-indigo">Sign Up</button>
             </div>
         </form>
-    </div>
+    </section>
   </div>
 </div>

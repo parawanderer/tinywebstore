@@ -2,7 +2,7 @@
 <!-- lightweight editor to add "advanced" feature of creating more complex descriptions since that was part of the project and i do not want to write an editor from scratch -->
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/pell/dist/pell.min.css">
 
-<div class="container p-outer-block">
+<section class="container p-outer-block">
     <form action="<?= $is_edit ? "/product/edit/{$product['id']}" : '/product/create' ?>" method="post" id="productEditCreateForm" novalidate>
     <?= csrf_field() ?>
 
@@ -185,7 +185,7 @@
             </div>
         </div>
     </form>
-</div>
+</section>
 
 <div class="modal fade z-3000" id="addMediaModal" tabindex="-1" aria-labelledby="addMediaModalLabel" aria-hidden="true">
     <div class="modal-dialog">

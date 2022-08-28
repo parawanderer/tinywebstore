@@ -2,7 +2,7 @@
 
 <div class="container p-outer-block">
     <div class="row">
-        <div class="col">
+        <section class="col">
             <h1 class="text-center pb-4">Newest Products</h1>
 
             <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -28,11 +28,11 @@
                     </article>
                 <?php endforeach; ?>
             </div>
-        </div>
+        </section>
     </div>
     <?php if (count($products_seen) > 0): ?>
     <div class="row">
-        <div class="col">
+        <section class="col">
             <h3 class="text-center py-4">Your Last Viewed Products</h3>
 
             <div class="row">
@@ -58,7 +58,7 @@
                     </article>
                 <?php endforeach; ?>
             </div>
-        </div>
+        </section>
     </div>
     <?php endif ?>
 </div>

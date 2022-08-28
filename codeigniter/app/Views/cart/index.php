@@ -4,7 +4,7 @@
     <h1 class="pb-3">Your Cart</h1>
 
     <div class="row">
-        <div class="col">
+        <section class="col">
             <div class="table-responsive">
                 <table class="table" summary="A list of the products currently in your cart, as well as the current availability of your choices. Checking out will only allow you to purchase up to the available products">
                     <thead>
@@ -71,11 +71,11 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </section>
     </div>
 
     <?php if ($logged_in) : ?>
-        <div class="container">
+        <section class="container">
             <h2 class="pt-4">Checkout</h2>
             <h6 class="text-muted pb-3">Please choose your preferred checkout option</h6>
 
@@ -149,8 +149,8 @@
                                         <?php foreach ($shops as $shop) : ?>
                                             <tr>
                                                 <td><?= esc($shop['name']) ?></td>
-                                                <td><?= esc($shop['address']) ?></td>
-                                                <td><?= esc($shop['phone_number']) ?></td>
+                                                <td><address><?= esc($shop['address']) ?></address></td>
+                                                <td><address><?= esc($shop['phone_number']) ?></address></td>
                                             </tr>
                                         <?php endforeach ?>
                                     </tbody>
@@ -177,17 +177,19 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
     <?php else : ?>
-        <p class="text-muted">
-            You are not logged in. Please log in if you wish to check out
-        </p>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="/account/login" class="align-self-end btn btn-primary btn-lg bg-indigo">
-                Login
-            </a>
-        </div>
+        <section>
+            <p class="text-muted">
+                You are not logged in. Please log in if you wish to check out
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a href="/account/login" class="align-self-end btn btn-primary btn-lg bg-indigo">
+                    Login
+                </a>
+            </div>
+        </section>
     <?php endif ?>
 </div>
 

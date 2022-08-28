@@ -99,7 +99,11 @@
                     <h6 class="m-0">Order Number</h6>
                     <p class="m-0 p-0 pb-2">#<?= esc($order['order_id']) ?></p>
                     <h6 class="m-0">Ordered on</h6>
-                    <p class="m-0 p-0 pb-2"><?= date("F jS, Y \a\\t G\:i", strtotime($order['created'])) ?></p>
+                    <p class="m-0 p-0 pb-2">
+                        <time datetime="<?= esc(date("Y-m-d H:i", strtotime($order['created'])), 'attr') ?>">
+                            <?= date("F jS, Y \a\\t G\:i", strtotime($order['created'])) ?>
+                        </time>
+                    </p>
                 </div>
                 <div class="col">
                     <h6 class="m-0">Order Type</h6>
@@ -118,7 +122,9 @@
                     <?php else : ?>
                         <h6 class="m-0">Picked Up Scheduled</h6>
                         <p class="m-0 p-0 pb-2">
-                            <?= date("F jS, Y \a\\t G\:i", strtotime($order['pickup_datetime'])) ?>
+                            <time datetime="<?= esc(date("Y-m-d H:i", strtotime($order['pickup_datetime'])), 'attr') ?>">
+                                <?= date("F jS, Y \a\\t G\:i", strtotime($order['pickup_datetime'])) ?>
+                            </time>
                         </p>
                     <?php endif ?>
                 </div>

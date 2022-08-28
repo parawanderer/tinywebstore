@@ -1,7 +1,7 @@
 <link href="/css/shop.css" rel="stylesheet">
 
 <div class="container p-outer-block-s shop-container">
-    <div class="card">
+    <section class="card">
         <div class="card text-white shop-banner">
             <?php if ($shop['shop_banner_img']) : ?>
                 <img src="/uploads/shop/banner/<?= esc($shop['shop_banner_img']) ?>" class="card-img bg-indigo banner-img" alt="Shop banner">
@@ -33,18 +33,20 @@
                 <div class="col">
                     <h2 class="card-title shop-title"><?= esc($shop['name']) ?></h2>
                     <p class="text-muted"><?= esc($shop['address']) ?></p>
+                    
+                    <address>
+                        <?php if ($shop['phone_number']) : ?>
+                            <p class="text-muted"><i class="bi bi-telephone-fill color-indigo" <?= $icon_color ? "style=\"color: {$icon_color}; \"" : "" ?>></i>
+                                <?= esc($shop['phone_number']) ?>
+                            </p>
+                        <?php endif ?>
 
-                    <?php if ($shop['phone_number']) : ?>
-                        <p class="text-muted"><i class="bi bi-telephone-fill color-indigo" <?= $icon_color ? "style=\"color: {$icon_color}; \"" : "" ?>></i>
-                            <?= esc($shop['phone_number']) ?>
-                        </p>
-                    <?php endif ?>
-
-                    <?php if ($shop['support_email']) : ?>
-                        <p class="text-muted"><i class="bi bi bi-envelope color-indigo" <?= $icon_color ? "style=\"color: {$icon_color}; \"" : "" ?>></i>
-                            <?= esc($shop['support_email']) ?>
-                        </p>
-                    <?php endif ?>
+                        <?php if ($shop['support_email']) : ?>
+                            <p class="text-muted"><i class="bi bi bi-envelope color-indigo" <?= $icon_color ? "style=\"color: {$icon_color}; \"" : "" ?>></i>
+                                <?= esc($shop['support_email']) ?>
+                            </p>
+                        <?php endif ?>
+                    </address>
                 </div>
 
                 <?php if ($logged_in) : ?>
@@ -61,17 +63,17 @@
                 <?php endif ?>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="card my-2">
+    <section class="card my-2">
         <div class="card-body user-editable-box" style="background-color: <?= esc($shop['theme_color']) ?? 'transparent' ?>; color: <?= esc($shop['font_color']) ?? 'inherit' ?>;">
             <p class="card-text">
                 <?= $description_safe ?>
             </p>
         </div>
-    </div>
+    </section>
 
-    <div class="card my-2">
+    <section class="card my-2">
         <div class="card-body" id="media" style="background-color: <?= esc($shop['theme_color']) ?? 'transparent' ?>; color: <?= esc($shop['font_color']) ?? 'inherit' ?>;">
             <h5 class="card-title">Media</h5>
 
@@ -123,9 +125,9 @@
 
             <?php endif ?>
         </div>
-    </div>
+    </section>
 
-    <div class="card my-2">
+    <section class="card my-2">
         <div class="card-body" style="background-color: <?= esc($shop['theme_color']) ?? 'transparent' ?>; color: <?= esc($shop['font_color']) ?? 'inherit' ?>;">
             <h3 class="card-title">Products</h3>
             <p class="card-text">These are products featured by <?= esc($shop['name']) ?></p>
@@ -155,14 +157,14 @@
             <?php endforeach; ?>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="card my-2">
+    <section class="card my-2">
         <div class="card-body">
             <h5 class="card-title">Similar Products</h5>
             <p class="card-text">These are products similar to products sold by <?= esc($shop['name']) ?></p>
         </div>
-    </div>
+    </section>
 </div>
 
 <div class="modal fade z-3000" id="deleteMediaModal" tabindex="-1" aria-labelledby="deleteMediaModalLabel" aria-hidden="true">

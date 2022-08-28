@@ -45,7 +45,7 @@
 
                             <td>
                                 <h6 class="text-muted">
-                                    <time>
+                                    <time datetime="<?= esc(date("Y-m-d H:i", strtotime($product['created'])), 'attr') ?>">
                                         <?= date("F jS, Y", strtotime($product['created'])) ?>
                                     </time>
                                 </h6>

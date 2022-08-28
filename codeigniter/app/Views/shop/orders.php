@@ -38,7 +38,9 @@
                         </th>
                         <td>
                             <h6 class="text-muted">
-                                <?= date("F jS, Y", strtotime($order['created'])) ?>
+                                <time datetime="<?= esc(date("Y-m-d H:i", strtotime($order['created'])), 'attr') ?>">
+                                    <?= date("F jS, Y", strtotime($order['created'])) ?>
+                                </time>
                             </h6>
                         </td>
                         <td>
