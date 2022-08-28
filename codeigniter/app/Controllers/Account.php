@@ -216,7 +216,7 @@ class Account extends AppBaseController
         $products = $productModel->getProductsByIdsForUpdate(array_keys($countMap));
         
         $outOfStockResets = Account::mapNewAvailabilities($countMap, $products);
-        $productModel->incrementProductAvailabilities($countMap);
+        $productModel->updateProductAvailabilities($countMap);
 
         $result = $orderModel->completeOrderTransaction();
         // TRANSACTION END        
