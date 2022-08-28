@@ -45,9 +45,9 @@ or use the command line seeder as [described here](https://codeigniter4.github.i
 The database (assuming recent version of docker and container running):
 
 ```
-docker container exec app-1 mysql -uroot -e "create database app"
+docker container exec webprogramming_proj-app-1 mysql -uroot -e "create database app"
 ```
-Or replace `app-1` with the container ID.
+Or replace `webprogramming_proj-app-1` with the container ID.
 
 
 The seeder name is `AppSeeder`. So e.g.
