@@ -25,7 +25,7 @@
                             <th class="hide-mobile">
                                 <?php if ($product['media_thumbnail_id_s']) : ?>
                                     <a href="/product/<?= esc($product['product_id']) ?>">
-                                        <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_s']) ?>" class="img-thumbnail img-thumb-s" aria-labelledby="productTitle-<?= esc($shop['id']) ?>">
+                                        <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_s']) ?>" class="img-thumbnail img-thumb-s" alt="Shop Logo">
                                     </a>
                                 <?php else : ?>
                                     <div class="rounded float-start bg-grey-light d-flex justify-content-center img-thumb-s">
@@ -35,7 +35,7 @@
                             </th>
                             <th>
                                 <?php if ($product['title']) : ?>
-                                    <a href="/product/<?= esc($product['product_id']) ?>" class="text-decoration-none text-reset" id="productTitle-<?= esc($shop['id']) ?>">
+                                    <a href="/product/<?= esc($product['product_id']) ?>" class="text-decoration-none text-reset">
                                         <?= esc($product['title']) ?>
                                     </a>
                                 <?php else : ?>

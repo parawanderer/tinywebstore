@@ -34,23 +34,34 @@ class ShopModel extends Model
     }
 
     public function getShops(array $shopIds) {
-        $shop = $this->whereIn("id", $shopIds)->findAll();
-        ShopModel::extendShopMedia($shop);
+        $shops = $this->whereIn("id", $shopIds)->findAll();
+        ShopModel::extendShopMedias($shops);
 
-        return $shop;
+        return $shops;
+    }
+
+    public static function extendShopMedias(array &$shops) {
+        foreach($shops as &$shop) {
+            ShopModel::extendShopMedia($shop);
+        }
     }
 
     public static function extendShopMedia(array &$shop) {
         if (!$shop || empty($shop)) return;
-        if (!$shop['shop_logo_img']) return;
+        
+        $shop['shop_logo_img_l'] = null;
+        $shop['shop_logo_img_m'] = null;
+        $shop['shop_logo_img_s'] = null;
+        $shop['shop_logo_img_xs'] = null;
 
-        $media = new MediaFile($shop['shop_logo_img'], MediaFile::TYPE_LOGO, null);
-        $thumbnails = $media->getThumbnails();
+        if ($shop['shop_logo_img']) {
+            $media = new MediaFile($shop['shop_logo_img'], MediaFile::TYPE_LOGO, null);
+            $thumbnails = $media->getThumbnails();
 
-
-        $shop['shop_logo_img_l'] = $thumbnails['l'];
-        $shop['shop_logo_img_m'] = $thumbnails['m'];
-        $shop['shop_logo_img_s'] = $thumbnails['s'];
-        $shop['shop_logo_img_xs'] = $thumbnails['xs'];
+            $shop['shop_logo_img_l'] = $thumbnails['l'];
+            $shop['shop_logo_img_m'] = $thumbnails['m'];
+            $shop['shop_logo_img_s'] = $thumbnails['s'];
+            $shop['shop_logo_img_xs'] = $thumbnails['xs'];
+        }
     }
 }

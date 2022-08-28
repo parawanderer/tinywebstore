@@ -24,8 +24,8 @@ class OrderEntryModel extends Model
     public function getEntriesForOrder(int $orderId) {
         $result = $this->select("order_entry.id, order_entry.product_id, order_entry.shop_id, order_entry.quantity, order_entry.price_per_unit, order_entry.completed, order_entry.product_name as product_title_backup, product.title as product_title, product.main_media as product_media, shop_media.mimetype as product_media_mimetype, shop.name as shop_name")
             ->join("product", "order_entry.product_id = product.id", "left")
-            ->join("shop_media", "product.main_media = shop_media.id")
-            ->join("shop", "order_entry.shop_id = shop.id")
+            ->join("shop_media", "product.main_media = shop_media.id", "left")
+            ->join("shop", "order_entry.shop_id = shop.id", "left")
             ->where([ "order_id" => $orderId])
             ->findAll();
 

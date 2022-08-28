@@ -75,7 +75,7 @@
                                 <?php else : ?>
                                     <a href="/shop/<?= esc($shop['id']) ?>">
                                         <div class="rounded float-start bg-indigo d-flex justify-content-center align-items-center img-thumb-xs">
-                                            <span class="text-white fw-bold text-uppercase text-center"><?= esc($shop['shop_name']) ?></span>
+                                            <span class="text-white fw-bold text-uppercase text-center"><?= esc($shop['name']) ?></span>
                                         </div>
                                     </a>
                                 <?php endif ?>

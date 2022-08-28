@@ -20,7 +20,7 @@ class ContrastRatioChecker {
         return $ratio < 1/4.5;
     }
 
-    public static function getDarkerColor(string $hex1, string $hex2) {
+    public static function getDarkerColor(?string $hex1, ?string $hex2) {
         if (!$hex1 && !$hex2) return null;
         if (!$hex1 || !$hex2) return null;
 
