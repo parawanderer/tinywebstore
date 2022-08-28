@@ -39,8 +39,16 @@ docker-compose up
 
 #### Initialisation /Seeding
 
-To initialise the database with some basic test data, send a get request to `/seed`
+To initialise the database with some basic test data, create a database `app` (or whatever name was configured in the `.env` file) in the container and then send a get request to `/seed`
 or use the command line seeder as [described here](https://codeigniter4.github.io/CodeIgniter4/dbmgmt/seeds.html#command-line-seeding)
+
+The database (assuming recent version of docker and container running):
+
+```
+docker container exec app-1 mysql -uroot -e "create database app"
+```
+Or replace `app-1` with the container ID.
+
 
 The seeder name is `AppSeeder`. So e.g.
 ```
