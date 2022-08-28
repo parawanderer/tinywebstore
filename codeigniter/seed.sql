@@ -312,13 +312,12 @@ CREATE TABLE messages(
 
 CREATE INDEX chainIndx ON messages(chain_id);
 
-CREATE INDEX userIndx ON alert(user_id);
-
 INSERT INTO message_chain VALUES (
 	1,
 	1,
     1,
-    '2022-08-24 06:57:48'
+    '2022-08-24 06:57:48',
+    '2022-08-24 07:57:48'
 );
 
 INSERT INTO messages VALUES (
