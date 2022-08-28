@@ -1,18 +1,33 @@
 ## Running
 
-Prerequisite 
+#### Prerequisites:
 - docker
 - [docker-compose](https://docs.docker.com/compose/install/) (not really necessary but I don't like typing long commands)
 - [composer](https://getcomposer.org/download/) (not sure if really necessary, but I believe since we use a volume mount we may not pull dependencies in the container? I don't really feel inclined to check the container setup for the xamp container)
 
 
-Run:
+#### Running:
 
-#### Dependencies:
+Ensure there is a `./codeigniter/.env` file, derived from [`./codeigniter/env`](./codeigniter/env).
+The bare minimum are these properties being set:
+
+```
+database.default.hostname = localhost
+database.default.database = app
+database.default.username = root
+database.default.DBDriver = MySQLi
+database.default.DBPrefix =
+database.default.port = 3306
+```
+
+Then from the root folder:
+
 ```
 cd ./codeigniter
 composer install
 ```
+
+In the root folder:
 
 ```
 docker-compose build
@@ -31,7 +46,6 @@ The seeder name is `AppSeeder`. So e.g.
 ```
 php spark db:seed AppSeeder
 ```
-
 
 ## Test Accounts (seeded)
 
