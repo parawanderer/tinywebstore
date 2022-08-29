@@ -89,7 +89,11 @@ class OrderModel extends Model
     public function hasPurchasedBefore(int $userId, int $productId) {
         $result = $this->select("1")
                     ->join("order_entry", "order.id = order_entry.order_id", "inner")
-                    ->where(["order.user_id" => $userId, "order_entry.product_id" => $productId, "status" => OrderModel::STATUS_COMPLETE ])
+                    ->where([
+                        "order.user_id" => $userId, 
+                        "order_entry.product_id" => $productId, 
+                        "order_entry.completed" => true
+                    ])
                     ->first();
 
         return !!$result;
@@ -132,6 +136,22 @@ class OrderModel extends Model
         //OrderModel::sortOrderListForShop($result);
         
         return $result;
+    }
+
+    public function getUnprocessedOrderCountForShop(int $shopId) {
+        $query = $this->db->query("SELECT COUNT(DISTINCT o.id) as `count`
+            FROM `order` o 
+            INNER JOIN `order_entry` e ON e.order_id = o.id 
+            WHERE e.shop_id = :shop_id:
+            GROUP BY o.id
+            ORDER BY o.`created` DESC", 
+            [
+                "shop_id" => $shopId
+            ]);
+
+        $result = $query->getFirstRow('array');
+        
+        return $result['count'];
     }
 
     private static function sortOrderListForShop(array &$orders) {
@@ -216,7 +236,7 @@ class OrderModel extends Model
     public function getTotalOrdersForShop(int $shopId, int $startingFrom = 0, int $endingAt = -1) {
         // I'll interpret this as orders that included an order from this shop, with the items from this shop grouped together as one unit
         // so this is not the sum of the total items, but the count of the total orders that included items ordered from this shop
-        $query = $this->db->query("SELECT COUNT(DISTINCT o.user_id) as 'count', SUM(e.price_per_unit * e.quantity) as 'profit'
+        $query = $this->db->query("SELECT COUNT(DISTINCT o.id) as 'count', SUM(e.price_per_unit * e.quantity) as 'profit'
             FROM `order` o 
             INNER JOIN `order_entry` e ON e.order_id = o.id 
             WHERE e.shop_id = :shop_id: AND o.`status` != 2 AND o.created >= :start_from: AND o.created < :ending_at:",

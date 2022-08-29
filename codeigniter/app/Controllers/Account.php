@@ -378,8 +378,8 @@ class Account extends AppBaseController
             'first_name' => $userData['first_name'],
             'last_name' => $userData['last_name'],
             'has_shop' => $userData['has_shop'],
-            'shop_name' => $userData['shop_name'],
-            'shop_id' => $userData['shop_id']
+            'shop_name' => $userData['shop_name'] ?? null,
+            'shop_id' => $userData['shop_id'] ?? null
         ]);
     }
 

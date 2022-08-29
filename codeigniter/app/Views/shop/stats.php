@@ -37,7 +37,7 @@
         <div class="col-6 col-md-3 mb-3 mb-md-0">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title color-indigo">€ <?= esc($avgProfit30d) ?></h5>
+                    <h5 class="card-title color-indigo">€ <?= esc(number_format($avgProfit30d, 2, '.', '')) ?></h5>
                     <p class="card-text">Avg Sale / 30 Days</p>
                 </div>
             </div>

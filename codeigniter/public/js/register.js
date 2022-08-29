@@ -69,7 +69,7 @@ zipInput.addEventListener('input', function (event) {
 });
 
 passwordInput.addEventListener("input", function (event) {
-    const value = event.target.value?.trim();
+    const value = passwordInput.value?.trim();
 
     if (!value) {
         const ERROR = 'Password must not be empty';
@@ -82,10 +82,14 @@ passwordInput.addEventListener("input", function (event) {
     } else {
         passwordInput.setCustomValidity("");
     }
+
+    validatePasswordRepeated();
+    passwordInput.reportValidity();
 });
 
-passwordRepeatInput.addEventListener('input', function (event) {
-    const value = event.target.value?.trim();
+
+function validatePasswordRepeated() {
+    const value = passwordRepeatInput.value?.trim();
 
     if (!value) {
         const ERROR = 'Password must not be empty';
@@ -100,7 +104,9 @@ passwordRepeatInput.addEventListener('input', function (event) {
     }
 
     passwordRepeatInput.reportValidity();
-});
+}
+
+passwordRepeatInput.addEventListener('input', validatePasswordRepeated);
 
 form.addEventListener('submit', function (event) {
 

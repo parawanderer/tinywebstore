@@ -14,10 +14,8 @@ class AlertHelper {
         $this->watchlistModel = model(WatchlistModel::class);
     }
 
-    public function orderCompleteAlert(array &$orderDetails) {
-        $userId = $orderDetails['user_id'];
-
-        foreach($orderDetails['entries'] as $orderRecord) {
+    public function orderCompleteAlert(array &$orderEntries, int $userId) {
+        foreach($orderEntries as &$orderRecord) {
             $productId = $orderRecord['product_id'];
             $productName = $orderRecord['product_title'];
             $this->alertModel->createAlert($userId, $productId, $productName, AlertModel::TYPE_PRODUCT_ORDER_COMPLETED);

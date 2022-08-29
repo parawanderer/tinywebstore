@@ -6,6 +6,7 @@ use App\Helpers\AlertHelper;
 use App\Helpers\HtmlSanitizer;
 use App\Helpers\ContrastRatioChecker;
 use App\Helpers\MediaFile;
+use App\Models\AccountModel;
 use App\Models\OrderModel;
 use App\Models\ProductModel;
 use App\Models\ShopMediaModel;
@@ -181,6 +182,8 @@ class Shop extends ShopDataControllerBase
         $orderModel = model(OrderModel::class);
         $latestOrders = $orderModel->getLatestOrdersForShop($ownedShopId, 50);
 
+        $this->getUnprocessedShopOrdersCached(true);
+
 
         $templateParams = $this->getUserTemplateParams();
         $templateParams['shop'] = $shop;
@@ -210,10 +213,14 @@ class Shop extends ShopDataControllerBase
         if (!$filteredOrderDetails || count($filteredOrderDetails) === 0)
             throw new Exception("Bad request");
 
-        
+        /** @var \App\Models\AccountModel */
+        $accountModel = model(AccountModel::class);
+        $orderer = $accountModel->getUserById($filteredOrderDetails['user_id']);
+
         $templateParams = $this->getUserTemplateParams();
         $templateParams['shop'] = $shop;
         $templateParams['order'] = $filteredOrderDetails;
+        $templateParams['orderer'] = $orderer;
         $templateParams['page'] = 'shop-orders';
         $templateParams['title'] = "Shop | {$shop['name']} | Order #{$orderId}";
 
@@ -252,7 +259,8 @@ class Shop extends ShopDataControllerBase
         $orderModel->updateStoreOrderCompletion($orderId, $completing, $updateStatus);
         
         $alertHelper = new AlertHelper();
-        $alertHelper->orderCompleteAlert($orderDetails);
+        $alertOrders = Shop::filterOrderDetails($orderDetails['entries'], $completing);
+        $alertHelper->orderCompleteAlert($alertOrders, $orderDetails['user_id']);
 
         return redirect()->to("/shop/order/{$orderId}");
     }
@@ -382,5 +390,21 @@ class Shop extends ShopDataControllerBase
             if ($det['shop_id'] == $shopId) return true;
         }
         return false;
+    }
+
+    private static function filterOrderDetails(array &$entries, array &$completedEntryIds) {
+        $ids = [];
+        $result = [];
+
+        foreach($completedEntryIds as $id) {
+            $ids[$id] = 1;
+        }
+
+        foreach($entries as &$entry) {
+            if (array_key_exists($entry['id'], $ids))
+                $result[] = $entry;
+        }
+
+        return $result;
     }
 }

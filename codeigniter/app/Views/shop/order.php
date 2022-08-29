@@ -98,7 +98,11 @@
                 <div class="col">
                     <h6 class="m-0">Order Number</h6>
                     <p class="m-0 p-0 pb-2">#<?= esc($order['order_id']) ?></p>
-                    <h6 class="m-0">Ordered on</h6>
+                    <h6 class="m-0">Ordered By</h6>
+                    <p class="m-0 p-0 pb-2">
+                        <?= esc($orderer['first_name']) ?> <?= esc($orderer['last_name']) ?>
+                    </p>
+                    <h6 class="m-0">Ordered On</h6>
                     <p class="m-0 p-0 pb-2">
                         <time datetime="<?= esc(date("Y-m-d H:i", strtotime($order['created'])), 'attr') ?>">
                             <?= date("F jS, Y \a\\t G\:i", strtotime($order['created'])) ?>
