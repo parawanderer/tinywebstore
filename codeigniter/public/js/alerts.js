@@ -29,20 +29,27 @@ function getTimeAgoString(time, from) {
     if (diff < SECOND) {
         return "just now";
     }
-    if (diff < MINUTE) {
+    else if (diff < MINUTE) {
         if (diff < (SECOND * 2)) {
             return "1 second ago";
         }
         
         const n = Math.floor(diff / SECOND);
         return n + " seconds ago";
-    } if (diff < HOUR) {
+    } else if (diff < HOUR) {
         if (diff < (MINUTE * 2)) {
             return "1 minute ago";
         }
 
         const n = Math.floor(diff / MINUTE);
         return n + " minutes ago";
+    } else if (diff < DAY) {
+        if (diff < (HOUR * 2)) {
+            return "1 hour ago";
+        }
+
+        const n = Math.floor(diff / HOUR);
+        return n + " hours ago";
     } else {
         if (diff < (DAY * 2)) {
             return "1 day ago";
