@@ -228,11 +228,11 @@ class MediaFile {
             ->save($sizeMPath);
 
         $image->withFile($mainFile)
-            ->fit(80, 80, 'center')
+            ->resize(80, 80, true, 'auto')
             ->save($sizeSPath);
         
         $image->withFile($mainFile)
-            ->fit(48, 48, 'center')
+            ->resize(48, 48, true, 'auto')
             ->save($sizeXSPath);
     }
 

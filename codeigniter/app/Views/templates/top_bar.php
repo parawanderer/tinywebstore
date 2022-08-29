@@ -46,9 +46,9 @@
                                 <article class="container px-2 px-md-3">
                                     <div class="row py-2 border-bottom">
                                         <div class="col col-3">
-                                            <?php if ($product['media_thumbnail_id']): ?>
+                                            <?php if ($product['media_thumbnail_id_xs']): ?>
                                                 <a href="/product/<?= esc($product['id']) ?>">
-                                                    <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id']) ?>" class="rounded img-thumbnail img-thumb-xs" alt="Product Thumbnail">
+                                                    <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_xs']) ?>" class="rounded img-thumbnail img-thumb-xs" alt="Product Thumbnail">
                                                 </a>
                                             <?php else: ?>
                                                 <div class="rounded float-start bg-grey-light d-flex justify-content-center img-thumb-xs">

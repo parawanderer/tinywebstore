@@ -22,9 +22,9 @@
                         <?php foreach ($cart as $product) : ?>
                             <tr  class="align-middle">
                                 <th>
-                                    <?php if ($product['media_thumbnail_id_xs']) : ?>
+                                    <?php if ($product['media_thumbnail_id_s']) : ?>
                                         <a href="/product/<?= esc($product['id']) ?>" class="d-none d-md-inline">
-                                            <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_xs']) ?>" class="img-thumbnail img-thumb-s" alt="Image thumbnail">
+                                            <img src="/uploads/shop/media/<?= esc($product['media_thumbnail_id_s']) ?>" class="img-thumbnail img-thumb-s" alt="Image thumbnail">
                                         </a>
                                     <?php else : ?>
                                         <div class="rounded float-start bg-grey-light d-flex justify-content-center img-thumb-s">
