@@ -100,3 +100,8 @@ Password: anotherPasswrod323
 Username: tvs@test.test
 Password: anotherPasswrod323
 ```
+
+
+## License
+
+MIT
