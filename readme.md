@@ -1,6 +1,6 @@
 # Toy App - "Web Store"
 
-This is a tiny simple PHP (Codeignitor 4) / Bootstrap 5 / Vanilla JS website (tier 3 app) that I ended up making within the scope of a course I've taken. 
+This is a tiny simple PHP ([Codeignitor 4](https://github.com/codeigniter4/CodeIgniter4)) / [Bootstrap 5](https://getbootstrap.com/docs/5.0/components/navbar/) / Vanilla JS website (a tier 3 app) that I ended up making within the scope of a course I've taken. 
 
 I thought it was polished enough (read: visually pretty enough & having enough, though basic, features to explore) to put it up on my personal page, because why not? 
 
