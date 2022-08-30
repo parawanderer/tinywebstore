@@ -28,6 +28,7 @@ class ProductModel extends Model
         $result = $this->select("product.id, product.shop_id, product.title, product.price, product.availability, product.main_media, product.description, shop_media.mimetype as media_mimetype")
             ->join('shop_media', 'product.main_media = shop_media.id', 'left')
             ->where(["product.shop_id" => $shopId])
+            ->orderBy("product.id", "asc")
             ->findAll($limit);
 
         ProductModel::updateMediaInfo($result);
@@ -153,6 +154,7 @@ class ProductModel extends Model
                 ->join('shop_media', 'product.main_media = shop_media.id', 'left')
                 ->where(["product.shop_id" => $shopId])
                 ->whereNotIn("product.id", $excludeIds)
+                ->orderBy("product.id", "desc")
                 ->findAll($limit);
         
         ProductModel::updateMediaInfo($result);

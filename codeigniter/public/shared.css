@@ -104,8 +104,8 @@
     align-items: center;
 }
 
-.navbar.search-bar .dropdown-item .bi {
-    margin-right: 0.5em;
+.account-nav .dropdown-item .bi {
+     margin-right: 0.5em; 
 }
 
 .store-icon {

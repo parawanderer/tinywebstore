@@ -40,7 +40,7 @@
                         </div>
                     </a>
                     <?php if (count($cart) > 0) : ?>
-                        <ul class="dropdown-menu dropdown-menu-end cart-dropdown nav-dropdown" aria-labelledby="cartDropdown">
+                        <ul class="dropdown-menu dropdown-menu-end cart-dropdown nav-dropdown account-nav" aria-labelledby="cartDropdown">
                             <?php foreach($cart as &$product): ?>
                             <li>
                                 <article class="container px-2 px-md-3">
@@ -88,7 +88,7 @@
                                 <span class="username"><?= esc($user['first_name']) ?></span>
                             </div>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end nav-dropdown" aria-labelledby="navbarDropdown">
+                        <ul class="dropdown-menu dropdown-menu-end nav-dropdown account-nav" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="/account"><i class="bi bi-person" aria-hidden="true"></i> Account</a></li>
                             <?php if ($user['has_shop']) : ?>
                                 <li><a class="dropdown-item" href="<?= esc($user['shop_url']) ?>"><i class="bi bi-shop" aria-hidden="true"></i> Shop (<?= esc($user['shop_name']) ?>)</a></li>

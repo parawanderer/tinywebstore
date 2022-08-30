@@ -9,7 +9,7 @@
                         </a>
                     <?php else : ?>
                         <div class="rounded float-start bg-grey-light d-flex justify-content-center img-thumb-xs">
-                            <i class="bi bi-image text-white fs-1 align-self-center"></i>
+                            <i class="bi bi-image text-white fs-4 align-self-center"></i>
                         </div>
                     <?php endif ?>
                 </div>
