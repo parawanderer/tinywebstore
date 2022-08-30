@@ -17,3 +17,7 @@ for an account to check out and a store to confirm the order.
 ![Preview Image 6](./p6.png)
 
 ![Preview Image 7](./p7.png)
+
+![Preview Image 8](./p8.png)
+
+![Preview Image 9](./p9.png)

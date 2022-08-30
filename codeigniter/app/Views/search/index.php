@@ -128,15 +128,17 @@
                                                         $stars += 1;
                                                     }
 
-                                                    if (ceil($average_score) == 1) {
-                                                        echo '<i class="bi bi-star-half" aria-hidden="true"></i>';
-                                                    } else {
-                                                        echo '<i class="bi bi-star" aria-hidden="true"></i>';
-                                                    }
-                                                    $stars += 1;
-
-                                                    for (; $stars < 5; ++$stars) {
-                                                        echo '<i class="bi bi-star" aria-hidden="true"></i>';
+                                                    if ($stars < 5) {
+                                                        if (ceil($average_score) == 1) {
+                                                            echo '<i class="bi bi-star-half" aria-hidden="true"></i>';
+                                                        } else {
+                                                            echo '<i class="bi bi-star" aria-hidden="true"></i>';
+                                                        }
+                                                        $stars += 1;
+    
+                                                        for (; $stars < 5; ++$stars) {
+                                                            echo '<i class="bi bi-star" aria-hidden="true"></i>';
+                                                        }
                                                     }
                                                     ?>
 
